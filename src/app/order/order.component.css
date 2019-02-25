@@ -1,0 +1,16 @@
+mat-spinner{
+    margin: 10% auto;
+}
+
+mat-card{
+
+    max-width: 70%;
+    margin: 0 auto;
+
+}
+
+.mat-raised-button, p{
+    border-radius: 0;
+    margin: .5rem 0 .5rem .5rem;
+}
+

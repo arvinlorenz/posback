@@ -1,0 +1,24 @@
+mat-card{
+    margin: 0 auto;
+    width: 80%;
+}
+
+.login-header{
+    text-align: center;
+}
+mat-form-field{
+    width: 100%;
+}
+
+.mat-input-element:disabled {
+    color: black;
+}
+
+button{
+    width: 60%;
+
+}
+
+mat-card-actions{
+    text-align: center;
+}

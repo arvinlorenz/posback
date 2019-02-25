@@ -1,0 +1,14 @@
+
+
+<ul class="list-group">
+  <a
+    class="list-group-item"
+    style="cursor: pointer"
+    *ngFor="let supplier of suppliers; let i = index"
+    (click)="onEditSupplier(i);"
+  >
+    {{ supplier.Supplier }}
+  </a>
+</ul>
+
+<app-supplier-edit></app-supplier-edit>

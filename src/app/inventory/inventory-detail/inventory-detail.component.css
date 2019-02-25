@@ -1,0 +1,22 @@
+mat-form-field{
+    margin-right: 1rem;
+    width: 100%;
+}
+
+.mat-input-element:disabled {
+    color: black;
+}
+
+button{
+    margin-left: .5rem;
+}
+
+.item-image {
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+.item-image img {
+    width: 50%;
+    box-shadow: 1px 1px 5px rgba(0,0,0,0.5);
+}

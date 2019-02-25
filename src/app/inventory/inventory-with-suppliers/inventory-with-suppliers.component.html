@@ -1,0 +1,180 @@
+<mat-tab-group>
+  <mat-tab label="Details"> 
+      <mat-card>
+          <div class="item-image" *ngIf="imagePath">
+              <img [src]="imagePath">
+          </div>
+          <form [formGroup]="form" (submit)="save()">
+              <!-- <div *ngIf="editMode && showButton">
+                  <button type="button" mat-stroked-button (click)="filePicker.click()">Pick Image</button>
+                  <input type="file" #filePicker (change)="onImagePicked($event)">
+                </div> -->
+                <mat-form-field>
+                    <input 
+                    matInput 
+                    placeholder="Image URL 圖片網址"
+                    formControlName="imageUrl">
+                  </mat-form-field>
+                  
+            <mat-form-field>
+              <input 
+              matInput 
+              placeholder="Item Number 項目編號"
+              formControlName="itemNumber">
+            </mat-form-field>
+      
+            <mat-form-field>
+                <input 
+                matInput 
+                placeholder="Item Name"
+                formControlName="itemTitle">
+              </mat-form-field>
+          
+            <mat-form-field>
+              <input 
+              #quantity
+              matInput 
+              placeholder="Quantity 項目名稱"
+              formControlName="quantity">
+            </mat-form-field>
+            
+            <mat-form-field>
+              <input 
+              matInput 
+              placeholder="Open Order 開放訂單"
+              formControlName="openOrder">
+            </mat-form-field>
+      
+            <mat-form-field>
+              <input 
+              matInput 
+              placeholder="Minimum Level 最低水平"
+              formControlName="minimumLevel">
+            </mat-form-field>
+      
+            <mat-form-field>
+              <input 
+              matInput 
+              placeholder="Available 可得到"
+              formControlName="available">
+            </mat-form-field>
+      
+            <mat-form-field>
+              <input 
+              matInput 
+              placeholder="Due 應有"
+              formControlName="due">
+            </mat-form-field>
+      
+            <mat-form-field>
+              <input 
+              matInput 
+              placeholder="Barcode 條碼"
+              formControlName="barcodeNumber">
+            </mat-form-field>
+      
+            <mat-form-field>
+              <input 
+              matInput 
+              placeholder="Purchase Price 購買價格"
+              formControlName="purchasePrice">
+            </mat-form-field>
+            <mat-form-field>
+              <input 
+              matInput 
+              placeholder="Retail Price 零售價"
+              formControlName="retailPrice">
+            </mat-form-field>
+            
+            
+      
+            <mat-form-field>
+              <input 
+              matInput 
+              placeholder="Height 高度"
+              formControlName="height">
+            </mat-form-field>
+      
+            <mat-form-field>
+              <input 
+              matInput 
+              placeholder="Width 寬度" 
+              formControlName="width">
+            </mat-form-field>
+      
+            <mat-form-field>
+              <input 
+              matInput 
+              placeholder="Depth 深度
+              "
+              formControlName="depth">
+            </mat-form-field>
+      
+            <mat-form-field>
+              <input 
+              matInput 
+              placeholder="Weight 重量"
+              formControlName="weight">
+            </mat-form-field>
+
+              <mat-form-field>
+                <input 
+                matInput 
+                placeholder="Shipping 運輸"
+                formControlName="shipping">
+              </mat-form-field>
+              <mat-form-field>
+                <input 
+                matInput 
+                placeholder="Postage 郵資"
+                formControlName="postage">
+              </mat-form-field>
+         
+              <mat-form-field >
+                <mat-select placeholder="Postal Service ID" formControlName="postalServiceId" [(value)]="postServiceSelected">
+                  <mat-option *ngFor="let postalServiceId of postalServiceIdArray" [value]="postalServiceId.Value" >
+                    {{postalServiceId.Key}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+
+              <mat-form-field>
+                <mat-select placeholder="Category ID" formControlName="categoryId" [(value)]="categorySelected">
+                  <mat-option *ngFor="let categoryId of categoryIdArray" [value]="categoryId.CategoryId" >
+                    {{categoryId.CategoryName}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+
+              <mat-form-field>
+                <mat-select placeholder="Package Group ID" formControlName="packageGroupId" [(value)]="packageGroupSelected">
+                  <mat-option *ngFor="let packageGroupId of packageGroupsIdArray" [value]="packageGroupId.Value" >
+                    {{packageGroupId.Key}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+
+            <mat-card-actions *ngIf="editMode && showButton">
+                <button 
+                  mat-stroked-button 
+                  type="submit"  
+                  color="primary">SAVE 保存</button>
+                <button mat-stroked-button (click)="cancel()" color="warn">CANCEL 撤消</button>
+            </mat-card-actions>
+      
+            <mat-card-actions *ngIf="!editMode && showButton">
+                <button mat-stroked-button (click)="edit()"color="primary" >EDIT 編輯</button>
+            </mat-card-actions>
+        </form>
+      </mat-card>
+  </mat-tab>
+
+
+
+
+  <mat-tab label="Suppliers"> 
+    <app-suppliers [suppliers]="suppliers" [itemStockId]="itemStockId"></app-suppliers>  
+  </mat-tab>
+</mat-tab-group>
+
+

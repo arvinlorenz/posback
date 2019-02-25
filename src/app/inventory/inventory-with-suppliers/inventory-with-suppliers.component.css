@@ -1,0 +1,40 @@
+mat-form-field{
+    margin-right: 1rem;
+    width: 100%;
+    color: black !important;
+}
+
+.mat-input-element:disabled, .mat-selaect-element:disabled {
+    color: black;
+}
+
+
+  :host /deep/ .mat-select-value-text {
+    color: black !important;
+  }
+
+button{
+    margin-left: .5rem;
+}
+
+.item-image {
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+.item-image img {
+    width: 50%;
+    box-shadow: 1px 1px 5px rgba(0,0,0,0.5);
+}
+
+input[type="file"]{
+    visibility: hidden;
+}
+/* 
+.mat-expansion-panel {
+    border-radius: 0 !important;
+    border-bottom: 1px solid #FAFAFF !important;
+    box-shadow: none;
+    margin-bottom: 1rem;
+
+} */

@@ -1,0 +1,33 @@
+<!-- <mat-spinner *ngIf="!tokenAvailable"></mat-spinner> -->
+  <mat-card>
+      <div class="row">
+          <div class="col">
+            <form [formGroup]="form" (submit)="processOrder()">
+                <mat-form-field>
+                  <input 
+                    #orderNumber
+                    formControlName="orderNumber"
+                    matInput 
+                    placeholder="Order Number 訂單號">
+                </mat-form-field>    
+                <button 
+                    mat-raised-button
+                    color="basic"
+                    type="submit"
+                    >Process Order 流程訂單
+                </button> 
+            </form>
+          </div>
+      </div>
+      <div class="row">
+          <div class="col">
+                <p> Count 計數: {{processCount}} </p>
+          </div>         
+      </div>
+      <div class="row">
+        <div class="col">
+            <app-order-return-message></app-order-return-message>
+        </div>
+      </div>
+  </mat-card>
+

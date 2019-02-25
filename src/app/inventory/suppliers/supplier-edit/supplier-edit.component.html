@@ -1,0 +1,98 @@
+<mat-card>
+    <form [formGroup]="form" (submit)="save()">
+        <mat-form-field>
+          <input 
+          matInput 
+          placeholder="Supplier 供應商"
+          formControlName="supplier">
+        </mat-form-field>
+        <mat-form-field>
+          <input 
+          matInput 
+          placeholder="Code 碼"
+          formControlName="code">
+        </mat-form-field>
+        <mat-form-field>
+          <input 
+          matInput 
+          placeholder="Bar Code 條碼"
+          formControlName="barCode">
+        </mat-form-field>
+  
+        <mat-form-field>
+            <input 
+            matInput 
+            placeholder="Lead Time 交貨時間"
+            formControlName="leadTime">
+          </mat-form-field>
+      
+        <mat-form-field>
+          <input 
+          #quantity
+          matInput 
+          placeholder="Purchase Price 購買價格"
+          formControlName="purchasePrice">
+        </mat-form-field>
+        
+        <mat-form-field>
+          <input 
+          matInput 
+          placeholder="Min Price 最低價格"
+          formControlName="minPrice">
+        </mat-form-field>
+  
+        
+  
+        <mat-form-field>
+          <input 
+          matInput 
+          placeholder="Max Price 最高價格"
+          formControlName="maxPrice">
+        </mat-form-field>
+  
+        <mat-form-field>
+          <input 
+          matInput 
+          placeholder="Average Price 平均價格"
+          formControlName="averagePrice">
+        </mat-form-field>
+  
+        <mat-form-field>
+          <input 
+          matInput 
+          placeholder="Average Lead Time 平均提前期"
+          formControlName="averageLeadTime">
+        </mat-form-field>
+  
+        <mat-form-field>
+          <input 
+          matInput 
+          placeholder="Supplier Min Order Qty 供應商最小訂單數量"
+          formControlName="supplierMinOrderQty">
+        </mat-form-field>
+        <mat-form-field>
+          <input 
+          matInput 
+          placeholder="Supplier Pack Size 供應商包裝尺寸"
+          formControlName="supplierPackSize">
+        </mat-form-field>
+        <mat-form-field>
+          <input 
+          matInput 
+          placeholder="Supplier Currency 供應商貨幣"
+          formControlName="supplierCurrency">
+        </mat-form-field>
+      
+        <mat-card-actions *ngIf="editMode && showButton">
+            <button 
+              mat-stroked-button 
+              type="submit"  
+              color="primary">SAVE 保存</button>
+            <button mat-stroked-button (click)="cancel()" color="warn">CANCEL 撤消</button>
+        </mat-card-actions>
+  
+        <mat-card-actions *ngIf="!editMode && showButton">
+            <button mat-stroked-button (click)="edit()"color="primary" >EDIT 編輯</button>
+        </mat-card-actions>
+    </form>
+  </mat-card>

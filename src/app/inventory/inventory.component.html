@@ -1,0 +1,32 @@
+
+  <mat-card>
+      <div class="row">
+          <div class="col">
+            <form [formGroup]="form" (submit)="checkSku()">
+                <mat-form-field>
+                  <input 
+                    #skuKey
+                    formControlName="skuKey"
+                    matInput 
+                    placeholder="SKU Key">
+                </mat-form-field>
+                <button 
+                  mat-raised-button
+                  color="basic"
+                  type="submit"
+                  >Check Info 查看信息
+                </button>
+            </form>
+            <br>
+          </div>
+      </div>
+      <div class="row">
+          <div class="col">
+                <router-outlet></router-outlet>
+          </div>
+      </div>
+
+  </mat-card>
+
+  
+

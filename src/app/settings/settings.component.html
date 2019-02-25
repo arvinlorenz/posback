@@ -1,0 +1,31 @@
+
+<mat-card>
+    <p>Account Name 用戶名: {{fullName}}</p>
+    <form [formGroup]="form" (submit)="updateToken()">
+      <mat-form-field>
+        <input 
+        matInput 
+        placeholder="Token"
+        formControlName="token">
+      </mat-form-field>
+
+      <mat-form-field>
+          <input 
+          matInput 
+          placeholder="App ID"
+          formControlName="applicationId">
+        </mat-form-field>
+    
+      <mat-form-field>
+        <input 
+        #quantity
+        matInput 
+        placeholder="APP Secret"
+        formControlName="applicationSecret">
+      </mat-form-field>
+
+      <mat-card-actions>
+          <button mat-stroked-button type="submit" color="primary" >UPDATE 使</button>
+      </mat-card-actions>
+  </form>
+</mat-card>

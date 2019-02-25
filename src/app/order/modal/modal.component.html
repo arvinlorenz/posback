@@ -1,0 +1,20 @@
+
+
+<h1 mat-dialog-title>Needs tracking number for 需要跟踪號碼{{data.notHashedOrderId}}</h1>
+<form [formGroup]="form" (submit)="processTrackingNumber()">
+<div mat-dialog-content>
+  <p>Tracking Number 追踪號碼</p>
+    <mat-form-field>
+      <input 
+      matInput 
+      #trackingNumber
+      formControlName="trackingNumber" 
+      >
+    
+    </mat-form-field>
+</div>
+
+  <div mat-dialog-actions>
+    <button mat-button type="submit">Process 處理!</button>
+  </div>
+</form>

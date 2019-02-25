@@ -1,0 +1,32 @@
+<nav class="navbar navbar-expand navbar-dark bg-primary"> 
+    <a class="navbar-brand" routerLink="/">PROCESS ORDER SYSTEM  </a>
+  
+  <div class="collapse navbar-collapse" id="navbarsExample02">
+      <ul class="navbar-nav ml-auto">
+          
+          <li class="nav-item">
+            <a  class="nav-link" href="#menu-toggle" id="menu-toggle">
+              <span class="navbar-toggler-icon"></span>
+            </a> 
+          </li>
+      </ul>
+      <form class="form-inline my-2 my-md-0"> </form>
+  </div>
+</nav>
+<div id="wrapper" class="toggled">
+  <!-- Sidebar -->
+  <div id="sidebar-wrapper">
+      <ul class="sidebar-nav">
+          <li class="sidebar-brand"> <a href="#menu-toggle" id="menu-toggle1">Quick Links 快速鏈接 </a> </li>
+          <li class="sidebar-item"> <a routerLink="/pos">Process System 流程訂單</a> </li>
+          <li class="sidebar-item"> <a routerLink="/sku">Stock 庫存</a> </li>
+          <li class="sidebar-item"> <a routerLink="/suppliers">Suppliers 提供者
+          </a> </li>
+          <div class="dropdown-divider"></div>
+          <li class="sidebar-item"> <a  routerLink="/setting" *ngIf="authService.isAuthenticated()">Settings 設置<span class="sr-only">(current)</span></a> </li>
+          <!-- <li class="nav-item"> <a class="nav-link" routerLink="/login" *ngIf="!authService.isAuthenticated()">Login</a> </li> -->
+          
+          <li class="sidebar-item"> <a (click)="onLogout()" *ngIf="authService.isAuthenticated()">Logout 登出</a> </li>
+
+      </ul>
+  </div> <!-- /#sidebar-wrapper -->

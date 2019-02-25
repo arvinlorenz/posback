@@ -1,0 +1,27 @@
+
+<mat-card>
+    <p class="login-header">Login 登錄</p>
+    <form [formGroup]="form" (submit)="login()">
+      <mat-form-field>
+        <input 
+        matInput 
+        placeholder="Email 電子郵件"
+        type="email"
+        formControlName="email">
+      </mat-form-field>
+
+      <mat-form-field>
+          <input 
+          matInput 
+          type="password"
+          placeholder="Password 密碼"
+          formControlName="password">
+      </mat-form-field>
+    
+     
+
+      <mat-card-actions>
+          <button mat-stroked-button type="submit" color="primary" >Login 登錄</button>
+      </mat-card-actions>
+  </form>
+</mat-card>

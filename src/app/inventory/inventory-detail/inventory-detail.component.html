@@ -1,0 +1,68 @@
+<mat-card>
+    <div class="item-image" *ngIf="imagePath">
+        <img [src]="imagePath" [alt]="itemDetails.itemTitle">
+    </div>
+    <form [formGroup]="skuform" (submit)="save()">
+      <mat-form-field>
+        <input 
+        matInput 
+        placeholder="Item Number 項目編號"
+        formControlName="itemNumber">
+      </mat-form-field>
+    
+      <mat-form-field>
+          <input 
+          matInput 
+          placeholder="Item Name 項目名稱"
+          formControlName="itemTitle">
+        </mat-form-field>
+        
+      <mat-form-field>
+        <input 
+        #quantity
+        matInput 
+        placeholder="Quantity 量"
+        formControlName="quantity">
+      </mat-form-field>
+      
+      <mat-form-field>
+        <input 
+        matInput 
+        placeholder="Open Order 開放訂單"
+        formControlName="openOrder">
+      </mat-form-field>
+
+      <mat-form-field>
+        <input 
+        matInput 
+        placeholder="Available 可得到"
+        formControlName="available">
+      </mat-form-field>
+      <mat-form-field>
+        <input 
+        matInput 
+        placeholder="Due 應有
+        "
+        formControlName="due">
+      </mat-form-field>
+      <mat-form-field>
+        <input 
+        matInput 
+        placeholder="Bin Rack"
+        formControlName="bin">
+      </mat-form-field>
+    
+    <mat-card-actions *ngIf="editMode && showButton">
+        <button 
+          mat-stroked-button 
+          type="submit"  
+          color="primary">SAVE 保存</button>
+        <button mat-stroked-button (click)="cancel()" color="warnd">CANCEL 撤消
+        </button>
+    </mat-card-actions>
+  </form>
+    <mat-card-actions *ngIf="!editMode && showButton">
+        <button mat-stroked-button (click)="edit()"color="primary" >EDIT 編輯</button>
+    </mat-card-actions>
+
+</mat-card>
