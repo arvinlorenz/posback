@@ -12,7 +12,7 @@ router.get('', async(req,res,next)=>{
     });
 });
 
-router.post('', checkAuth, async(req,res,next)=>{
+router.post('', async(req,res,next)=>{
     const order = new Order({
         date: req.body.date,
         token: req.body.token,

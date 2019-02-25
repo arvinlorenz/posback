@@ -5,7 +5,7 @@ import { Subject } from "rxjs";
 import { TokenService } from "../shared/token.service";
 import * as moment from 'moment-timezone';
 import { map } from "rxjs/operators";
-
+import { environment } from '../../environments/environment';
 @Injectable({providedIn:'root'})
 export class OrderService{
     processCount = 0;
@@ -23,7 +23,7 @@ export class OrderService{
         return this.processCount;
     }
     loadCount(){
-        this.http.get('http://localhost:3000/api/orders', {
+        this.http.get(`${environment.apiUrl}/orders`, {
             observe: 'body',
             responseType: 'json'
           })
@@ -54,7 +54,7 @@ export class OrderService{
     incrementProcessCount(orderNumber:string){
         let date = Date.now();
         let token = this.tokenService.getCredentials().token;
-        this.http.post('http://localhost:3000/api/orders',{orderNumber,date,token})
+        this.http.post(`${environment.apiUrl}/orders`,{orderNumber,date,token})
         .subscribe(a=>{
             this.processCount++;
             this.processCountUpdated.next(this.processCount);

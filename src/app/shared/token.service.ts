@@ -53,7 +53,7 @@ export class TokenService{
     // }
     getNewToken(){
         console.log(environment.apiDB)
-        this.http.get(`http://localhost:3000/api/token`)
+        this.http.get(`${environment.apiUrl}/token`)
         .subscribe((tokenRes:any)=>{
             let params = { token : tokenRes.token,
                         applicationId : tokenRes.applicationId,
@@ -108,7 +108,7 @@ export class TokenService{
             )
             .subscribe((tokenRes: any)=>{
                 let id = this.getCredentials().id;
-                this.http.put(`http://localhost:3000/api/token/${id}`, params)
+                this.http.put(`${environment.apiUrl}/token/${id}`, params)
                    .subscribe((response:any)=>{
                        if(response.message == 'Update successful')
                         this.playSuccess();
