@@ -21,7 +21,7 @@ export class OrderService{
     }
 
     getOpenOrders(){
-       interval(5000).subscribe(()=>{
+       interval(900000).subscribe(()=>{
         let url = `${this.tokenService.getServer()}/api/Orders/GetOpenOrders`;
             let params = {
                 entriesPerPage: 100,
