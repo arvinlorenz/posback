@@ -110,6 +110,7 @@ export class TokenService{
                 let id = this.getCredentials().id;
                 this.http.put(`${environment.apiUrl}/token/${id}`, params)
                    .subscribe((response:any)=>{
+                       console.log(response.message)
                        if(response.message == 'Update successful')
                         this.playSuccess();
                         this.createCredentials = { ...this.createCredentials, token, applicationId, applicationSecret};

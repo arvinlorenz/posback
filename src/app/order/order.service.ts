@@ -1,10 +1,10 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpParams, HttpHeaders } from "@angular/common/http";
 import { Router } from "@angular/router";
-import { Subject } from "rxjs";
+import { Subject, observable, interval } from "rxjs";
 import { TokenService } from "../shared/token.service";
 import * as moment from 'moment-timezone';
-import { map } from "rxjs/operators";
+import { map, flatMap } from "rxjs/operators";
 import { environment } from '../../environments/environment';
 @Injectable({providedIn:'root'})
 export class OrderService{
@@ -13,10 +13,43 @@ export class OrderService{
     returnResponse:{message:any,orderId:string};
     private returnResponseUpdated = new Subject<any>();
 
+    openOrders;
+    private openOrdersUpdated = new Subject<any>();
 
-   
 
     constructor(private http: HttpClient, private router: Router, private tokenService: TokenService){
+    }
+
+    getOpenOrders(){
+       interval(5000).subscribe(()=>{
+        let url = `${this.tokenService.getServer()}/api/Orders/GetOpenOrders`;
+            let params = {
+                entriesPerPage: 100,
+                pageNumber: 1
+                }
+            const options = {  headers: new HttpHeaders().set('Authorization', this.tokenService.getToken()) };
+            this.http.post(url,params,options)
+                .subscribe((orders:any)=>{
+                    
+
+                    let url = `${environment.apiUrl}/orders/open`;
+                    let params = {
+                        orders
+                        }
+                    this.http.post(url,params)
+                        .subscribe((orders:any)=>{
+                           this.openOrders = orders.openOrders;
+                           this.openOrdersUpdated.next(this.openOrders);
+                        })
+
+
+                })
+        
+       })
+            
+    }
+    openOrdersUpdatedListener(){
+        return this.openOrdersUpdated.asObservable();
     }
     
     getCount(){
@@ -70,7 +103,6 @@ export class OrderService{
 
     setReturnResponse(message,orderId){
         this.returnResponse = {message,orderId};
-        console.log(this.returnResponse)
         this.returnResponseUpdated.next(this.returnResponse);
     }
 
@@ -96,7 +128,6 @@ export class OrderService{
     }
 
     addTrackingNumber(orderId:string, trackingNumber: string){
-        console.log(orderId, trackingNumber)
         let url = `${this.tokenService.getServer()}/api/Orders/SetOrderShippingInfo`;
         let params = {
             orderID: orderId,

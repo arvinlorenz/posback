@@ -21,6 +21,8 @@ export class OrderComponent implements OnInit, OnDestroy {
   form: FormGroup;
   tokenSub: Subscription;
   tokenAvailable = false;
+
+  openOrders = 0;
   @ViewChild("orderNumber") orderField: ElementRef;
   
 
@@ -33,6 +35,11 @@ export class OrderComponent implements OnInit, OnDestroy {
     public route: ActivatedRoute) { }
 
   ngOnInit() {
+    this.orderService.getOpenOrders();
+    this.orderService.openOrdersUpdatedListener()
+    .subscribe(a=>{
+      console.log('new open orders', a.length)
+    })
     this.orderField.nativeElement.focus();
     this.processCount = this.orderService.getCount();
 

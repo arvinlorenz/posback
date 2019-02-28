@@ -1,8 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Token = require('../models/token');
-let type = 'test';
-
+let type = 'test'
 
 router.get('', async(req,res,next)=>{
     let credentials = await Token.findOne({type});
@@ -31,5 +30,7 @@ router.put('/:id', async(req,res,next)=>{
     }
 
 });
+
+
 
 module.exports = router;
