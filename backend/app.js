@@ -8,6 +8,7 @@ const orderRoutes = require('./routes/orders');
 const userRoutes = require('./routes/users');
 const app = express();
 
+const {checkAndSaveOrders} = require('./functions/orders');
 
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost:27017/Pos")
     .then(()=>{
@@ -28,8 +29,7 @@ app.use((req,res,next)=>{
     next();
 });
 
-
-
+checkAndSaveOrders();
 
 app.use('/api/token',tokenRoutes);
 app.use('/api/orders',orderRoutes);

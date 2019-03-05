@@ -4,7 +4,7 @@ import {MatDialog} from '@angular/material';
 
 import { OrderService } from './order.service';
 import { ModalComponent } from './modal/modal.component';
-import { Subscription } from 'rxjs';
+import { Subscription, interval } from 'rxjs';
 import { SoundsService } from '../shared/sounds.service';
 import { TokenService } from '../shared/token.service';
 import { ActivatedRoute, Params } from '@angular/router';
@@ -35,7 +35,11 @@ export class OrderComponent implements OnInit, OnDestroy {
     public route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.orderService.getOpenOrders();
+    // interval(900000).subscribe((a)=>{
+    //   this.orderService.getOpenOrders();
+    //   this.orderService.getProcessedOrders();
+    // });
+    
     this.orderService.openOrdersUpdatedListener()
     .subscribe(a=>{
       console.log('new open orders', a.length)

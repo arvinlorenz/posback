@@ -21,7 +21,7 @@ export class OrderService{
     }
 
     getOpenOrders(){
-       interval(900000).subscribe(()=>{
+       
         let url = `${this.tokenService.getServer()}/api/Orders/GetOpenOrders`;
             let params = {
                 entriesPerPage: 100,
@@ -44,8 +44,43 @@ export class OrderService{
 
 
                 })
+            
+    }
+    getProcessedOrders(){ //within unchecked minutes
+        let from = `${moment(Date.now()).tz('Australia/Sydney').add(1, 'hours').subtract(15, 'minutes').format('YYYY-MM-DD hh:mm:ss')}`;
+        let to = `${moment(Date.now()).tz('Australia/Sydney').add(1, 'hours').format('YYYY-MM-DD hh:mm:ss')}`;
         
-       })
+        let url = `${this.tokenService.getServer()}/api/ProcessedOrders/SearchProcessedOrders`;
+            let params = {
+                    request: {
+                        "SearchTerm":"",
+                        "SearchFilters":null,
+                        "DateField":"received",
+                        "FromDate":from,
+                        "ToDate":to,
+                        "PageNumber":1,
+                        "ResultsPerPage":500,
+                        "SearchSorting":null
+                    }
+                }
+            const options = {  headers: new HttpHeaders().set('Authorization', this.tokenService.getToken()) };
+            
+            this.http.post(url,params,options)
+                .subscribe((orders:any)=>{
+                    
+                    let url = `${environment.apiUrl}/orders/processed`;
+                    let params = {
+                        token: this.tokenService.getToken(),
+                        server: this.tokenService.getServer(),
+                        orders: orders.ProcessedOrders.Data
+                        }
+                    this.http.post(url,params)
+                        .subscribe((proccedOrders:any)=>{
+                           console.log("proccedOrders",proccedOrders)
+                        })
+
+
+                })
             
     }
     openOrdersUpdatedListener(){
@@ -65,7 +100,7 @@ export class OrderService{
             if(orders === null){
                 return []
             }
-            let now = moment(Date.now()).tz('Australia/Sydney').format('YYYY/MM/DD');
+            let now = moment(Date.now()).tz('Australia/Sydney').add(1, 'hours').format('YYYY/MM/DD');
             let accountPermaToken = this.tokenService.getCredentials().token;
  
             return orders.orders.filter((order:any) =>{

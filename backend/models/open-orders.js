@@ -42,8 +42,12 @@ const openOrdersSchema = mongoose.Schema({
         type: String,
         required: true
     },
-},{ collection: 'openOrders' });
+    type: {
+        type: String,
+        required: true
+    },
+},{ collection: 'savedOrders' });
 
 //MODEL
-module.exports = mongoose.model('OpenOrder', openOrdersSchema);
+module.exports = mongoose.model('OpenOrders', openOrdersSchema);
 
