@@ -9,6 +9,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import {MatDialogModule} from '@angular/material/dialog';
 
 
+
 import { environment } from '../environments/environment';
 
 import {MatCardModule} from '@angular/material/card';
@@ -37,6 +38,7 @@ import { NavigationComponent } from './navigation/navigation.component';
 import { InventoryWithSuppliersComponent } from './inventory/inventory-with-suppliers/inventory-with-suppliers.component';
 import { SuppliersComponent } from './inventory/suppliers/suppliers.component';
 import { SupplierEditComponent } from './inventory/suppliers/supplier-edit/supplier-edit.component';
+import { OpenOrderComponent } from './order/open-order/open-order.component';
 
 
 @NgModule({
@@ -53,7 +55,8 @@ import { SupplierEditComponent } from './inventory/suppliers/supplier-edit/suppl
     HomeComponent,
     InventoryWithSuppliersComponent,
     SuppliersComponent,
-    SupplierEditComponent
+    SupplierEditComponent,
+    OpenOrderComponent
     
   ],
   imports: [
@@ -80,7 +83,6 @@ import { SupplierEditComponent } from './inventory/suppliers/supplier-edit/suppl
     MatTabsModule,
     MatExpansionModule,
     MatSelectModule,
-
     BrowserAnimationsModule
   ],
   entryComponents: [

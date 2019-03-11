@@ -8,11 +8,13 @@ import { LoginComponent } from "./auth/login/login.component";
 import { HomeComponent } from "./home/home.component";
 import { AuthGuard } from "./auth/auth.guard";
 import { InventoryWithSuppliersComponent } from "./inventory/inventory-with-suppliers/inventory-with-suppliers.component";
+import { OpenOrderComponent } from "./order/open-order/open-order.component";
 
 
 const routes: Routes = [
     { path: '', component: HomeComponent,canActivate: [AuthGuard]},
     { path: 'setting', component: SettingsComponent,canActivate: [AuthGuard]},
+    { path: 'open', component: OpenOrderComponent,canActivate: [AuthGuard]},
     { path: 'pos', component: OrderComponent,canActivate: [AuthGuard]},
     { path: 'sku', component: InventoryComponent,
     children: [

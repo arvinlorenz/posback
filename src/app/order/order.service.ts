@@ -20,69 +20,162 @@ export class OrderService{
     constructor(private http: HttpClient, private router: Router, private tokenService: TokenService){
     }
 
-    getOpenOrders(){
+    getCountries(){
+        let url = `${this.tokenService.getServer()}/api/Orders/GetCountries`;
        
+        const options = {  headers: new HttpHeaders().set('Authorization', this.tokenService.getToken()) };
+        return  this.http.post(url,{}, options,);
+    }
+    // getOpenOrders(){
+       
+    //     let url = `${this.tokenService.getServer()}/api/Orders/GetOpenOrders`;
+    //         let params = {
+    //             entriesPerPage: 100,
+    //             pageNumber: 1
+    //             }
+    //         const options = {  headers: new HttpHeaders().set('Authorization', this.tokenService.getToken()) };
+    //         this.http.post(url,params,options)
+    //             .subscribe((orders:any)=>{
+                    
+
+    //                 let url = `${environment.apiUrl}/orders/open`;
+    //                 let params = {
+    //                     orders
+    //                     }
+    //                 this.http.post(url,params)
+    //                     .subscribe((orders:any)=>{
+                           
+    //                     })
+
+
+    //             })
+            
+    // }
+    // getProcessedOrders(){ //within unchecked minutes
+    //     let from = `${moment(Date.now()).tz('Australia/Sydney').add(1, 'hours').subtract(15, 'minutes').format('YYYY-MM-DD hh:mm:ss')}`;
+    //     let to = `${moment(Date.now()).tz('Australia/Sydney').add(1, 'hours').format('YYYY-MM-DD hh:mm:ss')}`;
+        
+    //     let url = `${this.tokenService.getServer()}/api/ProcessedOrders/SearchProcessedOrders`;
+    //         let params = {
+    //                 request: {
+    //                     "SearchTerm":"",
+    //                     "SearchFilters":null,
+    //                     "DateField":"received",
+    //                     "FromDate":from,
+    //                     "ToDate":to,
+    //                     "PageNumber":1,
+    //                     "ResultsPerPage":500,
+    //                     "SearchSorting":null
+    //                 }
+    //             }
+    //         const options = {  headers: new HttpHeaders().set('Authorization', this.tokenService.getToken()) };
+            
+    //         this.http.post(url,params,options)
+    //             .subscribe((orders:any)=>{
+                    
+    //                 let url = `${environment.apiUrl}/orders/processed`;
+    //                 let params = {
+    //                     token: this.tokenService.getToken(),
+    //                     server: this.tokenService.getServer(),
+    //                     orders: orders.ProcessedOrders.Data
+    //                     }
+    //                 this.http.post(url,params)
+    //                     .subscribe((proccedOrders:any)=>{
+    //                        console.log("proccedOrders",proccedOrders)
+    //                     })
+
+
+    //             })
+            
+    // }
+
+    getOpenOrdersWithEdit(){
         let url = `${this.tokenService.getServer()}/api/Orders/GetOpenOrders`;
             let params = {
-                entriesPerPage: 100,
+                entriesPerPage: 300,
                 pageNumber: 1
                 }
             const options = {  headers: new HttpHeaders().set('Authorization', this.tokenService.getToken()) };
-            this.http.post(url,params,options)
-                .subscribe((orders:any)=>{
-                    
+            return this.http.post(url,params,options)
+                .pipe(map((order:any)=>{
+   
+                    return {
+                        orders: order.Data.map(order=>{
+                            
+                            return {
+                                NumOrderId: order.NumOrderId,
+                                orderId: order.OrderId,
+                                Company: order.CustomerInfo.Address.Company == '' ? '-' : order.CustomerInfo.Address.Company,
+                                FullName: order.CustomerInfo.Address.FullName == '' ? '-' : order.CustomerInfo.Address.FullName,
+                                Address1: order.CustomerInfo.Address.Address1 == '' ? '-' : order.CustomerInfo.Address.Address1,
+                                Address2: order.CustomerInfo.Address.Address2 == '' ? '-' : order.CustomerInfo.Address.Address2,
+                                Address3: order.CustomerInfo.Address.Address3 == '' ? '-' : order.CustomerInfo.Address.Address3,
+                                Region: order.CustomerInfo.Address.Region == '' ? '-' : order.CustomerInfo.Address.Region,
+                                Town: order.CustomerInfo.Address.Town == '' ? '-' : order.CustomerInfo.Address.Town,
+                                PostCode: order.CustomerInfo.Address.PostCode == '' ? '-' : order.CustomerInfo.Address.PostCode,
+                                Country: order.CustomerInfo.Address.Country == '' ? '-' : order.CustomerInfo.Address.Country,
+                                EmailAddress: order.CustomerInfo.Address.EmailAddress == '' ? '-' : order.CustomerInfo.Address.EmailAddress,
+                                PhoneNumber: order.CustomerInfo.Address.PhoneNumber == '' ? '-' : order.CustomerInfo.Address.PhoneNumber,
+                                CountryId: order.CustomerInfo.Address.CountryId == '' ? '-' : order.CustomerInfo.Address.CountryId,
 
-                    let url = `${environment.apiUrl}/orders/open`;
-                    let params = {
-                        orders
-                        }
-                    this.http.post(url,params)
-                        .subscribe((orders:any)=>{
-                           this.openOrders = orders.openOrders;
-                           this.openOrdersUpdated.next(this.openOrders);
+                            }
                         })
-
-
-                })
-            
-    }
-    getProcessedOrders(){ //within unchecked minutes
-        let from = `${moment(Date.now()).tz('Australia/Sydney').add(1, 'hours').subtract(15, 'minutes').format('YYYY-MM-DD hh:mm:ss')}`;
-        let to = `${moment(Date.now()).tz('Australia/Sydney').add(1, 'hours').format('YYYY-MM-DD hh:mm:ss')}`;
-        
-        let url = `${this.tokenService.getServer()}/api/ProcessedOrders/SearchProcessedOrders`;
-            let params = {
-                    request: {
-                        "SearchTerm":"",
-                        "SearchFilters":null,
-                        "DateField":"received",
-                        "FromDate":from,
-                        "ToDate":to,
-                        "PageNumber":1,
-                        "ResultsPerPage":500,
-                        "SearchSorting":null
                     }
-                }
-            const options = {  headers: new HttpHeaders().set('Authorization', this.tokenService.getToken()) };
-            
-            this.http.post(url,params,options)
-                .subscribe((orders:any)=>{
-                    
-                    let url = `${environment.apiUrl}/orders/processed`;
+                }))
+                .subscribe(orders=>{
+
+                    let url = `${environment.apiUrl}/orders/checkOrderInDB`;
                     let params = {
-                        token: this.tokenService.getToken(),
-                        server: this.tokenService.getServer(),
-                        orders: orders.ProcessedOrders.Data
+                        ...orders
                         }
-                    this.http.post(url,params)
-                        .subscribe((proccedOrders:any)=>{
-                           console.log("proccedOrders",proccedOrders)
-                        })
-
-
-                })
-            
+                        this.http.post(url,params)
+                    .subscribe((res:any)=>{
+                        this.openOrders = res.orders;
+                        this.openOrdersUpdated.next(this.openOrders);
+                    })
+                    
+                  })
     }
+
+    
+    updateOpenOrder(orderId,fieldAndValue, data){
+
+        let info
+        let url = `${this.tokenService.getServer()}/api/Orders/SetOrderCustomerInfo`;
+        info = 
+        {
+            "ChannelBuyerName": "",
+            Address:{
+                ...data,    
+                ...fieldAndValue
+            }
+            
+        }
+        
+        delete info.Address.orderId;
+        delete info.Address.NumOrderId;
+
+        let params = {
+            OrderId: orderId,
+            info
+            }
+        const options = {  headers: new HttpHeaders().set('Authorization', this.tokenService.getToken()) };
+         this.http.post(url,params,options)
+            .subscribe(()=>{
+
+                let url = `${environment.apiUrl}/orders/open`;
+                    let params = {
+                            OrderId: orderId,
+                            info
+                        }
+                    this.http.patch(url,params)
+                        .subscribe((orders:any)=>{
+                           
+                        })
+            })
+    }
+
+    
     openOrdersUpdatedListener(){
         return this.openOrdersUpdated.asObservable();
     }
