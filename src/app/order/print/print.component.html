@@ -28,7 +28,7 @@
           <option disabled selected value>Template</option>
           <option 
             *ngFor="let template of templates; let id = index"
-            [value]="template.TemplateId"
+            [value]="{'id': template.TemplateId, 'type': template.TemplateType}"
           >{{template.TemplateType}} | {{template.TemplateName}} </option>
         </select>
     

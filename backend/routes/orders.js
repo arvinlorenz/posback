@@ -39,51 +39,6 @@ router.post('', async(req,res,next)=>{
 
 
 
-router.post('/open', async(req,res,next)=>{
-    // let credentials = await Token.findOne({type});
-    // res.status(200).json({
-    //     id: credentials._id,
-    //     token: credentials.token,
-    //     applicationId: credentials.applicationId,
-    //     applicationSecret: credentials.applicationSecret
-    // });
-   
-    let openOrders = req.body.orders;
-    let openOrdersArray = [];
-
-
-        
-    const promisesArray = await openOrders.reduce(async(acc, order) => {
-        let promises = await acc;
-        let filteredOrder = await OpenOrders.findOne({OrderId: order.OrderId});
-        if(filteredOrder == null){
-            promises.push(new Promise(async(resolve, reject) => {
-                resolve({...order, type: 'open'})
-            }))
-        }
-
-        return promises;
-    }, Promise.resolve([]));
-    
-    let promiseResponses = await Promise.all(promisesArray);
-
-
-    let secondPromises = [];
-    for (const res of promiseResponses) {
-        let openOrder = new OpenOrders(res);
-        secondPromises.push(new Promise(async(resolve, reject) => {
-            resolve(openOrder.save())
-        }))
-       
-    }
-    let a = await Promise.all(secondPromises);
-    res.status(201).json({
-        message: "Order added successfully",
-        openOrders: a,
-        
-    });
-});
-
 router.post('/checkOrderInDB', async(req,res,next)=>{
     let orders = req.body.orders;
  
@@ -129,65 +84,6 @@ router.patch('/open', async(req,res,next)=>{
    
 });
 
-router.post('/processed', async(req,res,next)=>{
-    
-  
-    
-    let processedOrders = req.body.orders;
-    let processedOrdersArray = [];
-
-   
-        
-    const promisesArray = await processedOrders.reduce(async(acc, order) => {
-        let promises = await acc;
-        let filteredOrder = await ProcessedOrders.findOne({OrderId: order.pkOrderID});
-        if(filteredOrder == null){
-          
-            try {
-                let headers = {
-        
-                    'Authorization': req.body.token 
-                }
-                let url = 'https://as-ext.linnworks.net/api/ProcessedOrders/GetProcessedItemDetails'
- 
-                let items = await axios.post(url, 
-                                            {   pkOrderId : order.pkOrderID,
-                                                includeChildren : true,
-                                                includeItemOptions : true 
-                                            }, 
-                                            {headers});
-             
-                    
-                promises.push(new Promise(async(resolve, reject) => {
-                    resolve({...order, OrderId: order.pkOrderID, type: 'processed', Items: items.data})
-                }))
-            } catch (error) {
-                console.log(error)
-            }
-            
-        }
-
-        return promises;
-    }, Promise.resolve([]));
-    
-    let promiseResponses = await Promise.all(promisesArray);
-
-
-    let secondPromises = [];
-    for (const res of promiseResponses) {
-        let processedOrder = new ProcessedOrders(res);
-        secondPromises.push(new Promise(async(resolve, reject) => {
-            resolve(processedOrder.save())
-        }))
-       
-    }
-    let a = await Promise.all(secondPromises);
-    res.status(201).json({
-        message: "Order added successfully",
-        processedOrders: a,
-        
-    });
-});
 
 
 module.exports = router;

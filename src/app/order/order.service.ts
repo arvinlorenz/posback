@@ -4,7 +4,7 @@ import { Router } from "@angular/router";
 import { Subject, observable, interval } from "rxjs";
 import { TokenService } from "../shared/token.service";
 import * as moment from 'moment-timezone';
-import { map, flatMap } from "rxjs/operators";
+import { map, flatMap, filter } from "rxjs/operators";
 import { environment } from '../../environments/environment';
 @Injectable({providedIn:'root'})
 export class OrderService{
@@ -294,5 +294,16 @@ export class OrderService{
         let params = {}
         const options = {  headers: new HttpHeaders().set('Authorization', this.tokenService.getToken()) };
         return  this.http.post(url,params,options);
+    }
+
+    getOpenOrdersToPrint(sku:string, printer:string, template:string){
+        let url = `${this.tokenService.getServer()}/api/Orders/GetOpenOrders`;
+        let params = {
+            entriesPerPage: 100,
+            pageNumber: 1,
+            additionalFilter: 'SKU:'+sku
+        }
+        const options = {  headers: new HttpHeaders().set('Authorization', this.tokenService.getToken()) };
+        return  this.http.post(url,params,options)
     }
 }

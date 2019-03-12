@@ -44,6 +44,13 @@ export class PrintComponent implements OnInit {
       })
       return
     }
-    console.log(this.form.value)
+    console.log(this.form.value.template)
+    // this.orderService.getOpenOrdersToPrint(this.form.value.sku,this.form.value.printer,this.form.value.template)
+    //   .subscribe((orders:any)=>{
+    //     this.openOrders = orders.Data.filter(order=>{
+    //       return order.FolderName[0] == "Address Checked - Single"
+    //     })
+    //     console.log(this.openOrders)
+    //   })
   }
 }

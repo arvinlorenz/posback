@@ -1,19 +1,34 @@
 const axios = require('axios');
+const OpenOrders = require('../models/open-orders');
 
 
 let openOrdersCall = async(orders)=>{
-    let url = `https://frozen-savannah-76475.herokuapp.com/api/orders/open`
-    let params = {
-       orders
+    let openOrders = orders;
+    const promisesArray = await openOrders.reduce(async(acc, order) => {
+        let promises = await acc;
+        let filteredOrder = await OpenOrders.findOne({OrderId: order.OrderId});
+        if(filteredOrder == null){
+            promises.push(new Promise(async(resolve, reject) => {
+                resolve({...order, type: 'open'})
+            }))
+        }
+
+        return promises;
+    }, Promise.resolve([]));
+    
+    let promiseResponses = await Promise.all(promisesArray);
+
+
+    let secondPromises = [];
+    for (const res of promiseResponses) {
+        let openOrder = new OpenOrders(res);
+        secondPromises.push(new Promise(async(resolve, reject) => {
+            resolve(openOrder.save())
+        }))
+       
     }
-    try {
-        let orders =  await axios.post(url,params);
-        return orders.data
-  
-    } catch (error) {
-        console.log(error)
-    }
-     
+    let a = await Promise.all(secondPromises);
+     return a;
 }
     
 module.exports = {

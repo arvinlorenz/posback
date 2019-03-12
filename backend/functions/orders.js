@@ -21,7 +21,7 @@ let checkAndSaveOrders = async()=>{
         
             Promise.all([openOrdersCall(openOrdersInfo),processedOrderCall({...ainfo, orders:processedOrders}) ])
             console.log('another 15mins.')
-        }, 900000) //15minutes
+        }, 30000) //15minutes 900000
     } catch (error) {
         credentialsInfo();
     }
