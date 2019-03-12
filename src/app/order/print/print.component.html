@@ -1,0 +1,36 @@
+<form [formGroup]="form" (submit)="scan()">
+  <div class="input-group mb-3">
+    
+      <div class="input-group-prepend">
+        <button class="btn btn-outline-secondary" type="submit">Scan</button>
+      </div>
+      <input 
+        type="text" 
+        class="form-control"
+        placeholder="SKU"
+        formControlName="sku">
+      <select 
+        class="custom-select" 
+        formControlName="printer"
+        >
+        <option disabled selected value selected>Printer</option>
+        <option 
+          *ngFor="let printer of printers; let id = index"
+          [value]="printer.PrinterName"
+          >{{printer.PrinterLocationName}} | {{printer.PrinterName}}
+        </option>
+        
+      </select>
+      <select 
+        class="custom-select"
+        formControlName="template"
+        >
+          <option disabled selected value>Template</option>
+          <option 
+            *ngFor="let template of templates; let id = index"
+            [value]="template.TemplateId"
+          >{{template.TemplateType}} | {{template.TemplateName}} </option>
+        </select>
+    
+  </div>
+</form>

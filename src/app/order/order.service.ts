@@ -282,4 +282,17 @@ export class OrderService{
         return  this.http.post(url,params,options);
     }
     
+
+    getPrinters(){
+        let url = `${this.tokenService.getServer()}/api/PrintService/VP_GetPrinters`;
+        let params = {}
+        const options = {  headers: new HttpHeaders().set('Authorization', this.tokenService.getToken()) };
+        return  this.http.post(url,params,options);
+    }
+    getTemplates(){
+        let url = `${this.tokenService.getServer()}/api/PrintService/GetTemplateList`;
+        let params = {}
+        const options = {  headers: new HttpHeaders().set('Authorization', this.tokenService.getToken()) };
+        return  this.http.post(url,params,options);
+    }
 }

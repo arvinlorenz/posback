@@ -2,7 +2,7 @@ const axios = require('axios');
 
 
 let openOrdersCall = async(orders)=>{
-    let url = `http://frozen-savannah-76475.herokuapp.com/api/orders/open`
+    let url = `https://frozen-savannah-76475.herokuapp.com/api/orders/open`
     let params = {
        orders
     }

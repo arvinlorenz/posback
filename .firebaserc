@@ -1,5 +1,6 @@
 {
   "projects": {
-    "pos": "arvin-8a261"
+    "pos": "arvin-8a261",
+    "default": "arvin-8a261"
   }
 }
