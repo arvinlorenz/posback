@@ -37,6 +37,7 @@ export class OpenOrderComponent implements OnInit, OnDestroy {
 
 
   updateList(id:number, orderId: number, property: string, event: any) {
+    
     let fieldAndValue;
 
    if(property === 'CountryId'){
@@ -55,9 +56,9 @@ export class OpenOrderComponent implements OnInit, OnDestroy {
     }
    }
    else{
-    this.orders[id][property] = event.target.textContent;
+   
     fieldAndValue = {
-      property: event.target.value
+      [property]: event.target.textContent
     }
    }
     

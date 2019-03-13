@@ -105,18 +105,18 @@ export class OrderService{
                             return {
                                 NumOrderId: order.NumOrderId,
                                 orderId: order.OrderId,
-                                Company: order.CustomerInfo.Address.Company == '' ? '-' : order.CustomerInfo.Address.Company,
-                                FullName: order.CustomerInfo.Address.FullName == '' ? '-' : order.CustomerInfo.Address.FullName,
-                                Address1: order.CustomerInfo.Address.Address1 == '' ? '-' : order.CustomerInfo.Address.Address1,
-                                Address2: order.CustomerInfo.Address.Address2 == '' ? '-' : order.CustomerInfo.Address.Address2,
-                                Address3: order.CustomerInfo.Address.Address3 == '' ? '-' : order.CustomerInfo.Address.Address3,
-                                Region: order.CustomerInfo.Address.Region == '' ? '-' : order.CustomerInfo.Address.Region,
-                                Town: order.CustomerInfo.Address.Town == '' ? '-' : order.CustomerInfo.Address.Town,
-                                PostCode: order.CustomerInfo.Address.PostCode == '' ? '-' : order.CustomerInfo.Address.PostCode,
-                                Country: order.CustomerInfo.Address.Country == '' ? '-' : order.CustomerInfo.Address.Country,
-                                EmailAddress: order.CustomerInfo.Address.EmailAddress == '' ? '-' : order.CustomerInfo.Address.EmailAddress,
-                                PhoneNumber: order.CustomerInfo.Address.PhoneNumber == '' ? '-' : order.CustomerInfo.Address.PhoneNumber,
-                                CountryId: order.CustomerInfo.Address.CountryId == '' ? '-' : order.CustomerInfo.Address.CountryId,
+                                Company: order.CustomerInfo.Address.Company,
+                                FullName: order.CustomerInfo.Address.FullName,
+                                Address1: order.CustomerInfo.Address.Address1,
+                                Address2: order.CustomerInfo.Address.Address2,
+                                Address3: order.CustomerInfo.Address.Address3,
+                                Region: order.CustomerInfo.Address.Region,
+                                Town: order.CustomerInfo.Address.Town,
+                                PostCode: order.CustomerInfo.Address.PostCode,
+                                Country: order.CustomerInfo.Address.Country,
+                                EmailAddress: order.CustomerInfo.Address.EmailAddress,
+                                PhoneNumber: order.CustomerInfo.Address.PhoneNumber,
+                                CountryId: order.CustomerInfo.Address.CountryId,
 
                             }
                         })
@@ -145,7 +145,7 @@ export class OrderService{
         info = 
         {
             "ChannelBuyerName": "",
-            Address:{
+            "Address":{
                 ...data,    
                 ...fieldAndValue
             }
@@ -156,9 +156,10 @@ export class OrderService{
         delete info.Address.NumOrderId;
 
         let params = {
-            OrderId: orderId,
+            orderId,
             info
             }
+        console.log(params)
         const options = {  headers: new HttpHeaders().set('Authorization', this.tokenService.getToken()) };
          this.http.post(url,params,options)
             .subscribe(()=>{
@@ -303,6 +304,18 @@ export class OrderService{
             pageNumber: 1,
             additionalFilter: 'SKU:'+sku
         }
+        const options = {  headers: new HttpHeaders().set('Authorization', this.tokenService.getToken()) };
+        return  this.http.post(url,params,options)
+    }
+
+    createPDF(IDs:any[], printerName:string, printerLocation, templateId:string, templateType:string){
+        let url = `${this.tokenService.getServer()}/api/PrintService/CreatePDFfromJobForceTemplate`;
+        let params = {
+            templateType,
+            IDs,
+            printerName: printerLocation+'\\'+printerName            
+        }
+        console.log(params)
         const options = {  headers: new HttpHeaders().set('Authorization', this.tokenService.getToken()) };
         return  this.http.post(url,params,options)
     }
