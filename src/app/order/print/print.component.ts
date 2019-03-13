@@ -54,7 +54,6 @@ export class PrintComponent implements OnInit {
 
      
      let printerLocation = this.printers.filter(printerEach=>{
-       console.l
       return printerEach.PrinterName === printer
     })[0].PrinterLocationName;
  
