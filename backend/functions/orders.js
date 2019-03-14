@@ -6,6 +6,7 @@ const {searchProcessedOrder} = require('./search-processed-orders');
 const {processedOrderCall} = require('./processed-order-call');
 
 let checkAndSaveOrders = async()=>{
+    console.log('get credentials')
     let credentialsInfo = await credentials()
     try {
         let accountInformation = await accountInfo(credentialsInfo);
@@ -20,7 +21,7 @@ let checkAndSaveOrders = async()=>{
         
         
             Promise.all([openOrdersCall(openOrdersInfo),processedOrderCall({...ainfo, orders:processedOrders}) ])
-            console.log('another 15mins.')
+            console.log('another 1min.')
         }, 60000) //1min 
     } catch (error) {
         credentialsInfo();

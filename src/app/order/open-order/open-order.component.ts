@@ -26,7 +26,7 @@ export class OpenOrderComponent implements OnInit, OnDestroy {
       order: [[ 0, 'asc' ]],
       "dom": '<"top"i>frt<"bottom"lp><"clear">',
       processing: true,
-      responsive: true
+      //responsive: true
       
     };
 
