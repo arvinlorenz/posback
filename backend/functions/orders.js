@@ -8,8 +8,9 @@ const {processedOrderCall} = require('./processed-order-call');
 let checkAndSaveOrders = async()=>{
     console.log('get credentials')
     let credentialsInfo = await credentials()
+    let accountInformation = await accountInfo(credentialsInfo);
     try {
-        let accountInformation = await accountInfo(credentialsInfo);
+        
 
         let ainfo = {
             server: accountInformation.Server,
@@ -24,7 +25,7 @@ let checkAndSaveOrders = async()=>{
             console.log('another 1min.')
         }, 60000) //1min 
     } catch (error) {
-        credentialsInfo();
+        checkAndSaveOrders();
     }
     
 
