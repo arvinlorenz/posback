@@ -22,8 +22,14 @@ export class PrintComponent implements OnInit {
       })
 
     this.orderService.getTemplates()
-      .subscribe(templates=>{
-        this.templates = templates;
+      .subscribe((templates:any[])=>{
+        let uniqueTems = [];
+        this.templates = templates.filter(template=>{
+          if(!uniqueTems.includes(template.TemplateType)){
+            uniqueTems.push(template.TemplateType);
+            return template;
+          } 
+        });
       })
     this.form = new FormGroup({
       sku: new FormControl(null, {
@@ -36,6 +42,8 @@ export class PrintComponent implements OnInit {
         validators: [Validators.required]
       })
     });
+
+    
   }
 
   scan(){

@@ -20,6 +20,7 @@ import {MatTableModule} from '@angular/material/table';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatMenuModule} from '@angular/material/menu';
+import { DataTablesModule } from 'angular-datatables';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ModalComponent } from './order/modal/modal.component';
@@ -85,6 +86,8 @@ import { PrintComponent } from './order/print/print.component';
     MatTabsModule,
     MatExpansionModule,
     MatSelectModule,
+
+    DataTablesModule,
     BrowserAnimationsModule
   ],
   entryComponents: [

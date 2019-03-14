@@ -3,59 +3,96 @@
   <h3 class="card-header text-center font-weight-bold text-uppercase py-4">OPEN ORDERS</h3>
   <div class="card-body">
     <div id="table" class="table-editable">
-      <table class="table table-bordered table-responsive table-striped text-center">
-        <tr>
-          <th class="text-center">Order No.</th>
-          <th class="text-center">Company</th>
-          <th class="text-center">FullName</th>
-          <th class="text-center">Address1</th>
-          <th class="text-center">Address2</th>
-          <th class="text-center">Address3</th>
-          <th class="text-center">Region</th>
-          <th class="text-center">Town</th>
-          <th class="text-center">PostCode</th>
-          <th class="text-center">Country</th>
-      
-        </tr>
-        <tr *ngFor="let order of orders; let id = index">
-          <td>
-            <span>{{order.NumOrderId}}</span>
-          </td>
-          <td>
-            <span  (blur)="updateList(id, order.orderId, 'Company', $event)" contenteditable="true">{{order.Company}}</span>
-          </td>
-          <td>
-            <span  (blur)="updateList(id, order.orderId, 'FullName', $event)" contenteditable="true">{{order.FullName}}</span>
-          </td>
-          <td>
-            <span  (blur)="updateList(id, order.orderId, 'Address1', $event)" contenteditable="true">{{order.Address1}}</span>
-          </td>
-          <td>
-            <span  (blur)="updateList(id, order.orderId, 'Address2', $event)" contenteditable="true">{{order.Address2}}</span>
-          </td>
-          <td>
-            <span  (blur)="updateList(id, order.orderId, 'Address3', $event)" contenteditable="true">{{order.Address3}}</span>
-          </td>
-          <td>
-            <span  (blur)="updateList(id, order.orderId, 'Region', $event)" contenteditable="true">{{order.Region}}</span>
-          </td>
-          <td>
-            <span  (blur)="updateList(id, order.orderId, 'Town', $event)" contenteditable="true">{{order.Town}}</span>
-          </td>
-          <td>
-            <span  (blur)="updateList(id, order.orderId, 'PostCode', $event)" contenteditable="true">{{order.PostCode}}</span>
-          </td>
-          <td>
-            <select name="country" (change)="updateList(id, order.orderId, 'CountryId', $event)">
-                <option 
-                  [value]="country.CountryId" 
-                  [selected]="order.CountryId == country.CountryId ? true : false" 
-                  *ngFor="let country of countries; let id = index">{{country.CountryName}}</option>
-            </select>
-                      
-          </td>
-          
-        </tr>
+      <table class="table table-bordered table-responsive table-striped text-center" datatable [dtOptions]="dtOptions"
+      [dtTrigger]="dtTrigger">
+        <thead>
+          <tr>
+            <th class="text-center">Order No.</th>
+            <th class="text-center">Company</th>
+            <th class="text-center">FullName</th>
+            <th class="text-center">Address1</th>
+            <th class="text-center">Address2</th>
+            <th class="text-center">Address3</th>
+            <th class="text-center">Region</th>
+            <th class="text-center">Town</th>
+            <th class="text-center">PostCode</th>
+            <th class="text-center">Country</th>
+        
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let order of orders; let id = index">
+            <td>
+              <span>{{order.NumOrderId}}</span>
+            </td>
+            
+              <td>
+                <div (blur)="updateList(id, order.orderId, 'Company', $event)" contenteditable="true">
+                  <span>{{order.Company}}</span>
+                </div>
+              </td>
+            
+            
+              <td>
+                <div (blur)="updateList(id, order.orderId, 'FullName', $event)" contenteditable="true">
+                  <span>{{order.FullName}}</span>
+                </div>
+              </td>
+            
+            
+              <td>
+                <div (blur)="updateList(id, order.orderId, 'Address1', $event)" contenteditable="true">
+                  <span>{{order.Address1}}</span>
+                </div>
+              </td>
+            
+            
+              <td>
+                <div (blur)="updateList(id, order.orderId, 'Address2', $event)" contenteditable="true">
+                  <span>{{order.Address2}}</span>
+                </div>
+              </td>
+            
+            
+              <td>
+                <div (blur)="updateList(id, order.orderId, 'Address3', $event)" contenteditable="true">
+                  <span>{{order.Address3}}</span>
+                </div>
+              </td>
+            
+            
+              <td>
+                <div (blur)="updateList(id, order.orderId, 'Region', $event)" contenteditable="true">
+                  <span>{{order.Region}}</span>
+                </div>
+              </td>
+            
+            
+              <td>
+                <div (blur)="updateList(id, order.orderId, 'Town', $event)" contenteditable="true">
+                  <span>{{order.Town}}</span>
+                </div>
+              </td>
+            
+            
+              <td>
+                <div (blur)="updateList(id, order.orderId, 'PostCode', $event)" contenteditable="true">
+                  <span>{{order.PostCode}}</span>
+                </div>
+              </td>
+            
+            <td>
+              <select name="country" (change)="updateList(id, order.orderId, 'CountryId', $event)">
+                  <option 
+                    [value]="country.CountryId" 
+                    [selected]="order.CountryId == country.CountryId ? true : false" 
+                    *ngFor="let country of countries; let id = index">{{country.CountryName}}</option>
+              </select>
+                        
+            </td>
+            
+          </tr>
+        </tbody>
       </table>
     </div>
   </div>

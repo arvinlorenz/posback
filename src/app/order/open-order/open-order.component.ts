@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy} from '@angular/core';
 import { OrderService } from '../order.service';
-import { Subscription } from 'rxjs';
+import { Subscription, Subject } from 'rxjs';
 
 @Component({
   selector: 'app-open-order',
@@ -13,13 +13,24 @@ export class OpenOrderComponent implements OnInit, OnDestroy {
 
 
   countries;
+  dtOptions: DataTables.Settings = {};
+  dtTrigger: Subject<any> = new Subject();
   constructor(private orderService: OrderService) { }
 
   ngOnInit() {
+
+    this.dtOptions = {
+      pagingType: 'full_numbers',
+      pageLength: 10,
+      order: [[ 0, 'asc' ]],
+      processing: true
+    };
+
     this.orderService.getOpenOrdersWithEdit();
     this.ordersSub = this.orderService.openOrdersUpdatedListener()
       .subscribe(orders=>{
         this.orders = orders;
+        this.dtTrigger.next();
       })
     this.orderService.getCountries()
       .subscribe(countries=>{
@@ -29,6 +40,9 @@ export class OpenOrderComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(){
     this.ordersSub.unsubscribe();
+   
+    this.dtTrigger.unsubscribe();
+    
   }
 
   changeValue(id: number, property: string, event: any) {
@@ -54,14 +68,24 @@ export class OpenOrderComponent implements OnInit, OnDestroy {
       Country: CountryName,
       CountryId: event.target.value
     }
+    this.orders[id] = {
+      ...this.orders[id],
+      ...fieldAndValue,
+    }
+
    }
    else{
-   
+    this.orders[id][property] = event.target.textContent
     fieldAndValue = {
       [property]: event.target.textContent
     }
+    this.orders[id] = {
+      ...this.orders[id],
+      ...fieldAndValue,
+    }
    }
-    
+  
+
 
     
     
