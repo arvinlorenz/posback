@@ -1,36 +1,41 @@
-<form [formGroup]="form" (submit)="scan()">
-  <div class="input-group mb-3">
-    
-      <div class="input-group-prepend">
-        <button class="btn btn-outline-secondary" type="submit">Scan</button>
+<mat-card>
+  <mat-card-header>
+       
+        <mat-card-title>Print Labels</mat-card-title>
+
+  </mat-card-header>
+  <form [formGroup]="form" (submit)="scan()">
+      <div class="form-group">
+        
+          <input 
+          type="text" 
+          class="form-control"
+          placeholder="SKU"
+          formControlName="sku">
+        
       </div>
-      <input 
-        type="text" 
-        class="form-control"
-        placeholder="SKU"
-        formControlName="sku">
-      <select 
-        class="custom-select" 
-        formControlName="printer"
-        >
+
+    <div class="form-group">
+      <select class="form-control" formControlName="printer">
         <option disabled selected value selected>Printer</option>
         <option 
           *ngFor="let printer of printers; let id = index"
           [value]="printer.PrinterName"
           >{{printer.PrinterLocationName}} | {{printer.PrinterName}}
         </option>
-        
       </select>
-      <select 
-        class="custom-select"
-        formControlName="template"
-        >
-          <option disabled selected value>Template</option>
-          <option 
-            *ngFor="let template of templates; let id = index"
-            [value]="template.TemplateId"
-          >{{template.TemplateType}}</option>
-        </select>
-    
-  </div>
-</form>
+    </div>
+    <div class="form-group">
+      <select class="form-control" formControlName="template">
+        <option disabled selected value selected>Printer</option>
+        <option disabled selected value>Template</option>
+        <option 
+          *ngFor="let template of templates; let id = index"
+          [value]="template.TemplateId"
+        >{{template.TemplateType}}</option>
+      </select>
+    </div>
+
+    <button mat-stroked-button type="submit" color="primary" >SCAN</button>
+  </form>
+</mat-card>

@@ -9,6 +9,7 @@ import { Subscription, Subject } from 'rxjs';
 })
 export class OpenOrderComponent implements OnInit, OnDestroy {
   orders;
+  copyOrders;
   ordersSub: Subscription;
 
 
@@ -23,13 +24,19 @@ export class OpenOrderComponent implements OnInit, OnDestroy {
       pagingType: 'full_numbers',
       pageLength: 10,
       order: [[ 0, 'asc' ]],
-      processing: true
+      "dom": '<"top"i>frt<"bottom"lp><"clear">',
+      processing: true,
+      responsive: {
+        details: false
+    }
+      
     };
 
     this.orderService.getOpenOrdersWithEdit();
     this.ordersSub = this.orderService.openOrdersUpdatedListener()
       .subscribe(orders=>{
         this.orders = orders;
+        this.copyOrders = {...orders};
         this.dtTrigger.next();
       })
     this.orderService.getCountries()
@@ -52,35 +59,35 @@ export class OpenOrderComponent implements OnInit, OnDestroy {
 
   updateList(id:number, orderId: number, property: string, event: any) {
     
-    let fieldAndValue;
+  let fieldAndValue;
 
    if(property === 'CountryId'){
      console.log(event.target.value)
-    this.orders[id]['CountryId'] = event.target.value;
+    this.copyOrders[id]['CountryId'] = event.target.value;
     let CountryName = this.countries.filter((country:any) =>{
       if (country.CountryId === event.target.value){
         return country
       }
     });
-    this.orders[id]['Country'] = CountryName[0].CountryName;
+    this.copyOrders[id]['Country'] = CountryName[0].CountryName;
     CountryName = CountryName[0].CountryName;
     fieldAndValue = {
       Country: CountryName,
       CountryId: event.target.value
     }
-    this.orders[id] = {
-      ...this.orders[id],
+    this.copyOrders[id] = {
+      ...this.copyOrders[id],
       ...fieldAndValue,
     }
 
    }
    else{
-    this.orders[id][property] = event.target.textContent
+    this.copyOrders[id][property] = event.target.textContent
     fieldAndValue = {
       [property]: event.target.textContent
     }
-    this.orders[id] = {
-      ...this.orders[id],
+    this.copyOrders[id] = {
+      ...this.copyOrders[id],
       ...fieldAndValue,
     }
    }
@@ -89,7 +96,7 @@ export class OpenOrderComponent implements OnInit, OnDestroy {
 
     
     
-    this.orderService.updateOpenOrder(orderId, fieldAndValue, this.orders[id])
+    this.orderService.updateOpenOrder(orderId, fieldAndValue, this.copyOrders[id])
       
    
   }
