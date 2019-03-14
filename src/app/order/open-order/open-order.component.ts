@@ -26,9 +26,7 @@ export class OpenOrderComponent implements OnInit, OnDestroy {
       order: [[ 0, 'asc' ]],
       "dom": '<"top"i>frt<"bottom"lp><"clear">',
       processing: true,
-      responsive: {
-        details: false
-    }
+      responsive: true
       
     };
 
@@ -62,14 +60,12 @@ export class OpenOrderComponent implements OnInit, OnDestroy {
   let fieldAndValue;
 
    if(property === 'CountryId'){
-     console.log(event.target.value)
-    this.copyOrders[id]['CountryId'] = event.target.value;
     let CountryName = this.countries.filter((country:any) =>{
       if (country.CountryId === event.target.value){
         return country
       }
     });
-    this.copyOrders[id]['Country'] = CountryName[0].CountryName;
+    //this.copyOrders[id]['Country'] = CountryName[0].CountryName;
     CountryName = CountryName[0].CountryName;
     fieldAndValue = {
       Country: CountryName,
@@ -82,7 +78,7 @@ export class OpenOrderComponent implements OnInit, OnDestroy {
 
    }
    else{
-    this.copyOrders[id][property] = event.target.textContent
+    //this.copyOrders[id][property] = event.target.textContent
     fieldAndValue = {
       [property]: event.target.textContent
     }
