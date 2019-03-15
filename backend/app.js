@@ -29,7 +29,17 @@ app.use((req,res,next)=>{
     next();
 });
 
-checkAndSaveOrders();
+
+    try {
+        checkAndSaveOrders();
+        
+    } catch (error) {
+        console.log('repeating process')
+        checkAndSaveOrders();
+    }
+
+
+
 
 app.use('/api/token',tokenRoutes);
 app.use('/api/orders',orderRoutes);

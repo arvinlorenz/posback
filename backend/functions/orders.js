@@ -7,11 +7,12 @@ const {processedOrderCall} = require('./processed-order-call');
 
 let checkAndSaveOrders = async()=>{
     console.log('get credentials')
+    
     let credentialsInfo = await credentials()
     let accountInformation = await accountInfo(credentialsInfo);
-    try {
+    
         
-
+    try {
         let ainfo = {
             server: accountInformation.Server,
             token: accountInformation.Token
@@ -25,7 +26,7 @@ let checkAndSaveOrders = async()=>{
             console.log('another 1min.')
         }, 60000) //1min 
     } catch (error) {
-        checkAndSaveOrders();
+         throw new Error('there is an error');
     }
     
 

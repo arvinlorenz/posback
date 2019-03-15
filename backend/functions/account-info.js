@@ -9,7 +9,8 @@ let accountInfo = async(credentials)=>{
         let credentialsD = await axios.post(url,credentials);
         return credentialsD.data;
     } catch (error) {
-       console.log(error) 
+    //    console.log(error) 
+     throw new Error('my error sa credentials')
     }
     
 }
