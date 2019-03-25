@@ -30,13 +30,13 @@ app.use((req,res,next)=>{
 });
 
 
-    // try {
-    //     checkAndSaveOrders();
+    try {
+        checkAndSaveOrders();
         
-    // } catch (error) {
-    //     console.log('repeating process')
-    //     checkAndSaveOrders();
-    // }
+    } catch (error) {
+        console.log('repeating process')
+        checkAndSaveOrders();
+    }
 
 
 
