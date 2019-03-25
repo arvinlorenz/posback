@@ -15,7 +15,7 @@ export class OpenOrderComponent implements OnInit, OnDestroy {
   copyOrders;
   ordersSub: Subscription;
 
-
+  loading = true;
   countries;
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject();
@@ -36,6 +36,7 @@ export class OpenOrderComponent implements OnInit, OnDestroy {
     this.orderService.getOpenOrdersWithEdit();
     this.ordersSub = this.orderService.openOrdersUpdatedListener()
       .subscribe(orders=>{
+        this.loading = false;
         this.orders = orders;
         this.copyOrders = {...orders};
         $('#table').DataTable().destroy()
@@ -102,15 +103,9 @@ export class OpenOrderComponent implements OnInit, OnDestroy {
   }
 
   fetchOpenOrders(){
+    this.loading = true;
      this.orderService.fetchOpenOrders()
-    // this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-    //   // Destroy the table first
-    //   dtInstance.destroy();
-    //   // Call the dtTrigger to rerender again
 
-    //   this.dtTrigger.next();
-    // });
-    
     
     
   }
