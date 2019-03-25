@@ -6,14 +6,14 @@
       <mat-form-field>
         <input 
         matInput 
-        placeholder="Item Number 項目編號"
+        placeholder="Item Number"
         formControlName="itemNumber">
       </mat-form-field>
     
       <mat-form-field>
           <input 
           matInput 
-          placeholder="Item Name 項目名稱"
+          placeholder="Item Name"
           formControlName="itemTitle">
         </mat-form-field>
         
@@ -21,28 +21,27 @@
         <input 
         #quantity
         matInput 
-        placeholder="Quantity 量"
+        placeholder="Quantity"
         formControlName="quantity">
       </mat-form-field>
       
       <mat-form-field>
         <input 
         matInput 
-        placeholder="Open Order 開放訂單"
+        placeholder="Open Order"
         formControlName="openOrder">
       </mat-form-field>
 
       <mat-form-field>
         <input 
         matInput 
-        placeholder="Available 可得到"
+        placeholder="Available"
         formControlName="available">
       </mat-form-field>
       <mat-form-field>
         <input 
         matInput 
-        placeholder="Due 應有
-        "
+        placeholder="Due"
         formControlName="due">
       </mat-form-field>
       <mat-form-field>
@@ -56,13 +55,13 @@
         <button 
           mat-stroked-button 
           type="submit"  
-          color="primary">SAVE 保存</button>
-        <button mat-stroked-button (click)="cancel()" color="warnd">CANCEL 撤消
+          color="primary">SAVE</button>
+        <button mat-stroked-button (click)="cancel()" color="warnd">CANCEL
         </button>
     </mat-card-actions>
   </form>
     <mat-card-actions *ngIf="!editMode && showButton">
-        <button mat-stroked-button (click)="edit()"color="primary" >EDIT 編輯</button>
+        <button mat-stroked-button (click)="edit()"color="primary" >EDIT</button>
     </mat-card-actions>
 
 </mat-card>

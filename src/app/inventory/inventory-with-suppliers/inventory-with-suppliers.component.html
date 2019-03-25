@@ -12,14 +12,14 @@
                 <mat-form-field>
                     <input 
                     matInput 
-                    placeholder="Image URL 圖片網址"
+                    placeholder="Image URL"
                     formControlName="imageUrl">
                   </mat-form-field>
                   
             <mat-form-field>
               <input 
               matInput 
-              placeholder="Item Number 項目編號"
+              placeholder="Item Number"
               formControlName="itemNumber">
             </mat-form-field>
       
@@ -34,55 +34,55 @@
               <input 
               #quantity
               matInput 
-              placeholder="Quantity 項目名稱"
+              placeholder="Quantity"
               formControlName="quantity">
             </mat-form-field>
             
             <mat-form-field>
               <input 
               matInput 
-              placeholder="Open Order 開放訂單"
+              placeholder="Open Order"
               formControlName="openOrder">
             </mat-form-field>
       
             <mat-form-field>
               <input 
               matInput 
-              placeholder="Minimum Level 最低水平"
+              placeholder="Minimum Level"
               formControlName="minimumLevel">
             </mat-form-field>
       
             <mat-form-field>
               <input 
               matInput 
-              placeholder="Available 可得到"
+              placeholder="Available"
               formControlName="available">
             </mat-form-field>
       
             <mat-form-field>
               <input 
               matInput 
-              placeholder="Due 應有"
+              placeholder="Due"
               formControlName="due">
             </mat-form-field>
       
             <mat-form-field>
               <input 
               matInput 
-              placeholder="Barcode 條碼"
+              placeholder="Barcode"
               formControlName="barcodeNumber">
             </mat-form-field>
       
             <mat-form-field>
               <input 
               matInput 
-              placeholder="Purchase Price CNY 購買價格"
+              placeholder="Purchase Price CNY"
               formControlName="purchasePrice">
             </mat-form-field>
             <mat-form-field>
               <input 
               matInput 
-              placeholder="Retail Price 零售價"
+              placeholder="Retail Price"
               formControlName="retailPrice">
             </mat-form-field>
             
@@ -91,42 +91,41 @@
             <mat-form-field>
               <input 
               matInput 
-              placeholder="Height 高度"
+              placeholder="Height"
               formControlName="height">
             </mat-form-field>
       
             <mat-form-field>
               <input 
               matInput 
-              placeholder="Width 寬度" 
+              placeholder="Width" 
               formControlName="width">
             </mat-form-field>
       
             <mat-form-field>
               <input 
               matInput 
-              placeholder="Depth 深度
-              "
+              placeholder="Depth"
               formControlName="depth">
             </mat-form-field>
       
             <mat-form-field>
               <input 
               matInput 
-              placeholder="Weight 重量"
+              placeholder="Weight"
               formControlName="weight">
             </mat-form-field>
 
               <mat-form-field>
                 <input 
                 matInput 
-                placeholder="Shipping 運輸"
+                placeholder="Shipping"
                 formControlName="shipping">
               </mat-form-field>
               <mat-form-field>
                 <input 
                 matInput 
-                placeholder="Postage 郵資"
+                placeholder="Postage"
                 formControlName="postage">
               </mat-form-field>
          
@@ -158,12 +157,12 @@
                 <button 
                   mat-stroked-button 
                   type="submit"  
-                  color="primary">SAVE 保存</button>
-                <button mat-stroked-button (click)="cancel()" color="warn">CANCEL 撤消</button>
+                  color="primary">SAVE</button>
+                <button mat-stroked-button (click)="cancel()" color="warn">CANCEL</button>
             </mat-card-actions>
       
             <mat-card-actions *ngIf="!editMode && showButton">
-                <button mat-stroked-button (click)="edit()"color="primary" >EDIT 編輯</button>
+                <button mat-stroked-button (click)="edit()"color="primary" >EDIT</button>
             </mat-card-actions>
         </form>
       </mat-card>

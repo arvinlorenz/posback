@@ -1,11 +1,11 @@
 
 <mat-card>
-    <p class="login-header">Login 登錄</p>
+    <p class="login-header">Login</p>
     <form [formGroup]="form" (submit)="login()">
       <mat-form-field>
         <input 
         matInput 
-        placeholder="Email 電子郵件"
+        placeholder="Email"
         type="email"
         formControlName="email">
       </mat-form-field>
@@ -14,14 +14,14 @@
           <input 
           matInput 
           type="password"
-          placeholder="Password 密碼"
+          placeholder="Password"
           formControlName="password">
       </mat-form-field>
     
      
 
       <mat-card-actions>
-          <button mat-stroked-button type="submit" color="primary" >Login 登錄</button>
+          <button mat-stroked-button type="submit" color="primary" >Login</button>
       </mat-card-actions>
   </form>
 </mat-card>

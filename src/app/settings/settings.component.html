@@ -1,6 +1,6 @@
 
 <mat-card>
-    <p>Account Name 用戶名: {{fullName}}</p>
+    <p>Account Name: {{fullName}}</p>
     <form [formGroup]="form" (submit)="updateToken()">
       <mat-form-field>
         <input 
@@ -25,7 +25,7 @@
       </mat-form-field>
 
       <mat-card-actions>
-          <button mat-stroked-button type="submit" color="primary" >UPDATE 使</button>
+          <button mat-stroked-button type="submit" color="primary" >UPDATE</button>
       </mat-card-actions>
   </form>
 </mat-card>
