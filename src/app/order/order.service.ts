@@ -128,7 +128,7 @@ export class OrderService{
             return orders.map(order=>{
                 return {
                     ...order,
-                    date:  moment(order.date).format('DD/MMM/YYYY')
+                    date:  moment(order.date).format('DD/MMM/YYYY HH:mm:ss A')
                 }
             })
             }),
@@ -267,7 +267,7 @@ export class OrderService{
     }
 
     incrementProcessCount(orderNumber:string, name:string){
-        let date = moment(Date.now()).tz('Australia/Sydney').add(1, 'hours').format('DD/MMM/YYYY');
+        let date =  moment(Date.now()).tz('Australia/Sydney').add(1, 'hours').format('DD/MMM/YYYY hh:mm:ss A')
         let token = this.tokenService.getCredentials().token;
         this.http.post(`${environment.apiUrl}/orders`,{orderNumber,name,date,token})
         .subscribe(a=>{
