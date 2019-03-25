@@ -36,13 +36,15 @@ export class ModalComponent implements OnInit{
 
     this.orderService.addTrackingNumber(this.data.orderId, this.form.value.trackingNumber)
     .subscribe(responseData =>{
+  
       this.orderService.processOrder(this.data.notHashedOrderId)
       .subscribe((responseData:any)=>{
+        console.log(responseData)
         if(responseData.ProcessedState == 'PROCESSED'){
          
-          this.orderService.incrementProcessCount(this.data.orderId);
+          this.orderService.incrementProcessCount(this.data.orderNumber,responseData.OrderSummary.CustomerName);
           this.soundsService.playSuccess(); 
-          this.orderService.setReturnResponse(responseData,this.data.orderId);
+          this.orderService.setReturnResponse(responseData,this.data.orderNumber);
           this.data.form.reset();
           this.closeDialog(responseData);
           

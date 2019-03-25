@@ -68,11 +68,11 @@ export class InventoryWithSuppliersComponent implements OnInit, OnDestroy{
   enableAllFields(){
     this.form.controls.imageUrl.enable()
     this.form.controls.itemTitle.enable();
-    this.form.controls.itemNumber.enable();
+   // this.form.controls.itemNumber.enable();
     this.form.controls.quantity.enable();
-    this.form.controls.openOrder.enable();
-    this.form.controls.available.enable();
-    this.form.controls.due.enable();
+   // this.form.controls.openOrder.enable();
+   // this.form.controls.available.enable();
+   // this.form.controls.due.enable();
     this.form.controls.minimumLevel.enable();
     this.form.controls.barcodeNumber.enable();
     this.form.controls.purchasePrice.enable();

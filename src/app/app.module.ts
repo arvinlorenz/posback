@@ -41,6 +41,7 @@ import { SuppliersComponent } from './inventory/suppliers/suppliers.component';
 import { SupplierEditComponent } from './inventory/suppliers/supplier-edit/supplier-edit.component';
 import { OpenOrderComponent } from './order/open-order/open-order.component';
 import { PrintComponent } from './order/print/print.component';
+import { ProcessedComponent } from './order/processed/processed.component';
 
 
 @NgModule({
@@ -59,7 +60,8 @@ import { PrintComponent } from './order/print/print.component';
     SuppliersComponent,
     SupplierEditComponent,
     OpenOrderComponent,
-    PrintComponent
+    PrintComponent,
+    ProcessedComponent
     
   ],
   imports: [

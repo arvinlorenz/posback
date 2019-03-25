@@ -17,9 +17,11 @@ import { ActivatedRoute, Params } from '@angular/router';
 export class OrderComponent implements OnInit, OnDestroy {
   lang = 'en';
   processCount:number = 0;
+  processOrders;
   pCountSub: Subscription;
   form: FormGroup;
   tokenSub: Subscription;
+  getProcessedOrdersSub: Subscription;
   tokenAvailable = false;
 
   openOrders = 0;
@@ -40,10 +42,7 @@ export class OrderComponent implements OnInit, OnDestroy {
     //   this.orderService.getProcessedOrders();
     // });
     
-    this.orderService.openOrdersUpdatedListener()
-    .subscribe(a=>{
-      console.log('new open orders', a.length)
-    })
+    
     this.orderField.nativeElement.focus();
     this.processCount = this.orderService.getCount();
 
@@ -53,7 +52,12 @@ export class OrderComponent implements OnInit, OnDestroy {
         this.form.controls.orderNumber.enable();
         this.orderField.nativeElement.focus();
       })
-
+    this.orderService.getProcessedOrders();
+    this.getProcessedOrdersSub = this.orderService.getProcessedOrdersUpdateListener()
+      .subscribe(orders=>{
+        this.processOrders = orders;
+        console.log(this.processOrders)
+      })
       this.form = new FormGroup({
         orderNumber: new FormControl(null, {
           validators: [Validators.required, Validators.minLength(6)]
@@ -81,11 +85,9 @@ export class OrderComponent implements OnInit, OnDestroy {
       return;
     }
     this.orderService.processOrder(this.form.value.orderNumber).subscribe((responseData:any) => {
-        console.log(responseData.headers)
-
-      
+      console.log(responseData)
           if(responseData.ProcessedState == 'PROCESSED'){
-            this.orderService.incrementProcessCount(this.form.value.orderNumber);
+            this.orderService.incrementProcessCount(this.form.value.orderNumber,responseData.OrderSummary.CustomerName);
             this.orderService.setReturnResponse(responseData,this.form.value.orderNumber);
             this.soundsService.playSuccess();  
             this.form.reset();
@@ -97,11 +99,12 @@ export class OrderComponent implements OnInit, OnDestroy {
   
   
           else if(responseData.ProcessedState === 'NOT_PROCESSED'){
+            
             console.log(responseData.Message)
               if(responseData.Message.indexOf('tracking number') !== -1){
                   const dialogRef = this.dialog.open(ModalComponent, {
                     width: '250px',
-                    data: {orderId: responseData.OrderId, notHashedOrderId: this.form.value.orderNumber, form: this.form}
+                    data: {orderId: responseData.OrderId,orderNumber: this.form.value.orderNumber, notHashedOrderId: this.form.value.orderNumber, form: this.form}
                   });
                   this.soundsService.playError(); 
                   dialogRef.afterClosed().subscribe(result => {   
@@ -167,6 +170,7 @@ export class OrderComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(){
     this.pCountSub.unsubscribe();
+    this.getProcessedOrdersSub.unsubscribe();
     this.tokenSub.unsubscribe();
   }
 

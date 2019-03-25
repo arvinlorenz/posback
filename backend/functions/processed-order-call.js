@@ -1,5 +1,5 @@
 const axios = require('axios');
-
+const ProcessedOrders = require('../models/processed-orders');
 
 let processedOrderCall = async(infos)=>{
     

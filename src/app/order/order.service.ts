@@ -10,6 +10,10 @@ import { environment } from '../../environments/environment';
 export class OrderService{
     processCount = 0;
     private processCountUpdated = new Subject<number>();
+
+    processedOrders: any[];
+    private processedOrdersUpdated = new Subject<any[]>();
+
     returnResponse:{message:any,orderId:string};
     private returnResponseUpdated = new Subject<any>();
 
@@ -88,11 +92,51 @@ export class OrderService{
     //             })
             
     // }
+    fetchOpenOrders(){
+        let url = `${environment.apiUrl}/orders/fetchOpenOrders`;
+        let params = {}
+            this.http.post(url,params)
+        .subscribe((res:any)=>{
+            this.openOrders = [...this.openOrders, ...res.orders ]
+            console.log(this.openOrders)
+             this.openOrdersUpdated.next(this.openOrders);
+        })
+    }
+    getProcessedOrders(){
+        this.http.get(`${environment.apiUrl}/orders`, {
+            observe: 'body',
+            responseType: 'json'
+          })
+          .pipe(map((orders:any)=>{
+            
+            if(orders === null){
+                return []
+            }
+            let now = moment(Date.now()).tz('Australia/Sydney').add(1, 'hours').format('YYYY/MM/DD');
+            let accountPermaToken = this.tokenService.getCredentials().token;
+            return orders.orders.filter((order:any) =>{
+                let processDate = moment(order.date).tz('Australia/Sydney').format('YYYY/MM/DD');
+                if(processDate === now && accountPermaToken === order.token){
+                    return true
+                }
+                
+            })
+          }))
+        .subscribe((orders:any)=>{
+           
+            this.processedOrders = orders;
+            this.processedOrdersUpdated.next(this.processedOrders);
+        })
+    }
+
+    getProcessedOrdersUpdateListener(){
+        return this.processedOrdersUpdated.asObservable();
+    }
 
     getOpenOrdersWithEdit(){
         let url = `${this.tokenService.getServer()}/api/Orders/GetOpenOrders`;
             let params = {
-                entriesPerPage: 300,
+                entriesPerPage: 1000,
                 pageNumber: 1
                 }
             const options = {  headers: new HttpHeaders().set('Authorization', this.tokenService.getToken()) };
@@ -196,10 +240,8 @@ export class OrderService{
             }
             let now = moment(Date.now()).tz('Australia/Sydney').add(1, 'hours').format('YYYY/MM/DD');
             let accountPermaToken = this.tokenService.getCredentials().token;
- 
             return orders.orders.filter((order:any) =>{
                 let processDate = moment(order.date).tz('Australia/Sydney').format('YYYY/MM/DD');
-                
                 if(processDate === now && accountPermaToken === order.token){
                     return true
                 }
@@ -213,13 +255,15 @@ export class OrderService{
         })
     }
 
-    incrementProcessCount(orderNumber:string){
-        let date = Date.now();
+    incrementProcessCount(orderNumber:string, name:string){
+        let date = moment(Date.now()).tz('Australia/Sydney').add(1, 'hours').format('YYYY/MM/DD');
         let token = this.tokenService.getCredentials().token;
-        this.http.post(`${environment.apiUrl}/orders`,{orderNumber,date,token})
+        this.http.post(`${environment.apiUrl}/orders`,{orderNumber,name,date,token})
         .subscribe(a=>{
             this.processCount++;
             this.processCountUpdated.next(this.processCount);
+
+            this.processedOrdersUpdated.next([...this.processedOrders, {orderNumber,name,date,token}]);
         })
 
     }

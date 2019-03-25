@@ -1,9 +1,12 @@
 <!-- Editable table -->
-<div class="card">
+<button mat-stroked-button type="button" (click)="fetchOpenOrders()" color="primary" >FETCH OPEN ORDERS</button>
+<br>
+
+<div class="card" >
     <h3 class="card-header text-center font-weight-bold text-uppercase py-4">OPEN ORDERS</h3>
     <div class="card-body">
-      <div id="table" class="table-editable">
-        <table class="table table-striped table-bordered" datatable [dtOptions]="dtOptions"
+      <div  class="table-editable">
+        <table id="table" class="table table-striped table-bordered" datatable [dtOptions]="dtOptions"
         [dtTrigger]="dtTrigger">
           <thead>
             <tr>
@@ -96,5 +99,5 @@
         </table>
       </div>
     </div>
-  </div>
+</div>
   <!-- Editable table -->

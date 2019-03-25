@@ -31,3 +31,6 @@
       </div>
   </mat-card>
 
+  <div *ngIf="processOrders">
+    <app-processed [orders]="processOrders"></app-processed>
+  </div>

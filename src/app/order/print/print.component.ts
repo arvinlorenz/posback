@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { OrderService } from '../order.service';
 import { SoundsService } from 'src/app/shared/sounds.service';
@@ -13,6 +13,7 @@ export class PrintComponent implements OnInit {
   printers;
   templates;
   openOrders;
+  @ViewChild("skuNumber") skuField: ElementRef;
   constructor(private orderService: OrderService, private soundService: SoundsService) { }
 
   ngOnInit() {
@@ -48,8 +49,9 @@ export class PrintComponent implements OnInit {
 
   scan(){
     if(this.form.invalid || (this.form.value.printer == '' || this.form.value.template == '') ){
+      this.soundService.playError();
       this.form.setValue({
-        sku: '', printer: '', template: ''
+        sku: ''
       })
       return
     }
@@ -81,9 +83,17 @@ export class PrintComponent implements OnInit {
           console.log(a)
           if(a.KeyedError.length == 0){
             this.soundService.playSuccess();
+            this.form.setValue({
+              sku: ''
+            })
+            this.skuField.nativeElement.focus();
           }
           else{
             this.soundService.playError();
+            this.form.setValue({
+              sku: ''
+            })
+            this.skuField.nativeElement.focus();
           }
         })
      

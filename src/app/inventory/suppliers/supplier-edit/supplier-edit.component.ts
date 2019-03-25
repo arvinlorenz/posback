@@ -41,10 +41,10 @@ export class SupplierEditComponent implements OnInit, OnDestroy {
     this.form.controls.barCode.enable();
     this.form.controls.leadTime.enable();
     this.form.controls.purchasePrice.enable();
-    this.form.controls.minPrice.enable();
-    this.form.controls.maxPrice.enable();
-    this.form.controls.averagePrice.enable();
-    this.form.controls.averageLeadTime.enable();
+    // this.form.controls.minPrice.enable();
+    // this.form.controls.maxPrice.enable();
+    // this.form.controls.averagePrice.enable();
+    // this.form.controls.averageLeadTime.enable();
     this.form.controls.supplierMinOrderQty.enable();
     this.form.controls.supplierPackSize.enable();
     this.form.controls.supplierCurrency.enable();

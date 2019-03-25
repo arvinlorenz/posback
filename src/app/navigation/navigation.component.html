@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand navbar-dark bg-primary"> 
+<nav class="navbar navbar-expand navbar-dark bg-primary fixed-top"> 
     <a class="navbar-brand" routerLink="/">PROCESS ORDER SYSTEM  </a>
   
   <div class="collapse navbar-collapse" id="navbarsExample02">
@@ -13,6 +13,7 @@
       <form class="form-inline my-2 my-md-0"> </form>
   </div>
 </nav>
+<br><br>
 <div id="wrapper" class="toggled">
   <!-- Sidebar -->
   <div id="sidebar-wrapper">
@@ -22,7 +23,7 @@
           <li class="sidebar-item"> <a routerLink="/print">Print Labels</a> </li>
           <li class="sidebar-item"> <a routerLink="/pos">Process System 流程訂單</a> </li>
           <li class="sidebar-item"> <a routerLink="/sku">Stock 庫存</a> </li>
-          <li class="sidebar-item"> <a routerLink="/suppliers">Suppliers 提供者
+          <li class="sidebar-item"> <a routerLink="/inventory">Inventory
           </a> </li>
           <div class="dropdown-divider"></div>
           <li class="sidebar-item"> <a  routerLink="/setting" *ngIf="authService.isAuthenticated()">Settings 設置<span class="sr-only">(current)</span></a> </li>
@@ -32,3 +33,4 @@
 
       </ul>
   </div> <!-- /#sidebar-wrapper -->
+  <br>

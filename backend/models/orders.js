@@ -10,6 +10,9 @@ const ordersSchema = mongoose.Schema({
         type: String,
         required: true
     },
+    name: {
+        type: String
+    },
     token:{
         type: String,
         required: true

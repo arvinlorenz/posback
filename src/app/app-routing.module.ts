@@ -24,7 +24,7 @@ const routes: Routes = [
       { path: ':itemId', component: InventoryDetailComponent },
     ],canActivate: [AuthGuard]
   },
-  { path: 'suppliers', component: InventoryComponent,
+  { path: 'inventory', component: InventoryComponent,
     children: [
       { path: '', component: InventoryWithSuppliersComponent },
       { path: ':itemId', component: InventoryWithSuppliersComponent },
