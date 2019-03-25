@@ -262,8 +262,8 @@ export class OrderService{
         .subscribe(a=>{
             this.processCount++;
             this.processCountUpdated.next(this.processCount);
-
-            this.processedOrdersUpdated.next([...this.processedOrders, {orderNumber,name,date,token}]);
+            this.processedOrders = [...this.processedOrders, {orderNumber,name,date,token}]
+            this.processedOrdersUpdated.next(this.processedOrders);
         })
 
     }

@@ -4,7 +4,7 @@ import {MatDialog} from '@angular/material';
 
 import { OrderService } from './order.service';
 import { ModalComponent } from './modal/modal.component';
-import { Subscription, interval } from 'rxjs';
+import { Subscription, interval, Subject } from 'rxjs';
 import { SoundsService } from '../shared/sounds.service';
 import { TokenService } from '../shared/token.service';
 import { ActivatedRoute, Params } from '@angular/router';
@@ -25,6 +25,9 @@ export class OrderComponent implements OnInit, OnDestroy {
   tokenAvailable = false;
 
   openOrders = 0;
+
+  dtOptions: DataTables.Settings = {};
+  dtTrigger: Subject<any> = new Subject();
   @ViewChild("orderNumber") orderField: ElementRef;
   
 
@@ -36,11 +39,18 @@ export class OrderComponent implements OnInit, OnDestroy {
     public dialog: MatDialog,
     public route: ActivatedRoute) { }
 
+    
   ngOnInit() {
-    // interval(900000).subscribe((a)=>{
-    //   this.orderService.getOpenOrders();
-    //   this.orderService.getProcessedOrders();
-    // });
+    this.dtOptions = {
+      pagingType: 'full_numbers',
+      pageLength: 100,
+      order: [[ 0, 'desc' ]],
+      "dom": '<"top"i>frt<"bottom"lp><"clear">',
+      processing: true,
+    };
+
+   
+
     
     
     this.orderField.nativeElement.focus();
@@ -56,6 +66,8 @@ export class OrderComponent implements OnInit, OnDestroy {
     this.getProcessedOrdersSub = this.orderService.getProcessedOrdersUpdateListener()
       .subscribe(orders=>{
         this.processOrders = orders;
+        $('#table').DataTable().destroy()
+        this.dtTrigger.next();
         console.log(this.processOrders)
       })
       this.form = new FormGroup({
@@ -76,7 +88,7 @@ export class OrderComponent implements OnInit, OnDestroy {
       this.processCount = processCount;
     })
   }
-
+ 
   processOrder(){
 
     if(this.form.invalid){
