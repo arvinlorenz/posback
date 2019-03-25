@@ -107,7 +107,9 @@ export class OrderService{
             observe: 'body',
             responseType: 'json'
           })
-          .pipe(map((orders:any)=>{
+          .pipe(
+            
+            map((orders:any)=>{
             
             if(orders === null){
                 return []
@@ -121,7 +123,16 @@ export class OrderService{
                 }
                 
             })
-          }))
+          }),
+          map((orders:any)=>{
+            return orders.map(order=>{
+                return {
+                    ...order,
+                    date:  moment(order.date).format('DD/MMM/YYYY')
+                }
+            })
+            }),
+          )
         .subscribe((orders:any)=>{
            
             this.processedOrders = orders;
@@ -256,7 +267,7 @@ export class OrderService{
     }
 
     incrementProcessCount(orderNumber:string, name:string){
-        let date = moment(Date.now()).tz('Australia/Sydney').add(1, 'hours').format('YYYY/MM/DD');
+        let date = moment(Date.now()).tz('Australia/Sydney').add(1, 'hours').format('DD/MMM/YYYY');
         let token = this.tokenService.getCredentials().token;
         this.http.post(`${environment.apiUrl}/orders`,{orderNumber,name,date,token})
         .subscribe(a=>{
