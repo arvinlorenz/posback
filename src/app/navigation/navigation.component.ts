@@ -55,13 +55,13 @@ export class NavigationComponent implements OnInit {
           }
         });
     
-        $(window).resize(function(e) {
-          if($(window).width()<=768){
-            $("#wrapper").removeClass("toggled");
-          }else{
-            $("#wrapper").addClass("toggled");
-          }
-        });
+        // $(window).resize(function(e) {
+        //   if($(window).width()<=768){
+        //     $("#wrapper").removeClass("toggled");
+        //   }else{
+        //     $("#wrapper").addClass("toggled");
+        //   }
+        // });
       }
       
       
