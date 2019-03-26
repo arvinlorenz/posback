@@ -22,7 +22,7 @@ export class OpenOrderComponent implements OnInit, OnDestroy {
   constructor(private orderService: OrderService) { }
 
   ngOnInit() {
-
+    
     this.dtOptions = {
       pagingType: 'full_numbers',
       pageLength: 100,
@@ -32,7 +32,7 @@ export class OpenOrderComponent implements OnInit, OnDestroy {
      
       responsive: {
         details: {
-          renderer: $.fn.dataTable.Responsive.renderer.listHiddenNodes()
+          renderer: $.fn.DataTable.Responsive.renderer.listHiddenNodes()
         }
       }
 
