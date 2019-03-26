@@ -79,7 +79,7 @@ router.post('/fetchOpenOrders', async(req,res,next)=>{
             token: accountInformation.Token
         }
         let openOrdersInfo = await openOrders(ainfo);
-        openOrdersCall(openOrdersInfo).then(ordersRes=>{
+        openOrdersCall({linnworksToken: credentialsInfo.token,orders:openOrdersInfo}).then(ordersRes=>{
             orders = 
             res.status(200).json({
                 orders: ordersRes.map(order=>{

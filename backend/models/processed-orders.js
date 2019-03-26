@@ -186,6 +186,9 @@ const processedOrdersSchema = mongoose.Schema({
     FulfilmentLocationName: {
         type: String
     },
+    linnToken: {
+        type: String
+    },
     type: {
         type: String
     },

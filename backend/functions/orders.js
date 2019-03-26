@@ -7,8 +7,6 @@ const {processedOrderCall} = require('./processed-order-call');
 
 let checkAndSaveOrders = async()=>{
     console.log('get credentials')
-    try {
-        setInterval(async()=>{
             let credentialsInfo = await credentials()
             let accountInformation = await accountInfo(credentialsInfo);
         
@@ -21,9 +19,27 @@ let checkAndSaveOrders = async()=>{
             
                 let openOrdersInfo = await openOrders(ainfo);
                 let processedOrders = await searchProcessedOrder(ainfo); //within specific time
+    
+               
+                Promise.all([openOrdersCall({linnworksToken: credentialsInfo.token,orders:openOrdersInfo}),processedOrderCall({...ainfo,orders:processedOrders,linnworksToken: credentialsInfo.token}) ])
+                console.log('another 1min. for '+ accountInformation.FullName)
+    try {
+        setInterval(async()=>{
+             credentialsInfo = await credentials()
+             accountInformation = await accountInfo(credentialsInfo);
+        
             
+        
+             ainfo = {
+                server: accountInformation.Server,
+                token: accountInformation.Token
+            }
             
-                Promise.all([openOrdersCall(openOrdersInfo),processedOrderCall({...ainfo, orders:processedOrders}) ])
+                 openOrdersInfo = await openOrders(ainfo);
+                 processedOrders = await searchProcessedOrder(ainfo); //within specific time
+            
+                console.log(processedOrders)
+                Promise.all([openOrdersCall({...ainfo,orders:openOrdersInfo}),processedOrderCall({...ainfo, orders:processedOrders}) ])
                 console.log('another 1min. for '+ accountInformation.FullName)
             }, 60000) //1min 
     } catch (error) {

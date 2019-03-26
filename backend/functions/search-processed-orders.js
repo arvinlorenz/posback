@@ -4,9 +4,9 @@ const moment = require("moment-timezone");
 
 
 let searchProcessedOrder = async(info)=>{
-    let from = `${moment(Date.now()).tz('Australia/Sydney').add(1, 'hours').subtract(2, 'minutes').format('YYYY-MM-DD hh:mm:ss')}`;
+    let from = `${moment(Date.now()).tz('Australia/Sydney').add(1, 'hours').subtract(3, 'minutes').format('YYYY-MM-DD hh:mm:ss')}`;
     let to = `${moment(Date.now()).tz('Australia/Sydney').add(1, 'hours').format('YYYY-MM-DD hh:mm:ss')}`;
-
+    console.log(from,to)
     let url = `${info.server}/api/ProcessedOrders/SearchProcessedOrders`
     let params = {
         request: {

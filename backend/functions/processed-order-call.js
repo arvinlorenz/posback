@@ -3,7 +3,6 @@ const ProcessedOrders = require('../models/processed-orders');
 
 let processedOrderCall = async(infos)=>{
     
-    
     let processedOrders = infos.orders;
         
     const promisesArray = await processedOrders.reduce(async(acc, order) => {
@@ -16,7 +15,7 @@ let processedOrderCall = async(infos)=>{
         
                     'Authorization': infos.token 
                 }
-                let url = `${infos.server}https://as-ext.linnworks.net/api/ProcessedOrders/GetProcessedItemDetails`
+                let url = `${infos.server}/api/ProcessedOrders/GetProcessedItemDetails`
  
                 let items = await axios.post(url, 
                                             {   pkOrderId : order.pkOrderID,
@@ -27,7 +26,7 @@ let processedOrderCall = async(infos)=>{
              
                     
                 promises.push(new Promise(async(resolve, reject) => {
-                    resolve({...order, OrderId: order.pkOrderID, type: 'processed', Items: items.data})
+                    resolve({...order, OrderId: order.pkOrderID, type: 'processed', Items: items.data, linnToken: infos.linnworksToken})
                 }))
             } catch (error) {
                 console.log(error)

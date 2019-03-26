@@ -2,7 +2,6 @@ const axios = require('axios');
 
 
 let accountInfo = async(credentials)=>{
-    
     let url = 'https://api.linnworks.net/api/Auth/AuthorizeByApplication'
     
     try {

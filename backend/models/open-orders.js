@@ -46,6 +46,10 @@ const openOrdersSchema = mongoose.Schema({
         type: String,
         required: true
     },
+    linnToken: {
+        type: String,
+        required: true
+    },
 },{ collection: 'savedOrders' });
 
 //MODEL

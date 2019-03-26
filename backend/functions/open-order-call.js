@@ -2,14 +2,14 @@ const axios = require('axios');
 const OpenOrders = require('../models/open-orders');
 
 
-let openOrdersCall = async(orders)=>{
-    let openOrders = orders;
+let openOrdersCall = async(payload)=>{
+    let openOrders = payload.orders;
     const promisesArray = await openOrders.reduce(async(acc, order) => {
         let promises = await acc;
         let filteredOrder = await OpenOrders.findOne({OrderId: order.OrderId});
         if(filteredOrder == null){
             promises.push(new Promise(async(resolve, reject) => {
-                resolve({...order, type: 'open'})
+                resolve({...order, type: 'open', linnToken: payload.linnworksToken})
             }))
         }
 
