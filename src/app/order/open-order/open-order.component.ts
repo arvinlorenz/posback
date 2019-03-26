@@ -17,7 +17,7 @@ export class OpenOrderComponent implements OnInit, OnDestroy {
 
   loading = true;
   countries;
-  dtOptions: DataTables.Settings = {};
+  dtOptions = {};
   dtTrigger: Subject<any> = new Subject();
   constructor(private orderService: OrderService) { }
 
@@ -29,6 +29,12 @@ export class OpenOrderComponent implements OnInit, OnDestroy {
       order: [[ 0, 'desc' ]],
       "dom": '<"top"i>frt<"bottom"lp><"clear">',
       processing: true,
+     
+      responsive: {
+        details: {
+          renderer: $.fn.dataTable.Responsive.renderer.listHiddenNodes()
+        }
+      }
 
       
     };

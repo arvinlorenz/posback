@@ -98,7 +98,6 @@ export class OrderService{
             this.http.post(url,params)
         .subscribe((res:any)=>{
             this.openOrders = [...this.openOrders, ...res.orders ]
-            console.log(this.openOrders)
              this.openOrdersUpdated.next(this.openOrders);
         })
     }
@@ -116,8 +115,10 @@ export class OrderService{
             }
             let now = moment(Date.now()).tz('Australia/Sydney').add(1, 'hours').format('YYYY/MM/DD');
             let accountPermaToken = this.tokenService.getCredentials().token;
+
             return orders.orders.filter((order:any) =>{
-                let processDate = moment(order.date).tz('Australia/Sydney').format('YYYY/MM/DD');
+                let processDate = moment(order.date).format('YYYY/MM/DD');
+                
                 if(processDate === now && accountPermaToken === order.token){
                     return true
                 }
@@ -252,7 +253,7 @@ export class OrderService{
             let now = moment(Date.now()).tz('Australia/Sydney').add(1, 'hours').format('YYYY/MM/DD');
             let accountPermaToken = this.tokenService.getCredentials().token;
             return orders.orders.filter((order:any) =>{
-                let processDate = moment(order.date).tz('Australia/Sydney').format('YYYY/MM/DD');
+                let processDate = moment(order.date).format('YYYY/MM/DD');
                 if(processDate === now && accountPermaToken === order.token){
                     return true
                 }
@@ -370,7 +371,7 @@ export class OrderService{
             IDs,
             printerName: printerLocation+'\\'+printerName            
         }
-        console.log(params)
+
         const options = {  headers: new HttpHeaders().set('Authorization', this.tokenService.getToken()) };
         return  this.http.post(url,params,options)
     }

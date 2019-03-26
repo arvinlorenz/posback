@@ -26,7 +26,7 @@ export class OrderComponent implements OnInit, OnDestroy {
 
   openOrders = 0;
 
-  dtOptions: DataTables.Settings = {};
+  dtOptions = {};
   dtTrigger: Subject<any> = new Subject();
   @ViewChild("orderNumber") orderField: ElementRef;
   
@@ -47,6 +47,10 @@ export class OrderComponent implements OnInit, OnDestroy {
       order: [[ 0, 'desc' ]],
       "dom": '<"top"i>frt<"bottom"lp><"clear">',
       processing: true,
+      rowReorder: {
+        selector: 'td:nth-child(2)'
+      },
+      responsive: true
     };
 
    
