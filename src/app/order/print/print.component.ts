@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { OrderService } from '../order.service';
 import { SoundsService } from 'src/app/shared/sounds.service';
+import { TokenService } from 'src/app/shared/token.service';
 
 @Component({
   selector: 'app-print',
@@ -14,9 +15,26 @@ export class PrintComponent implements OnInit {
   templates;
   openOrders;
   @ViewChild("skuNumber") skuField: ElementRef;
-  constructor(private orderService: OrderService, private soundService: SoundsService) { }
+  constructor(private orderService: OrderService, private soundService: SoundsService, private tokenService: TokenService) { }
 
   ngOnInit() {
+    this.tokenService.tokenUpdateListener().subscribe(a=>{ 
+      this.orderService.getPrinters()
+      .subscribe(printers=>{
+        this.printers = printers;
+      })
+      this.orderService.getTemplates()
+      .subscribe((templates:any[])=>{
+        let uniqueTems = [];
+        this.templates = templates.filter(template=>{
+          if(!uniqueTems.includes(template.TemplateType)){
+            uniqueTems.push(template.TemplateType);
+            return template;
+          } 
+        });
+      })
+
+    })
     this.orderService.getPrinters()
       .subscribe(printers=>{
         this.printers = printers;

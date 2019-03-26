@@ -147,19 +147,30 @@ export class InventoryDetailComponent implements OnInit, OnDestroy{
           if(paramMap.has('itemId')){
             this.itemId = paramMap.get('itemId');
             this.editMode = false;
-            if(this.tokenService.getToken() === undefined)
-            {
-              this.tokenService.tokenUpdateListener().subscribe(a=>{
-                this.skuSubscribe();
-              })
-            }
-            else{
-              this.skuSubscribe();
-            }
+            
+            this.skuSubscribe();
+            
               
           }
         }    
         ); 
+
+    this.tokenService.tokenUpdateListener().subscribe(a=>{
+      this.route.paramMap
+        .subscribe(
+        (paramMap: ParamMap)=>{
+            
+          if(paramMap.has('itemId')){
+            this.itemId = paramMap.get('itemId');
+            this.editMode = false;
+            
+            this.skuSubscribe();
+            
+              
+          }
+        }    
+        ); 
+    })
         
   }
 

@@ -31,10 +31,11 @@ export class TokenService{
         return this.accountFullname;
     }
     getToken(){
-        return this.token;
+        //return this.token || localStorage.getItem('linnToken');
+        return localStorage.getItem('linnToken');
     }
     getServer(){
-        return this.server;
+        return this.server || localStorage.getItem('linnServer');
     }
     getCredentials(){
         return this.createCredentials;
@@ -73,6 +74,7 @@ export class TokenService{
                 console.log('SAVED')
                 this.accountFullname = responseData.FullName;
                 this.token = responseData.Token;
+                localStorage.setItem('linnToken', this.token);
                 this.server = responseData.Server;
                 this.tokenUpdated.next(this.token);
                 this.nameUpdated.next(this.accountFullname);

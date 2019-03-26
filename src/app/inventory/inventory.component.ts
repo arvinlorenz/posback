@@ -5,6 +5,7 @@ import { Subscription, Observable } from 'rxjs';
 import {  Router } from '@angular/router';
 import { SoundsService } from '../shared/sounds.service';
 import { startWith, map } from 'rxjs/operators';
+import { TokenService } from '../shared/token.service';
 
 @Component({
   selector: 'app-inventory',
@@ -25,9 +26,25 @@ export class InventoryComponent implements OnInit, AfterViewInit {
 
     return this.SKUs.filter(sku => sku.toLowerCase().includes(filterValue));
   }
-  constructor(private inventoryService: InventoryService, private router: Router, private soundsService: SoundsService) { }
+  constructor(private inventoryService: InventoryService, private router: Router, private soundsService: SoundsService, private tokenService: TokenService) { }
 
   ngOnInit() {
+    localStorage.setItem('linnToken'," this.token");
+
+     this.tokenService.tokenUpdateListener()
+      .subscribe(res=>{
+        this.inventoryService.getInventoryItems()
+        .subscribe((inventories:any)=>{
+          this.SKUs = inventories.Items.map(inventory=>{
+            return inventory.SKU
+            
+          })
+          console.log(this.SKUs)
+          
+        })
+      })
+
+
     this.form = new FormGroup({
       skuKey: new FormControl(null, {
         validators: [Validators.required]

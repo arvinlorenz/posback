@@ -319,19 +319,31 @@ export class InventoryWithSuppliersComponent implements OnInit, OnDestroy{
           if(paramMap.has('itemId')){
             this.itemId = paramMap.get('itemId');
             this.editMode = false;
-            if(this.tokenService.getToken() === undefined)
-            {
-              this.tokenSub = this.tokenService.tokenUpdateListener().subscribe(a=>{
-                this.skuSubscribe();
-              })
-            }
-            else{
-              this.skuSubscribe();
-            }
+            
+            this.skuSubscribe();
+            
               
           }
         }    
         ); 
+
+    this.tokenSub = this.tokenService.tokenUpdateListener().subscribe(a=>{
+      this.route.paramMap
+        .subscribe(
+        (paramMap: ParamMap)=>{
+            
+          if(paramMap.has('itemId')){
+            this.itemId = paramMap.get('itemId');
+            this.editMode = false;
+            
+            this.skuSubscribe();
+            
+              
+          }
+        }    
+        ); 
+    })
+        
         
   }
 

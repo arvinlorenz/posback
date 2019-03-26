@@ -41,6 +41,8 @@ export class OrderComponent implements OnInit, OnDestroy {
 
     
   ngOnInit() {
+   
+
     this.dtOptions = {
       pagingType: 'full_numbers',
       pageLength: 100,

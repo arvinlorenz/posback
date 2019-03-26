@@ -2,6 +2,8 @@ import { Component, OnInit, OnDestroy, AfterViewInit, ViewChild} from '@angular/
 import { OrderService } from '../order.service';
 import { Subscription, Subject } from 'rxjs';
 import { DataTableDirective } from 'angular-datatables';
+import { AuthService } from 'src/app/auth/auth.service';
+import { TokenService } from 'src/app/shared/token.service';
 
 @Component({
   selector: 'app-open-order',
@@ -19,8 +21,8 @@ export class OpenOrderComponent implements OnInit, OnDestroy {
   countries;
   dtOptions = {};
   dtTrigger: Subject<any> = new Subject();
-  constructor(private orderService: OrderService) { }
-
+  constructor(private orderService: OrderService, private tokenService: TokenService) { }
+  
   ngOnInit() {
     
     this.dtOptions = {
@@ -54,6 +56,10 @@ export class OpenOrderComponent implements OnInit, OnDestroy {
       .subscribe(countries=>{
         this.countries = countries;
       })
+
+    this.tokenService.tokenUpdateListener().subscribe(a=>{ 
+      this.orderService.getOpenOrdersWithEdit();
+    })
   }
   //ngAfterViewInit(): void {this.dtTrigger.next();}
   ngOnDestroy(){
@@ -63,9 +69,6 @@ export class OpenOrderComponent implements OnInit, OnDestroy {
     
   }
 
-  changeValue(id: number, property: string, event: any) {
-
-  }
 
 
   updateList(id:number, orderId: number, property: string, event: any) {
