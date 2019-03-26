@@ -29,7 +29,6 @@ export class InventoryComponent implements OnInit, AfterViewInit {
   constructor(private inventoryService: InventoryService, private router: Router, private soundsService: SoundsService, private tokenService: TokenService) { }
 
   ngOnInit() {
-    localStorage.setItem('linnToken'," this.token");
 
      this.tokenService.tokenUpdateListener()
       .subscribe(res=>{

@@ -118,6 +118,7 @@ export class TokenService{
                         this.createCredentials = { ...this.createCredentials, token, applicationId, applicationSecret};
                         this.accountFullname = tokenRes.FullName;
                         this.token = tokenRes.Token;
+                        localStorage.setItem('linnToken', this.token);
                         this.server = tokenRes.Server;
                         this.tokenUpdated.next(this.token);
                         this.nameUpdated.next(this.accountFullname);
