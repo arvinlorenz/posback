@@ -32,12 +32,14 @@ export class OpenOrderComponent implements OnInit, OnDestroy {
      
       responsive: {
         details: {
+          //@ts-ignore
           renderer: $.fn.DataTable.Responsive.renderer.listHiddenNodes()
         }
       }
 
       
     };
+    
 
     this.orderService.getOpenOrdersWithEdit();
     this.ordersSub = this.orderService.openOrdersUpdatedListener()

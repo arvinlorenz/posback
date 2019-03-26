@@ -45,6 +45,19 @@ export class InventoryService{
         const options = {  headers: new HttpHeaders().set('Authorization', this.tokenService.getToken()) };
         return  this.http.post(url,params,options);
     }
+
+    getInventoryItems(){
+        let url = `${this.tokenService.getServer()}/api/Inventory/GetInventoryItems`;
+        let params = {
+            view: {"Id":"3d30afaf-426f-4132-8430-7983a4eb2631","Name":"virtual","Mode":"All","Source":"All","SubSource":"Show all","CountryCode":"All","CountryName":"All","Listing":"All","ShowOnlyChanged":false,"IncludeProducts":"NotArchived","Filters":[{"FilterName":"Available","DisplayName":"Available","FilterNameExact":[],"Field":"Int","Condition":"Greater","ConditionDisplayName":"Greater","Value":"0"}],"Columns":[{"ColumnName":"SKU","DisplayName":"SKU","Group":"General","Field":"String","SortDirection":"None","Width":150,"IsEditable":false},{"ColumnName":"Title","DisplayName":"Title","Group":"General","Field":"String","SortDirection":"None","Width":250,"IsEditable":true},{"ColumnName":"Barcode","DisplayName":"Barcode","Group":"General","Field":"String","SortDirection":"None","Width":130,"IsEditable":true},{"ColumnName":"RetailPrice","DisplayName":"Retail","Group":"General","Field":"Double","SortDirection":"None","Width":100,"IsEditable":true},{"ColumnName":"PurchasePrice","DisplayName":"Purchase","Group":"General","Field":"Double","SortDirection":"None","Width":75,"IsEditable":true},{"ColumnName":"StockLevel","DisplayName":"Level","Group":"Stock","Field":"Int","SortDirection":"None","Width":75,"IsEditable":true},{"ColumnName":"InOrder","DisplayName":"In Open Orders","Group":"Stock","Field":"Int","SortDirection":"None","Width":75,"IsEditable":false},{"ColumnName":"Available","DisplayName":"Available","Group":"Stock","Field":"Int","SortDirection":"None","Width":75,"IsEditable":false},{"ColumnName":"MinimumLevel","DisplayName":"Minimum Level","Group":"Stock","Field":"Int","SortDirection":"None","Width":75,"IsEditable":true},{"ColumnName":"Tracked","DisplayName":"Tracked","Group":"General","Field":"Boolean","SortDirection":"None","Width":75,"IsEditable":false}],"Channels":[],"IsSearchRequired":true},
+            stockLocationIds: ["00000000-0000-0000-0000-000000000000"],
+            startIndex: 1,
+            itemsCount: 100,
+            preloadChilds: false
+            }
+        const options = {  headers: new HttpHeaders().set('Authorization', this.tokenService.getToken()) };
+        return  this.http.post(url,params,options);
+    }
     getItemDetails(StockItemId){
         let url = `${this.tokenService.getServer()}/api/Inventory/GetInventoryItemById`;
         let params = {

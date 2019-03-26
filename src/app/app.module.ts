@@ -20,6 +20,7 @@ import {MatTableModule} from '@angular/material/table';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatMenuModule} from '@angular/material/menu';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 
 import { DataTablesModule } from 'angular-datatables';
 
@@ -87,6 +88,7 @@ import { PrintComponent } from './order/print/print.component';
     MatTabsModule,
     MatExpansionModule,
     MatSelectModule,
+    MatAutocompleteModule,
 
     DataTablesModule,
     BrowserAnimationsModule

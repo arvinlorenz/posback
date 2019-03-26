@@ -201,17 +201,22 @@ export class InventoryWithSuppliersComponent implements OnInit, OnDestroy{
           this.inventoryService.getInventoryItemExtendedProperties(this.itemStockId)
             .subscribe((propRes:any[])=>{
               console.log(propRes)
+              let withProp = false;
               if(propRes.length > 0){
                
                 propRes.forEach(prop=>{
-                  if(prop.ProperyName === "Postage"){
+                  if(prop.ProperyName === "Postage" || prop.ProperyName === "Shipping"){
+                    withProp = true;
                     this.postageExtendedProp = prop;
                   }
-                  else if(prop.ProperyName === "Shipping"){
-                    this.shippingExtendedProp = prop;
-                  }
                 })
-                this.inventoryService.setSkuDetails({...this.skuDetails, postage:this.postageExtendedProp.PropertyValue, shipping:this.shippingExtendedProp.PropertyValue});
+                if(withProp){
+                  this.inventoryService.setSkuDetails({...this.skuDetails, postage:this.postageExtendedProp.PropertyValue, shipping:this.shippingExtendedProp.PropertyValue});
+                }
+                else{
+                  this.inventoryService.setSkuDetails({...this.skuDetails, postage:null, shipping:null});
+
+                }
               }
               else{
                 this.inventoryService.setSkuDetails({...this.skuDetails, postage:null, shipping:null});

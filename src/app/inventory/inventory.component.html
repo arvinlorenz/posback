@@ -3,12 +3,20 @@
       <div class="row">
           <div class="col">
             <form [formGroup]="form" (submit)="checkSku()">
-                <mat-form-field>
+                <mat-form-field floatLabel="always">
                   <input 
                     #skuKey
-                    formControlName="skuKey"
+                    [matAutocomplete]="auto"
+                    [formControl]="myControl"
                     matInput 
-                    placeholder="SKU Key">
+                    type="text"
+                    placeholder="SKU Key"
+                    >
+                      <mat-autocomplete #auto="matAutocomplete">
+                        <mat-option *ngFor="let sku of filteredOptions | async" [value]="sku">
+                          {{sku}}
+                        </mat-option>
+                      </mat-autocomplete>
                 </mat-form-field>
                 <button 
                   mat-raised-button
