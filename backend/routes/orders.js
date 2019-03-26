@@ -42,16 +42,44 @@ router.post('', async(req,res,next)=>{
 
 
 
-router.post('/checkOrderInDB', async(req,res,next)=>{
-    let orders = req.body.orders;
+// router.post('/checkOrderInDB', async(req,res,next)=>{
+//     let orders = req.body.orders;
  
+//     try {
+//         const promisesArray = await orders.reduce(async(acc, order) => {
+//             let promises = await acc;
+//             let filteredOrder = await OpenOrders.findOne({OrderId: order.orderId});
+//             if(filteredOrder != null){
+//                 promises.push(new Promise(async(resolve, reject) => {
+//                     resolve({...order})
+//                 }))
+//             }
+
+//             return promises;
+//         }, Promise.resolve([]));
+        
+//         let promiseResponses = await Promise.all(promisesArray);
+
+//         res.status(200).json({
+//             orders: promiseResponses
+//         });
+//     } catch (error) {
+//         res.status(400).json({
+//             message: "FAILED",
+//         });
+//     }  
+// });
+
+router.post('/checkOrderInDB', async(req,res,next)=>{
+    let orderIds = req.body.orderIds;
+    console.log(orderIds)
     try {
-        const promisesArray = await orders.reduce(async(acc, order) => {
+        const promisesArray = await orderIds.reduce(async(acc, orderId) => {
             let promises = await acc;
-            let filteredOrder = await OpenOrders.findOne({OrderId: order.orderId});
+            let filteredOrder = await OpenOrders.findOne({OrderId: orderId});
             if(filteredOrder != null){
                 promises.push(new Promise(async(resolve, reject) => {
-                    resolve({...order})
+                    resolve(orderId)
                 }))
             }
 
@@ -61,7 +89,7 @@ router.post('/checkOrderInDB', async(req,res,next)=>{
         let promiseResponses = await Promise.all(promisesArray);
 
         res.status(200).json({
-            orders: promiseResponses
+            orderIds: promiseResponses
         });
     } catch (error) {
         res.status(400).json({

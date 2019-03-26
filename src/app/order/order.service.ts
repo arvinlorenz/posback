@@ -146,6 +146,7 @@ export class OrderService{
     }
 
     getOpenOrdersWithEdit(){
+        let orderIdArrayResponse = []
         let url = `${this.tokenService.getServer()}/api/Orders/GetOpenOrders`;
             let params = {
                 entriesPerPage: 1000,
@@ -154,41 +155,81 @@ export class OrderService{
             const options = {  headers: new HttpHeaders().set('Authorization', this.tokenService.getToken()) };
             return this.http.post(url,params,options)
                 .pipe(map((order:any)=>{
-   
+                    
                     return {
                         orders: order.Data.map(order=>{
-                            
-                            return {
-                                NumOrderId: order.NumOrderId,
-                                orderId: order.OrderId,
-                                Company: order.CustomerInfo.Address.Company,
-                                FullName: order.CustomerInfo.Address.FullName,
-                                Address1: order.CustomerInfo.Address.Address1,
-                                Address2: order.CustomerInfo.Address.Address2,
-                                Address3: order.CustomerInfo.Address.Address3,
-                                Region: order.CustomerInfo.Address.Region,
-                                Town: order.CustomerInfo.Address.Town,
-                                PostCode: order.CustomerInfo.Address.PostCode,
-                                Country: order.CustomerInfo.Address.Country,
-                                EmailAddress: order.CustomerInfo.Address.EmailAddress,
-                                PhoneNumber: order.CustomerInfo.Address.PhoneNumber,
-                                CountryId: order.CustomerInfo.Address.CountryId,
+                            return order.OrderId
+                            //return {
+                                //orderId: order.OrderId,
+                                // NumOrderId: order.NumOrderId,
+                                // Company: order.CustomerInfo.Address.Company,
+                                // FullName: order.CustomerInfo.Address.FullName,
+                                // Address1: order.CustomerInfo.Address.Address1,
+                                // Address2: order.CustomerInfo.Address.Address2,
+                                // Address3: order.CustomerInfo.Address.Address3,
+                                // Region: order.CustomerInfo.Address.Region,
+                                // Town: order.CustomerInfo.Address.Town,
+                                // PostCode: order.CustomerInfo.Address.PostCode,
+                                // Country: order.CustomerInfo.Address.Country,
+                                // EmailAddress: order.CustomerInfo.Address.EmailAddress,
+                                // PhoneNumber: order.CustomerInfo.Address.PhoneNumber,
+                                // CountryId: order.CustomerInfo.Address.CountryId,
 
-                            }
+                            //}
                         })
                     }
                 }))
-                .subscribe(orders=>{
-
+                .subscribe(orderIds=>{
+                    
                     let url = `${environment.apiUrl}/orders/checkOrderInDB`;
                     let params = {
-                        ...orders
+                        orderIds: orderIds.orders
                         }
                         this.http.post(url,params)
                     .subscribe((res:any)=>{
-                        this.openOrders = res.orders;
-                        this.openOrdersUpdated.next(this.openOrders);
+    
+                       orderIdArrayResponse = res.orderIds
+
+                       let url = `${this.tokenService.getServer()}/api/Orders/GetOpenOrders`;
+                        let params = {
+                            entriesPerPage: 1000,
+                            pageNumber: 1
+                            }
+                        const options = {  headers: new HttpHeaders().set('Authorization', this.tokenService.getToken()) };
+                        return this.http.post(url,params,options)
+                            .pipe(map((order:any)=>{
+                                
+                                return {
+                                    orders: order.Data.map(order=>{
+                                       
+                                        return {
+                                            orderId: order.OrderId,
+                                            NumOrderId: order.NumOrderId,
+                                            Company: order.CustomerInfo.Address.Company,
+                                            FullName: order.CustomerInfo.Address.FullName,
+                                            Address1: order.CustomerInfo.Address.Address1,
+                                            Address2: order.CustomerInfo.Address.Address2,
+                                            Address3: order.CustomerInfo.Address.Address3,
+                                            Region: order.CustomerInfo.Address.Region,
+                                            Town: order.CustomerInfo.Address.Town,
+                                            PostCode: order.CustomerInfo.Address.PostCode,
+                                            Country: order.CustomerInfo.Address.Country,
+                                            EmailAddress: order.CustomerInfo.Address.EmailAddress,
+                                            PhoneNumber: order.CustomerInfo.Address.PhoneNumber,
+                                            CountryId: order.CustomerInfo.Address.CountryId,
+
+                                        }
+                                    }).filter(order=>{
+                                        return orderIdArrayResponse.includes(order.orderId)
+                                    })
+                                }
+                            }))
+                            .subscribe(res=>{
+                                 this.openOrders = res.orders;
+                                 this.openOrdersUpdated.next(this.openOrders);
+                            })
                     })
+                    
                     
                   })
     }
