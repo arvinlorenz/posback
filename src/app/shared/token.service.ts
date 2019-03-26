@@ -75,7 +75,9 @@ export class TokenService{
                 this.accountFullname = responseData.FullName;
                 this.token = responseData.Token;
                 localStorage.setItem('linnToken', this.token);
+                
                 this.server = responseData.Server;
+                localStorage.setItem('linnServer', this.server);
                 this.tokenUpdated.next(this.token);
                 this.nameUpdated.next(this.accountFullname);
             });
@@ -120,6 +122,7 @@ export class TokenService{
                         this.token = tokenRes.Token;
                         localStorage.setItem('linnToken', this.token);
                         this.server = tokenRes.Server;
+                        localStorage.setItem('linnServer', this.server);
                         this.tokenUpdated.next(this.token);
                         this.nameUpdated.next(this.accountFullname);
                     })
