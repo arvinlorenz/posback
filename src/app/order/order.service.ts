@@ -17,7 +17,7 @@ export class OrderService{
     returnResponse:{message:any,orderId:string};
     private returnResponseUpdated = new Subject<any>();
 
-    openOrders;
+    openOrders = [];
     private openOrdersUpdated = new Subject<any>();
 
 
@@ -101,6 +101,10 @@ export class OrderService{
              this.openOrdersUpdated.next(this.openOrders);
         })
     }
+
+    getOpenOrders(){
+        return this.openOrders;
+    }
     getProcessedOrders(){
         this.http.get(`${environment.apiUrl}/orders`, {
             observe: 'body',
@@ -146,6 +150,44 @@ export class OrderService{
     }
 
     getOpenOrdersWithEdit(){
+        let url = `${environment.apiUrl}/orders/getOpenOrdersFromMongo`;
+            let params = {
+                }
+                this.http.post(url,params)
+                .pipe(map((orderRes:any)=>{
+    
+                    return {
+                        orders: orderRes.openOrders.map(order=>{
+                           
+                            return {
+                                orderId: order.OrderId,
+                                NumOrderId: order.NumOrderId,
+                                Company: order.CustomerInfo.Address.Company,
+                                FullName: order.CustomerInfo.Address.FullName,
+                                Address1: order.CustomerInfo.Address.Address1,
+                                Address2: order.CustomerInfo.Address.Address2,
+                                Address3: order.CustomerInfo.Address.Address3,
+                                Region: order.CustomerInfo.Address.Region,
+                                Town: order.CustomerInfo.Address.Town,
+                                PostCode: order.CustomerInfo.Address.PostCode,
+                                Country: order.CustomerInfo.Address.Country,
+                                EmailAddress: order.CustomerInfo.Address.EmailAddress,
+                                PhoneNumber: order.CustomerInfo.Address.PhoneNumber,
+                                CountryId: order.CustomerInfo.Address.CountryId,
+
+                            }
+                        })
+                    }
+                }))
+                .subscribe((res: any)=>{
+                    console.log(res)
+                     this.openOrders = res.orders;
+                     this.openOrdersUpdated.next(this.openOrders);
+                })
+    }
+
+    //this is not working
+    getOpenOrdersWithEditOLDONE(){
         let orderIdArrayResponse = []
         let url = `${this.tokenService.getServer()}/api/Orders/GetOpenOrders`;
             let params = {

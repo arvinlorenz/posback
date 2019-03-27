@@ -70,6 +70,17 @@ router.post('', async(req,res,next)=>{
 //     }  
 // });
 
+router.post('/getOpenOrdersFromMongo', async(req,res,next)=>{
+
+    let openOrders = await OpenOrders.find();
+    res.status(200).json({
+        openOrders
+    });
+
+});
+
+
+//not working
 router.post('/checkOrderInDB', async(req,res,next)=>{
     let orderIds = req.body.orderIds;
    
