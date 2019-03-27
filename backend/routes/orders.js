@@ -72,7 +72,7 @@ router.post('', async(req,res,next)=>{
 
 router.post('/checkOrderInDB', async(req,res,next)=>{
     let orderIds = req.body.orderIds;
-    console.log(orderIds)
+   
     try {
         const promisesArray = await orderIds.reduce(async(acc, orderId) => {
             let promises = await acc;
@@ -98,6 +98,8 @@ router.post('/checkOrderInDB', async(req,res,next)=>{
     }  
 });
 
+
+//not working yet
 router.post('/fetchOpenOrders', async(req,res,next)=>{
     let credentialsInfo = await credentials()
     let accountInformation = await accountInfo(credentialsInfo);

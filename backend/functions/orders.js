@@ -4,7 +4,7 @@ const {openOrders} = require('./open-orders');
 const {openOrdersCall} = require('./open-order-call');
 const {searchProcessedOrder} = require('./search-processed-orders');
 const {processedOrderCall} = require('./processed-order-call');
-
+const {deleteProcessed} = require('../functions/delete-processed');
 let checkAndSaveOrders = async()=>{
     console.log('get credentials')
             let credentialsInfo = await credentials()
@@ -18,11 +18,13 @@ let checkAndSaveOrders = async()=>{
             }
             
                 let openOrdersInfo = await openOrders(ainfo);
-                let processedOrders = await searchProcessedOrder(ainfo); //within specific time
+                //let processedOrders = await searchProcessedOrder(ainfo); //within specific time
     
                
-                Promise.all([openOrdersCall({linnworksToken: credentialsInfo.token,orders:openOrdersInfo}),processedOrderCall({...ainfo,orders:processedOrders,linnworksToken: credentialsInfo.token}) ])
-                console.log('another 1min. for '+ accountInformation.FullName)
+                //Promise.all([openOrdersCall({linnworksToken: credentialsInfo.token,orders:openOrdersInfo}),processedOrderCall({...ainfo,orders:processedOrders,linnworksToken: credentialsInfo.token}) ])
+                Promise.all([openOrdersCall({linnworksToken: credentialsInfo.token,orders:openOrdersInfo}) ])
+                deleteProcessed({orders:openOrdersInfo})
+                console.log('starting 1min.count for '+ accountInformation.FullName)
     try {
         setInterval(async()=>{
              credentialsInfo = await credentials()
@@ -36,10 +38,10 @@ let checkAndSaveOrders = async()=>{
             }
             
                  openOrdersInfo = await openOrders(ainfo);
-                 processedOrders = await searchProcessedOrder(ainfo); //within specific time
-            
-                console.log(processedOrders)
-                Promise.all([openOrdersCall({...ainfo,orders:openOrdersInfo}),processedOrderCall({...ainfo, orders:processedOrders}) ])
+                 //processedOrders = await searchProcessedOrder(ainfo); //within specific time
+                //Promise.all([openOrdersCall({...ainfo,orders:openOrdersInfo}),processedOrderCall({...ainfo, orders:processedOrders}) ])
+                Promise.all([openOrdersCall({linnworksToken: credentialsInfo.token,orders:openOrdersInfo}) ])
+                deleteProcessed({orders:openOrdersInfo})
                 console.log('another 1min. for '+ accountInformation.FullName)
             }, 60000) //1min 
     } catch (error) {

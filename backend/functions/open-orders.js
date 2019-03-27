@@ -4,7 +4,7 @@ const axios = require('axios');
 let openOrders = async(info)=>{
     let url = `${info.server}/api/Orders/GetOpenOrders`
     let params = {
-        entriesPerPage: 100,
+        entriesPerPage: 1000,
         pageNumber: 1
     }
     let headers = {

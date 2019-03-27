@@ -115,9 +115,9 @@ export class OpenOrderComponent implements OnInit, OnDestroy {
 
   fetchOpenOrders(){
     this.loading = true;
-     this.orderService.fetchOpenOrders()
+     //this.orderService.fetchOpenOrders() this is with fetch data from linnworks and save to mongo
 
-    
+     this.orderService.getOpenOrdersWithEdit();
     
   }
 }
