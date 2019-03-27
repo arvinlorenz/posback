@@ -71,8 +71,8 @@ router.post('', async(req,res,next)=>{
 // });
 
 router.post('/getOpenOrdersFromMongo', async(req,res,next)=>{
-
-    let openOrders = await OpenOrders.find();
+    let credentialsInfo = await credentials()
+    let openOrders = await OpenOrders.find({linnToken:credentialsInfo.token});
     res.status(200).json({
         openOrders
     });
