@@ -100,6 +100,7 @@ export class PrintComponent implements OnInit {
         .subscribe((a:any)=>{
           console.log(a)
           if(a.KeyedError.length == 0){
+            alert('Printing...')
             this.soundService.playSuccess();
             this.form.setValue({
               sku: ''

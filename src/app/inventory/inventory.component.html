@@ -11,6 +11,7 @@
                     matInput 
                     type="text"
                     placeholder="SKU Key"
+                    (keyup)="chooseFirstOptionActive($event)"
                     >
                       <mat-autocomplete #auto="matAutocomplete">
                         <mat-option *ngFor="let sku of filteredOptions | async" [value]="sku">

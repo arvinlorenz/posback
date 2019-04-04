@@ -6,10 +6,10 @@ const openOrdersSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    GeneralInfo: {
-        type: Object,
-        required: true
-    },
+    // GeneralInfo: {
+    //     type: Object,
+    //     required: true
+    // },
     ShippingInfo: {
         type: Object,
         required: true
@@ -22,22 +22,22 @@ const openOrdersSchema = mongoose.Schema({
         type: Object,
         required: true
     },
-    FolderName: {
-        type: Array,
-        required: true
-    },
-    CanFulfil: {
-        type: Boolean,
-        required: true
-    },
+    // FolderName: {
+    //     type: Array,
+    //     required: true
+    // },
+    // CanFulfil: {
+    //     type: Boolean,
+    //     required: true
+    // },
     Items:{
         type: Object,
         required: true
     },
-    HasItems: {
-        type: Boolean,
-        required: true
-    },
+    // HasItems: {
+    //     type: Boolean,
+    //     required: true
+    // },
     OrderId: {
         type: String,
         required: true

@@ -23,7 +23,7 @@
               <th class="text-center">Town</th>
               <th class="text-center">PostCode</th>
               <th class="text-center">Country</th>
-          
+              <th class="text-center">Action</th>
             </tr>
           </thead>
           <tbody>
@@ -95,6 +95,12 @@
                       *ngFor="let country of countries; let id = index">{{country.CountryName}}</option>
                 </select>
                           
+              </td>
+
+              <td>
+                <div>
+                  <button mat-stroked-button type="button" (click)="processOrder(order)" color="primary" >Process</button>
+                </div>
               </td>
               
             </tr>

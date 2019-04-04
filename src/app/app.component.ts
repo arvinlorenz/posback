@@ -16,10 +16,10 @@ export class AppComponent implements OnInit{
   ngOnInit(){
     this.tokenService.getNewToken();
     this.authService.autoAuthUser();
-    
     this.tokenService.tokenUpdateListener()
     .subscribe(a=>{
       this.orderService.loadCount();
+      this.orderService.getOpenOrdersWithEdit()
     })
     ///this.tokenService.realTimeUpdateToken();
     

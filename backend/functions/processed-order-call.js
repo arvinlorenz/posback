@@ -49,6 +49,7 @@ let processedOrderCall = async(infos)=>{
        
     }
     let a = await Promise.all(secondPromises);
+    console.log('2', a)
     return a;
      
 }

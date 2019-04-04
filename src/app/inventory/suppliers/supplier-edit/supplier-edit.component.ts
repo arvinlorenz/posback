@@ -27,6 +27,7 @@ export class SupplierEditComponent implements OnInit, OnDestroy {
     this.form.controls.barCode.disable();
     this.form.controls.leadTime.disable();
     this.form.controls.purchasePrice.disable();
+    this.form.controls.purchasePriceAUD.disable();
     this.form.controls.minPrice.disable();
     this.form.controls.maxPrice.disable();
     this.form.controls.averagePrice.disable();
@@ -57,6 +58,7 @@ export class SupplierEditComponent implements OnInit, OnDestroy {
       barCode: new FormControl(null, Validators.required),
       leadTime: new FormControl(null, Validators.required),
       purchasePrice: new FormControl(null, Validators.required),
+      purchasePriceAUD: new FormControl(null, Validators.required),
       minPrice: new FormControl(null, Validators.required),
       maxPrice: new FormControl(null, Validators.required),
       averagePrice: new FormControl(null, Validators.required),
@@ -83,6 +85,7 @@ export class SupplierEditComponent implements OnInit, OnDestroy {
           barCode: this.supplier.SupplierBarcode,
           leadTime: this.supplier.LeadTime,
           purchasePrice: this.supplier.PurchasePrice,
+          purchasePriceAUD: this.supplier.PurchasePrice/4.5,
           minPrice: this.supplier.MinPrice,
           maxPrice: this.supplier.MaxPrice,
           averagePrice: this.supplier.AveragePrice,
@@ -127,6 +130,7 @@ export class SupplierEditComponent implements OnInit, OnDestroy {
                 barCode: supplierRecheck.SupplierBarcode,
                 leadTime: supplierRecheck.LeadTime,
                 purchasePrice: supplierRecheck.PurchasePrice,
+                purchasePriceAUD: supplierRecheck.PurchasePrice/4.5,
                 minPrice: supplierRecheck.MinPrice,
                 maxPrice: supplierRecheck.MaxPrice,
                 averagePrice: supplierRecheck.AveragePrice,

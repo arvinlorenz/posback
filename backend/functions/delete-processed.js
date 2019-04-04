@@ -11,7 +11,7 @@ let deleteProcessed = async(payload)=>{
    allOrders.forEach(order=>{
         if(!openOrderIdsArray.includes(order.OrderId)){
             OpenOrders.deleteOne({OrderId:order.OrderId}).then((a)=>{
-                console.log(order.OrderId + " deleted")
+                console.log(order.OrderId +" "+ order.NumOrderId + " deleted")
                 console.log(a)
             })
             

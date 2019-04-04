@@ -20,6 +20,7 @@ import {MatTableModule} from '@angular/material/table';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatMenuModule} from '@angular/material/menu';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 
 import { DataTablesModule } from 'angular-datatables';
@@ -43,6 +44,7 @@ import { SuppliersComponent } from './inventory/suppliers/suppliers.component';
 import { SupplierEditComponent } from './inventory/suppliers/supplier-edit/supplier-edit.component';
 import { OpenOrderComponent } from './order/open-order/open-order.component';
 import { PrintComponent } from './order/print/print.component';
+import { PrintlabelProcessorderComponent } from './printlabel-processorder/printlabel-processorder.component';
 
 
 @NgModule({
@@ -61,7 +63,8 @@ import { PrintComponent } from './order/print/print.component';
     SuppliersComponent,
     SupplierEditComponent,
     OpenOrderComponent,
-    PrintComponent
+    PrintComponent,
+    PrintlabelProcessorderComponent
     
   ],
   imports: [
@@ -89,6 +92,7 @@ import { PrintComponent } from './order/print/print.component';
     MatExpansionModule,
     MatSelectModule,
     MatAutocompleteModule,
+    MatCheckboxModule,
 
     DataTablesModule,
     BrowserAnimationsModule

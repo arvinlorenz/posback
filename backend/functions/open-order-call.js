@@ -9,7 +9,16 @@ let openOrdersCall = async(payload)=>{
         let filteredOrder = await OpenOrders.findOne({OrderId: order.OrderId});
         if(filteredOrder == null){
             promises.push(new Promise(async(resolve, reject) => {
-                resolve({...order, type: 'open', linnToken: payload.linnworksToken})
+                // resolve({...order, type: 'open', linnToken: payload.linnworksToken})
+                resolve({
+                        CustomerInfo: order.CustomerInfo, 
+                        NumOrderId: order.NumOrderId, 
+                        OrderId: order.OrderId, 
+                        Items: order.Items,
+                        ShippingInfo: order.ShippingInfo, 
+                        TotalsInfo: order.TotalsInfo,
+                        type: 'open', 
+                        linnToken: payload.linnworksToken})
             }))
         }
 

@@ -10,6 +10,7 @@ import { AuthGuard } from "./auth/auth.guard";
 import { InventoryWithSuppliersComponent } from "./inventory/inventory-with-suppliers/inventory-with-suppliers.component";
 import { OpenOrderComponent } from "./order/open-order/open-order.component";
 import { PrintComponent } from "./order/print/print.component";
+import { PrintlabelProcessorderComponent } from "./printlabel-processorder/printlabel-processorder.component";
 
 
 const routes: Routes = [
@@ -17,6 +18,7 @@ const routes: Routes = [
     { path: 'setting', component: SettingsComponent,canActivate: [AuthGuard]},
     { path: 'open', component: OpenOrderComponent,canActivate: [AuthGuard]},
     { path: 'print', component: PrintComponent,canActivate: [AuthGuard]},
+    { path: 'label-print', component: PrintlabelProcessorderComponent,canActivate: [AuthGuard]},
     { path: 'pos', component: OrderComponent,canActivate: [AuthGuard]},
     { path: 'sku', component: InventoryComponent,
     children: [

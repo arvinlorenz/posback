@@ -1,0 +1,86 @@
+<mat-card>
+  <div class="row">
+      <div class="col-sm">
+        <form [formGroup]="form" (submit)="findOrder()">
+            <mat-form-field>
+              <input 
+                #orderNumber
+                formControlName="orderNumber"
+                matInput 
+                placeholder="Order Number">
+            </mat-form-field>    
+            <button 
+                mat-raised-button
+                color="basic"
+                type="submit"
+                >Find
+            </button> 
+          </form>
+      </div>
+      <div class="col-sm checkboxes">
+          <mat-checkbox class="checkbox-margin">Autoprocess</mat-checkbox>
+          <mat-checkbox class="checkbox-margin">Autoprint </mat-checkbox>
+      </div>
+
+      <div class="col-sm print-buttons">
+          <button mat-raised-button color="primary">Print Label</button>
+          <button mat-raised-button color="primary">Print Invoice</button>
+      </div>
+  </div>
+  
+</mat-card>
+
+<div style="margin-top: 1rem">
+          <mat-card>
+                  Address: {{address}}
+              
+          </mat-card>
+
+          <mat-card>
+            Notes:
+                  <span *ngFor="let note of orderNotes; let id = index">
+                  {{note}}.
+                  </span> 
+          </mat-card>
+
+          <mat-card>
+            <div class="row">
+            <form [formGroup]="formDisplay">
+              <mat-form-field class="col-md-4">
+                <mat-select placeholder="Shipping Method" formControlName="shippingMethod">
+                  <mat-option *ngFor="let shippingMethodItem of shippingMethodArray" [value]="shippingMethodItem.pkPostalServiceId" >
+                    {{shippingMethodItem.PostalServiceName}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field class="col-md-4">
+  
+                <mat-select placeholder="Packaging Group" formControlName="packagingGroup" (selectionChange)="onChangePackageGroup($event)">
+                  <mat-option *ngFor="let packagingGroupItem of packagingGroupArray" [value]="packagingGroupItem.packagingGroupId" >
+                    {{packagingGroupItem.packagingGroupName}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+
+              <mat-form-field class="col-md-4">
+                <mat-select placeholder="Packaging Type" formControlName="packagingType">
+                  <mat-option *ngFor="let packagingTypeItem of packagingTypeArray" [value]="packagingTypeItem.PackagingTypeId" >
+                    {{packagingTypeItem.Name}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+
+            </form>
+          </div>
+            <br>
+            
+            <div class="row">
+              <div class="offset-md-5">
+                  <button mat-raised-button color="alert" style="margin-left: 5px">Process</button>
+              </div>
+            </div>
+           
+          </mat-card>
+
+    
+</div>

@@ -30,6 +30,8 @@ export class OrderService{
         const options = {  headers: new HttpHeaders().set('Authorization', this.tokenService.getToken()) };
         return  this.http.post(url,{}, options,);
     }
+
+    
     // getOpenOrders(){
        
     //     let url = `${this.tokenService.getServer()}/api/Orders/GetOpenOrders`;
@@ -105,6 +107,30 @@ export class OrderService{
     getOpenOrders(){
         return this.openOrders;
     }
+    
+    getOrderById(orderId){
+        let url = `${this.tokenService.getServer()}/api/Orders/GetOrder`;
+            let params = {
+                orderId,
+                fulfilmentLocationId: "00000000-0000-0000-0000-000000000000",
+                loadItems: false,
+                loadAdditionalInfo: false
+                }
+            const options = {  headers: new HttpHeaders().set('Authorization', this.tokenService.getToken()) };
+        return this.http.post(url,params, options)
+
+
+    }
+    getOrderNoteById(orderId){
+        let url = `${this.tokenService.getServer()}/api/Orders/GetOrderNotes`;
+            let params = {
+                orderId
+                }
+            const options = {  headers: new HttpHeaders().set('Authorization', this.tokenService.getToken()) };
+        return this.http.post(url,params, options)
+
+
+    }
     getProcessedOrders(){
         this.http.get(`${environment.apiUrl}/orders`, {
             observe: 'body',
@@ -121,8 +147,9 @@ export class OrderService{
             let accountPermaToken = this.tokenService.getCredentials().token;
 
             return orders.orders.filter((order:any) =>{
-                let processDate = moment(order.date).format('YYYY/MM/DD');
                 
+                let processDate = moment(order.date).format('YYYY/MM/DD');
+
                 if(processDate === now && accountPermaToken === order.token){
                     return true
                 }
@@ -131,6 +158,7 @@ export class OrderService{
           }),
           map((orders:any)=>{
             return orders.map(order=>{
+                
                 return {
                     ...order,
                     date:  moment(order.date).format('DD/MMM/YYYY HH:mm:ss A')

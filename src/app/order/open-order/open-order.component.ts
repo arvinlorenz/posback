@@ -17,7 +17,7 @@ export class OpenOrderComponent implements OnInit, OnDestroy {
   copyOrders;
   ordersSub: Subscription;
 
-  loading = true;
+  loading = false;
   countries;
   dtOptions = {};
   dtTrigger: Subject<any> = new Subject();
@@ -43,7 +43,13 @@ export class OpenOrderComponent implements OnInit, OnDestroy {
     };
     
 
-    this.orderService.getOpenOrdersWithEdit();
+    //this.orderService.getOpenOrdersWithEdit();
+    
+    this.loading = false;
+    this.orders= this.orderService.getOpenOrders();
+        this.copyOrders = {...this.orders};
+        $('#table').DataTable().destroy()
+        this.dtTrigger.next();
     this.ordersSub = this.orderService.openOrdersUpdatedListener()
       .subscribe(orders=>{
         this.loading = false;
@@ -57,9 +63,9 @@ export class OpenOrderComponent implements OnInit, OnDestroy {
         this.countries = countries;
       })
 
-    this.tokenService.tokenUpdateListener().subscribe(a=>{ 
-      this.orderService.getOpenOrdersWithEdit();
-    })
+    // this.tokenService.tokenUpdateListener().subscribe(a=>{ 
+    //   this.orderService.getOpenOrdersWithEdit();
+    // })
   }
   //ngAfterViewInit(): void {this.dtTrigger.next();}
   ngOnDestroy(){
