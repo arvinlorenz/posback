@@ -24,7 +24,7 @@ export class OpenOrderComponent implements OnInit, OnDestroy {
   constructor(private orderService: OrderService, private tokenService: TokenService) { }
   
   ngOnInit() {
-    
+    console.log('loaded')
     this.dtOptions = {
       pagingType: 'full_numbers',
       pageLength: 100,

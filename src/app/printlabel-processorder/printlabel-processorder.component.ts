@@ -158,27 +158,6 @@ export class PrintlabelProcessorderComponent implements OnInit {
         })
     }
   }
-
-  // printLabel(){
-  //   this.orderService.createPDF(IDs, printer,printerLocation, templateId, templateType)
-  //       .subscribe((a:any)=>{
-  //         console.log(a)
-  //         if(a.KeyedError.length == 0){
-  //           alert('Printing...')
-  //           this.soundService.playSuccess();
-  //           this.form.setValue({
-  //             sku: ''
-  //           })
-  //           this.skuField.nativeElement.focus();
-  //         }
-  //         else{
-  //           this.soundService.playError();
-  //           this.form.setValue({
-  //             sku: ''
-  //           })
-  //           this.skuField.nativeElement.focus();
-  //         }
-  //       })
-  // }
+  
 
 }
