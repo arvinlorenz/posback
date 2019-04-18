@@ -13,7 +13,16 @@ export class PrintlabelProcessorderComponent implements OnInit {
   orderNotes;
   form;
   orderEntered = false;
-  address;
+  name
+  company
+  address1
+  address2
+  address3
+  town
+  region
+  postcode
+  phone
+  email
 
   formDisplay;
   shippingMethodSelected
@@ -25,6 +34,8 @@ export class PrintlabelProcessorderComponent implements OnInit {
   packagingGroupTypeArrayAll
   packagingTypeArray
 
+  printers
+  templates
   constructor(private orderService: OrderService, private otherService: OthersService) { }
 
   ngOnInit() {
@@ -43,6 +54,21 @@ export class PrintlabelProcessorderComponent implements OnInit {
 
       },[])
     })
+
+    this.orderService.getPrinters()
+      .subscribe(printers=>{
+        this.printers = printers;
+      })
+      this.orderService.getTemplates()
+      .subscribe((templates:any[])=>{
+        let uniqueTems = [];
+        this.templates = templates.filter(template=>{
+          if(!uniqueTems.includes(template.TemplateType)){
+            uniqueTems.push(template.TemplateType);
+            return template;
+          } 
+        });
+      })
 
     this.otherService.getPackageGroupsAndTypes()
     .subscribe((groupsAndTypes: any[])=>{
@@ -99,7 +125,16 @@ export class PrintlabelProcessorderComponent implements OnInit {
       this.orderEntered = true;
       this.orderService.getOrderById(order.longId)
         .subscribe((res:any)=>{
-          this.address = res.CustomerInfo.Address.Address1;
+          this.name = res.CustomerInfo.Address.FullName;
+          this.company = res.CustomerInfo.Address.Company;
+          this.address1 = res.CustomerInfo.Address.Address1;
+          this.address2 = res.CustomerInfo.Address.Address2;
+          this.address3 = res.CustomerInfo.Address.Address3;
+          this.town = res.CustomerInfo.Address.Town;
+          this.region = res.CustomerInfo.Address.Region;
+          this.postcode = res.CustomerInfo.Address.PostCode;
+          this.phone = res.CustomerInfo.Address.PhoneNumber;
+          this.email = res.CustomerInfo.Address.EmailAddress;
           this.shippingMethodSelected = res.ShippingInfo.PostalServiceId;
           this.packagingGroupSelected = res.ShippingInfo.PackageCategoryId;
           this.packagingTypeSelected = res.ShippingInfo.PackageTypeId;
