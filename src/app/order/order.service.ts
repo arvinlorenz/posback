@@ -11,7 +11,7 @@ export class OrderService{
     processCount = 0;
     private processCountUpdated = new Subject<number>();
 
-    processedOrders: any[];
+    processedOrders: any[] = [];
     private processedOrdersUpdated = new Subject<any[]>();
 
     returnResponse:{message:any,orderId:string};
@@ -379,6 +379,7 @@ export class OrderService{
     }
 
     incrementProcessCount(orderNumber:string, name:string){
+        
         let date =  moment(Date.now()).tz('Australia/Sydney').add(1, 'hours').format('DD/MMM/YYYY hh:mm:ss A')
         let token = this.tokenService.getCredentials().token;
         this.http.post(`${environment.apiUrl}/orders`,{orderNumber,name,date,token})
@@ -386,6 +387,7 @@ export class OrderService{
             this.processCount++;
             this.processCountUpdated.next(this.processCount);
             this.processedOrders = [...this.processedOrders, {orderNumber,name,date,token}]
+            console.log(this.processedOrders)
             this.processedOrdersUpdated.next(this.processedOrders);
         })
 

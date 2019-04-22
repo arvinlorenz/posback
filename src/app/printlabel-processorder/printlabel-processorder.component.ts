@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { OrderService } from '../order/order.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { OthersService } from '../shared/others.service';
+import { SoundsService } from '../shared/sounds.service';
+import { MatDialog } from '@angular/material';
+import { ModalComponent } from '../order/modal/modal.component';
 
 @Component({
   selector: 'app-printlabel-processorder',
@@ -9,6 +12,15 @@ import { OthersService } from '../shared/others.service';
   styleUrls: ['./printlabel-processorder.component.css']
 })
 export class PrintlabelProcessorderComponent implements OnInit {
+
+  autoprocess:boolean = false;
+  autoprint:boolean = false;
+  autoprintlabel:boolean = false;
+  autoprintinvoice:boolean = false;
+
+  printer; 
+  template;
+
   orderIds;
   orderNotes;
   form;
@@ -36,7 +48,11 @@ export class PrintlabelProcessorderComponent implements OnInit {
 
   printers
   templates
-  constructor(private orderService: OrderService, private otherService: OthersService) { }
+  constructor(
+    private orderService: OrderService, 
+    private otherService: OthersService, 
+    private soundsService: SoundsService,
+    public dialog: MatDialog) { }
 
   ngOnInit() {
     this.orderIds = this.orderService.getOpenOrders().map(order=>{
@@ -61,13 +77,15 @@ export class PrintlabelProcessorderComponent implements OnInit {
       })
       this.orderService.getTemplates()
       .subscribe((templates:any[])=>{
-        let uniqueTems = [];
-        this.templates = templates.filter(template=>{
-          if(!uniqueTems.includes(template.TemplateType)){
-            uniqueTems.push(template.TemplateType);
-            return template;
-          } 
-        });
+        this.templates = templates
+        // let uniqueTems = [];
+        // console.log(templates)
+        // this.templates = templates.filter(template=>{
+        //   if(!uniqueTems.includes(template.TemplateType)){
+        //     uniqueTems.push(template.TemplateType);
+        //     return template;
+        //   } 
+        // });
       })
 
     this.otherService.getPackageGroupsAndTypes()
@@ -104,7 +122,27 @@ export class PrintlabelProcessorderComponent implements OnInit {
     this.formDisplay.controls.packagingGroup.disable();
     this.formDisplay.controls.packagingType.disable();
   }
-
+  printerSelected(e){
+    this.printer = e.target.value
+  }
+  templateSelected(e){
+    this.template = e.target.value
+  }
+  toggle({checked},checkboxName){
+    if(checkboxName === 'autoprocess'){
+      this.autoprocess = checked ? true : false
+    }
+    if(checkboxName === 'autoprint'){
+      this.autoprint = checked ? true : false
+    }
+    if(checkboxName === 'autoprintlabel'){
+      this.autoprintlabel = checked ? true : false
+    }
+    if(checkboxName === 'autoprintinvoice'){
+      this.autoprintinvoice = checked ? true : false
+    }
+    console.log(this.autoprocess,this.autoprint)
+  }
   onChangePackageGroup(event){
 
     console.log(event.value)
@@ -121,6 +159,7 @@ export class PrintlabelProcessorderComponent implements OnInit {
     let order = this.orderIds.find(order=>{
       return order.shortId === this.form.value.orderNumber
     })
+    console.log(order)
     if(order){
       this.orderEntered = true;
       this.orderService.getOrderById(order.longId)
@@ -138,7 +177,7 @@ export class PrintlabelProcessorderComponent implements OnInit {
           this.shippingMethodSelected = res.ShippingInfo.PostalServiceId;
           this.packagingGroupSelected = res.ShippingInfo.PackageCategoryId;
           this.packagingTypeSelected = res.ShippingInfo.PackageTypeId;
-          console.log('pid',this.packagingTypeSelected)
+
           this.packagingTypeArray = this.packagingGroupTypeArrayAll.find(type=>{
             return type.packagingGroupId === this.packagingGroupSelected
           })
@@ -156,8 +195,128 @@ export class PrintlabelProcessorderComponent implements OnInit {
             return note.Note
           })
         })
+
+
+        // if autoprocess
+        if(this.autoprocess){
+          this.processOrder(order)
+        }
+        if(this.autoprintlabel){
+          this.printLabel(order)
+        }
     }
   }
   
+  printLabel({longId}){
+    let printerLocation = this.printers.filter(printerEach=>{
+      return printerEach.PrinterName === this.printer
+    })[0].PrinterLocationName;
+
+    let templateType = this.templates.filter(template=>{
+      return template.TemplateId === template
+    })[0].TemplateType;
+
+    this.orderService.createPDF([longId], this.printer,printerLocation, this.template, templateType)
+        .subscribe((a:any)=>{
+          console.log(a)
+          if(a.KeyedError.length == 0){
+            alert('Printing...')
+            this.soundsService.playSuccess();
+            this.form.setValue({
+              sku: ''
+            })
+          }
+          else{
+            this.soundsService.playError();
+            this.form.setValue({
+              sku: ''
+            })
+          }
+        })
+  }
+  processOrder(order){
+    this.orderService.processOrder(order.shortId).subscribe((responseData:any) => {
+      console.log(responseData)
+          if(responseData.ProcessedState == 'PROCESSED'){
+            this.orderService.incrementProcessCount(order.shortId,responseData.OrderSummary.CustomerName);
+            this.orderService.setReturnResponse(responseData,order.shortId);
+            this.soundsService.playSuccess();  
+            this.form.reset();
+  
+          }
+  
+  
+  
+  
+  
+          else if(responseData.ProcessedState === 'NOT_PROCESSED'){
+            
+            console.log(responseData.Message)
+              if(responseData.Message.indexOf('tracking number') !== -1){
+                  const dialogRef = this.dialog.open(ModalComponent, {
+                    width: '250px',
+                    data: {orderId: responseData.OrderId,orderNumber: order.shortId, notHashedOrderId: order.shortId, form: this.form}
+                  });
+                  this.soundsService.playError(); 
+                  dialogRef.afterClosed().subscribe(result => {   
+          
+                  });
+      
+        
+                    
+              }
+            
+              else{
+                this.soundsService.playError(); 
+                //this.orderService.setReturnResponse(responseData);
+                
+              }
+          }
+  
+  
+  
+  
+  
+  
+          else if(responseData.ProcessedState === 'NOT_FOUND'){
+  
+            this.orderService.searchProcessedOrders(order.shortId).subscribe((processedRes:any)=>{
+              if(processedRes.ProcessedOrders.Data.length > 0){
+                this.orderService.setReturnResponse(processedRes,order.shortId);
+                this.soundsService.playError(); 
+                this.form.reset();
+              }
+              else{
+                this.orderService.setReturnResponse('NO DATA FOUND',order.shortId); 
+                this.form.reset();
+                this.soundsService.playError(); 
+              }
+            })
+  
+          }
+  
+  
+  
+          // else if(responseData.Message === 'Invalid applicationId or applicationsecret.'){
+          //   this.tokenService.getNewToken();
+          //   this.tokenService.tokenUpdateListener()
+          //     .subscribe(a=>{
+          //       this.processOrder();
+          //     })
+          // }
+  
+          
+          else{
+            this.soundsService.playError(); 
+  
+           
+          }
+        
+
+       
+
+        
+    })
+  }
 
 }

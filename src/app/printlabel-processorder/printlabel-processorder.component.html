@@ -19,7 +19,7 @@
       </div>
       <div class="col-lg checkboxes">
         <div class="form-group">
-          <select class="form-control" >
+          <select class="form-control" (change)="printerSelected($event)" >
             <option disabled selected value>Printer</option>
             <option 
               *ngFor="let printer of printers; let id = index"
@@ -29,21 +29,25 @@
           </select>
         </div>
         <div class="form-group">
-          <select class="form-control" >
+          <select class="form-control" (change)="templateSelected($event)">
             <option disabled selected value>Template</option>
             <option 
               *ngFor="let template of templates; let id = index"
               [value]="template.TemplateId"
-            >{{template.TemplateType}}</option>
+            >{{template.TemplateType}} - {{template.TemplateName}}</option>
           </select>
         </div>
       </div>
 
       <div class="col-lg">
-        <mat-checkbox class="checkbox-margin">Autoprocess</mat-checkbox>
-        <mat-checkbox class="checkbox-margin">Autoprint </mat-checkbox>
+        <mat-checkbox class="checkbox-margin" (change)="toggle($event,'autoprocess')">Autoprocess</mat-checkbox>
+        <mat-checkbox class="checkbox-margin" (change)="toggle($event,'autoprint')">Autoprint </mat-checkbox>
       </div>
 
+      <div class="col-lg" *ngIf="autoprint">
+          <mat-checkbox class="checkbox-margin" (change)="toggle($event,'autoprintLabel')">Autoprint Label</mat-checkbox>
+          <mat-checkbox class="checkbox-margin" (change)="toggle($event,'autoprintInvoice')">Autoprint Invoice</mat-checkbox>
+        </div>
       <div class="col-lg print-buttons">
           <button mat-raised-button color="primary">Print Label</button>
           <button mat-raised-button color="primary">Print Invoice</button>
