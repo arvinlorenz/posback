@@ -387,7 +387,12 @@ export class OrderService{
             this.processCount++;
             this.processCountUpdated.next(this.processCount);
             this.processedOrders = [...this.processedOrders, {orderNumber,name,date,token}]
-            console.log(this.processedOrders)
+            
+
+            let indexOfOpen = this.openOrders.findIndex(i => i.NumOrderId === orderNumber); 
+            this.openOrders.splice(indexOfOpen,1);
+
+            this.openOrdersUpdated.next([...this.openOrders])
             this.processedOrdersUpdated.next(this.processedOrders);
         })
 

@@ -4,6 +4,9 @@ import { Subscription, Subject } from 'rxjs';
 import { DataTableDirective } from 'angular-datatables';
 import { AuthService } from 'src/app/auth/auth.service';
 import { TokenService } from 'src/app/shared/token.service';
+import { SoundsService } from 'src/app/shared/sounds.service';
+import { ModalComponent } from '../modal/modal.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-open-order',
@@ -22,7 +25,7 @@ export class OpenOrderComponent implements OnInit, OnDestroy {
   dtOptions = {};
   totalRevenue = 0;
   dtTrigger: Subject<any> = new Subject();
-  constructor(private orderService: OrderService, private tokenService: TokenService) { }
+  constructor(private orderService: OrderService, private tokenService: TokenService, private soundsService: SoundsService, public dialog: MatDialog) { }
   
   ngOnInit() {
     console.log('loaded')
@@ -135,4 +138,90 @@ export class OpenOrderComponent implements OnInit, OnDestroy {
      this.orderService.getOpenOrdersWithEdit();
     
   }
+
+  processOrder(order){
+    this.orderService.processOrder(order.NumOrderId).subscribe((responseData:any) => {
+      console.log(responseData)
+          if(responseData.ProcessedState == 'PROCESSED'){
+            this.orderService.incrementProcessCount(order.NumOrderId,responseData.OrderSummary.CustomerName);
+            this.orderService.setReturnResponse(responseData,order.NumOrderId);
+            this.soundsService.playSuccess();  
+    
+  
+          }
+  
+  
+  
+  
+  
+          else if(responseData.ProcessedState === 'NOT_PROCESSED'){
+            
+            console.log(responseData.Message)
+              if(responseData.Message.indexOf('tracking number') !== -1){
+                  const dialogRef = this.dialog.open(ModalComponent, {
+                    width: '250px',
+                    data: {orderId: responseData.OrderId,orderNumber: order.NumOrderId, notHashedOrderId: order.NumOrderId}
+                  });
+                  this.soundsService.playError(); 
+                  dialogRef.afterClosed().subscribe(result => {   
+          
+                  });
+      
+        
+                    
+              }
+            
+              else{
+                this.soundsService.playError(); 
+                //this.orderService.setReturnResponse(responseData);
+                
+              }
+          }
+  
+  
+  
+  
+  
+  
+          else if(responseData.ProcessedState === 'NOT_FOUND'){
+  
+            this.orderService.searchProcessedOrders(order.NumOrderId).subscribe((processedRes:any)=>{
+              if(processedRes.ProcessedOrders.Data.length > 0){
+                this.orderService.setReturnResponse(processedRes,order.NumOrderId);
+                this.soundsService.playError(); 
+        
+              }
+              else{
+                this.orderService.setReturnResponse('NO DATA FOUND',order.NumOrderId); 
+        
+                this.soundsService.playError(); 
+              }
+            })
+  
+          }
+  
+  
+  
+          // else if(responseData.Message === 'Invalid applicationId or applicationsecret.'){
+          //   this.tokenService.getNewToken();
+          //   this.tokenService.tokenUpdateListener()
+          //     .subscribe(a=>{
+          //       this.processOrder();
+          //     })
+          // }
+  
+          
+          else{
+            this.soundsService.playError(); 
+  
+           
+          }
+        
+
+       
+
+        
+    })
+  }
+
 }
