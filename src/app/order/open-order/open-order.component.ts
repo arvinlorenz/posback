@@ -20,6 +20,7 @@ export class OpenOrderComponent implements OnInit, OnDestroy {
   loading = false;
   countries;
   dtOptions = {};
+  totalRevenue = 0;
   dtTrigger: Subject<any> = new Subject();
   constructor(private orderService: OrderService, private tokenService: TokenService) { }
   
@@ -53,6 +54,10 @@ export class OpenOrderComponent implements OnInit, OnDestroy {
         this.dtTrigger.next();
     this.ordersSub = this.orderService.openOrdersUpdatedListener()
       .subscribe(orders=>{
+        this.totalRevenue = orders.reduce((a, current)=>{
+          return a + current.Revenue
+        }, 0)
+        console.log(this.totalRevenue)
         this.loading = false;
         this.orders = orders;
         this.copyOrders = {...orders};

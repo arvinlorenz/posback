@@ -202,7 +202,7 @@ export class OrderService{
                                 EmailAddress: order.CustomerInfo.Address.EmailAddress,
                                 PhoneNumber: order.CustomerInfo.Address.PhoneNumber,
                                 CountryId: order.CustomerInfo.Address.CountryId,
-
+                                Revenue: order.TotalsInfo.TotalCharge
                             }
                         })
                     }
