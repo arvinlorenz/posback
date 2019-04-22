@@ -49,9 +49,12 @@ export class OpenOrderComponent implements OnInit, OnDestroy {
     
     this.loading = false;
     this.orders= this.orderService.getOpenOrders();
-        this.copyOrders = {...this.orders};
-        $('#table').DataTable().destroy()
-        this.dtTrigger.next();
+    this.totalRevenue = this.orders.reduce((a, current)=>{
+      return a + current.Revenue
+    }, 0)
+    this.copyOrders = {...this.orders};
+    $('#table').DataTable().destroy()
+    this.dtTrigger.next();
     this.ordersSub = this.orderService.openOrdersUpdatedListener()
       .subscribe(orders=>{
         this.totalRevenue = orders.reduce((a, current)=>{
