@@ -112,6 +112,13 @@ export class InventoryService{
         return  this.http.post(url,params,options);
     }
 
+    getNewItemNumber(){
+        let url = `https://as-ext.linnworks.net//api/Inventory/GetNewItemNumber`;
+        let params = {};
+        const options = {  headers: new HttpHeaders().set('Authorization', this.tokenService.getToken()) };
+        return  this.http.post(url,params,options);
+    }
+
     getBinRackDetail(inventoryItemId: string){
         let url = `https://as-ext.linnworks.net//api/Inventory/GetInventoryItemLocations`;
         let params = {inventoryItemId:inventoryItemId};
@@ -211,7 +218,15 @@ export class InventoryService{
     //     this.db.list(`${this.basePath}/`).push(image);
     //   }
 
-    
+    getAllSuppliers(){
+        let url = `${this.tokenService.getServer()}/api/Inventory/GetSuppliers`;
+        let params = {
+            }
+        const options = {  headers: new HttpHeaders().set('Authorization', this.tokenService.getToken()) };
+        return  this.http.post(url,params,options);
+    }
+
+
     getSuppliers(StockItemId){
         let url = `${this.tokenService.getServer()}/api/Inventory/GetStockSupplierStat`;
         let params = {
@@ -235,6 +250,14 @@ export class InventoryService{
     }
     setSuppliers(suppliers){
         this.suppliers = suppliers;
+    }
+    addSuppliersToNewCreatedInventory(suppliers){
+        let url = `${this.tokenService.getServer()}/api/Inventory/CreateStockSupplierStat`;
+        let params = {
+            itemSuppliers:[...suppliers]
+            };
+        const options = {  headers: new HttpHeaders().set('Authorization', this.tokenService.getToken()) };
+        return  this.http.post(url,params,options);
     }
  
     editSupplierListener(){
@@ -262,6 +285,17 @@ export class InventoryService{
                   "StockItemId": stockItemId
                 }]
             }
+        const options = {  headers: new HttpHeaders().set('Authorization', this.tokenService.getToken()) };
+        return  this.http.post(url,params,options);
+    }
+
+    addInventoryItem(item){
+        let url = `${this.tokenService.getServer()}/api/Inventory/AddInventoryItem `;
+        let params = {
+            inventoryItem:{
+                ...item
+            }
+        }
         const options = {  headers: new HttpHeaders().set('Authorization', this.tokenService.getToken()) };
         return  this.http.post(url,params,options);
     }

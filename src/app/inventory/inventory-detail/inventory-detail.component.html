@@ -3,63 +3,63 @@
         <img [src]="imagePath" [alt]="itemDetails.itemTitle">
     </div>
     <form [formGroup]="skuform" (submit)="save()">
-      <mat-form-field>
-        <input 
-        matInput 
-        placeholder="Item Number"
-        formControlName="itemNumber">
-      </mat-form-field>
-    
-      <mat-form-field>
+        <mat-form-field>
           <input 
           matInput 
-          placeholder="Item Name"
-          formControlName="itemTitle">
+          placeholder="Item Number"
+          formControlName="itemNumber">
+        </mat-form-field>
+      
+        <mat-form-field>
+            <input 
+            matInput 
+            placeholder="Item Name"
+            formControlName="itemTitle">
+          </mat-form-field>
+          
+        <mat-form-field>
+          <input 
+          #quantity
+          matInput 
+          placeholder="Quantity"
+          formControlName="quantity">
         </mat-form-field>
         
-      <mat-form-field>
-        <input 
-        #quantity
-        matInput 
-        placeholder="Quantity"
-        formControlName="quantity">
-      </mat-form-field>
-      
-      <mat-form-field>
-        <input 
-        matInput 
-        placeholder="Open Order"
-        formControlName="openOrder">
-      </mat-form-field>
+        <mat-form-field>
+          <input 
+          matInput 
+          placeholder="Open Order"
+          formControlName="openOrder">
+        </mat-form-field>
 
-      <mat-form-field>
-        <input 
-        matInput 
-        placeholder="Available"
-        formControlName="available">
-      </mat-form-field>
-      <mat-form-field>
-        <input 
-        matInput 
-        placeholder="Due"
-        formControlName="due">
-      </mat-form-field>
-      <mat-form-field>
-        <input 
-        matInput 
-        placeholder="Bin Rack"
-        formControlName="bin">
-      </mat-form-field>
-    
-    <mat-card-actions *ngIf="editMode && showButton">
-        <button 
-          mat-stroked-button 
-          type="submit"  
-          color="primary">SAVE</button>
-        <button mat-stroked-button (click)="cancel()" color="warnd">CANCEL
-        </button>
-    </mat-card-actions>
-  </form>
+        <mat-form-field>
+          <input 
+          matInput 
+          placeholder="Available"
+          formControlName="available">
+        </mat-form-field>
+        <mat-form-field>
+          <input 
+          matInput 
+          placeholder="Due"
+          formControlName="due">
+        </mat-form-field>
+        <mat-form-field>
+          <input 
+          matInput 
+          placeholder="Bin Rack"
+          formControlName="bin">
+        </mat-form-field>
+      
+      <mat-card-actions *ngIf="editMode && showButton">
+          <button 
+            mat-stroked-button 
+            type="submit"  
+            color="primary">SAVE</button>
+          <button mat-stroked-button (click)="cancel()" color="warnd">CANCEL
+          </button>
+      </mat-card-actions>
+    </form>
     <mat-card-actions *ngIf="!editMode && showButton">
         <button mat-stroked-button (click)="edit()"color="primary" >EDIT</button>
     </mat-card-actions>

@@ -44,7 +44,7 @@
                   <th class="text-center">Order No.</th>
                   <th class="text-center">Name</th>
                   <th class="text-center">Date/Time</th>
-                  
+                  <th class="text-center">Action</th>
               
                 </tr>
               </thead>
@@ -58,6 +58,11 @@
                   </td>
                   <td>
                     <span>{{order.date}}</span>
+                  </td>
+                  <td>
+                    <div>
+                      <button mat-stroked-button type="button" (click)="printInvoice(order)" color="primary" >Process</button>
+                    </div>
                   </td>
                   
                     

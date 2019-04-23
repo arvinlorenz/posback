@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { OrderService } from '../order/order.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { OthersService } from '../shared/others.service';
@@ -12,7 +12,7 @@ import { ModalComponent } from '../order/modal/modal.component';
   styleUrls: ['./printlabel-processorder.component.css']
 })
 export class PrintlabelProcessorderComponent implements OnInit {
-
+  @ViewChild("orderNumber") orderField: ElementRef;
   autoprocess:boolean = false;
   autoprint:boolean = false;
   autoprintlabel:boolean = false;
@@ -107,7 +107,7 @@ export class PrintlabelProcessorderComponent implements OnInit {
           }
         })
     })
-    
+    this.orderField.nativeElement.focus();
     this.form = new FormGroup({
       orderNumber: new FormControl(null, {
         validators: [Validators.required, Validators.minLength(6)]
@@ -242,7 +242,7 @@ export class PrintlabelProcessorderComponent implements OnInit {
             this.orderService.setReturnResponse(responseData,order.shortId);
             this.soundsService.playSuccess();  
             this.form.reset();
-  
+            this.orderField.nativeElement.focus();
           }
   
   

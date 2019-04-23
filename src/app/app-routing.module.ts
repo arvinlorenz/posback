@@ -11,6 +11,7 @@ import { InventoryWithSuppliersComponent } from "./inventory/inventory-with-supp
 import { OpenOrderComponent } from "./order/open-order/open-order.component";
 import { PrintComponent } from "./order/print/print.component";
 import { PrintlabelProcessorderComponent } from "./printlabel-processorder/printlabel-processorder.component";
+import { CreateProductComponent } from "./inventory/create-product/create-product.component";
 
 
 const routes: Routes = [
@@ -32,6 +33,7 @@ const routes: Routes = [
       { path: ':itemId', component: InventoryWithSuppliersComponent },
     ],canActivate: [AuthGuard]
   },
+  { path: 'create-product', component: CreateProductComponent},
   { path: 'login', component: LoginComponent},
     
 ]

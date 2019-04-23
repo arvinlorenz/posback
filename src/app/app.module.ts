@@ -22,6 +22,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {MatStepperModule} from '@angular/material/stepper';
 
 import { DataTablesModule } from 'angular-datatables';
 
@@ -45,6 +46,7 @@ import { SupplierEditComponent } from './inventory/suppliers/supplier-edit/suppl
 import { OpenOrderComponent } from './order/open-order/open-order.component';
 import { PrintComponent } from './order/print/print.component';
 import { PrintlabelProcessorderComponent } from './printlabel-processorder/printlabel-processorder.component';
+import { CreateProductComponent } from './inventory/create-product/create-product.component';
 
 
 @NgModule({
@@ -64,7 +66,8 @@ import { PrintlabelProcessorderComponent } from './printlabel-processorder/print
     SupplierEditComponent,
     OpenOrderComponent,
     PrintComponent,
-    PrintlabelProcessorderComponent
+    PrintlabelProcessorderComponent,
+    CreateProductComponent
     
   ],
   imports: [
@@ -93,6 +96,7 @@ import { PrintlabelProcessorderComponent } from './printlabel-processorder/print
     MatSelectModule,
     MatAutocompleteModule,
     MatCheckboxModule,
+    MatStepperModule,
 
     DataTablesModule,
     BrowserAnimationsModule

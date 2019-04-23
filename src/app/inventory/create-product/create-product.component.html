@@ -1,0 +1,164 @@
+<mat-horizontal-stepper #stepper>
+  <mat-step [stepControl]="firstFormGroup">
+    <ng-template matStepLabel>Inventory</ng-template>
+    <form [formGroup]="firstFormGroup">
+        <mat-form-field>
+          <input 
+          matInput 
+          placeholder="Item Number"
+          formControlName="itemNumber">
+        </mat-form-field>
+      
+        <mat-form-field>
+            <input 
+            matInput 
+            placeholder="Item Name"
+            formControlName="itemTitle">
+          </mat-form-field>
+          
+        <mat-form-field>
+          <input 
+          #quantity
+          matInput 
+          placeholder="Quantity"
+          formControlName="quantity">
+        </mat-form-field>
+        
+        <mat-form-field>
+          <input 
+          matInput 
+          placeholder="Open Order"
+          formControlName="openOrder">
+        </mat-form-field>
+
+        <mat-form-field>
+          <input 
+          matInput 
+          placeholder="Available"
+          formControlName="available">
+        </mat-form-field>
+        <mat-form-field>
+          <input 
+          matInput 
+          placeholder="Due"
+          formControlName="due">
+        </mat-form-field>
+        <mat-form-field>
+          <input 
+          matInput 
+          placeholder="Bin Rack"
+          formControlName="bin">
+        </mat-form-field>
+      
+        <div>
+          <button mat-button matStepperNext>Next</button>
+        </div>
+    </form>
+  </mat-step>
+  <mat-step [stepControl]="secondFormGroup">
+    <ng-template matStepLabel>Stock</ng-template>
+    <form [formGroup]="secondFormGroup">
+      
+            
+      
+      <mat-form-field>
+        <input 
+        matInput 
+        placeholder="Minimum Level"
+        formControlName="minimumLevel">
+      </mat-form-field>
+
+
+      <mat-form-field>
+        <input 
+        matInput 
+        placeholder="Barcode"
+        formControlName="barcodeNumber">
+      </mat-form-field>
+
+      <mat-form-field>
+        <input 
+        matInput 
+        placeholder="Purchase Price CNY"
+        formControlName="purchasePrice">
+      </mat-form-field>
+      <mat-form-field>
+        <input 
+        matInput 
+        placeholder="Retail Price"
+        formControlName="retailPrice">
+      </mat-form-field>
+      <mat-form-field>
+          <input 
+          matInput 
+          placeholder="Tax Rate"
+          formControlName="taxRate">
+        </mat-form-field>
+      
+
+      <mat-form-field>
+        <input 
+        matInput 
+        placeholder="Height"
+        formControlName="height">
+      </mat-form-field>
+
+      <mat-form-field>
+        <input 
+        matInput 
+        placeholder="Width" 
+        formControlName="width">
+      </mat-form-field>
+
+      <mat-form-field>
+        <input 
+        matInput 
+        placeholder="Depth"
+        formControlName="depth">
+      </mat-form-field>
+
+      <mat-form-field>
+        <input 
+        matInput 
+        placeholder="Weight"
+        formControlName="weight">
+      </mat-form-field>
+
+    
+        <mat-form-field >
+          <mat-select placeholder="Postal Service ID" formControlName="postalServiceId">
+            <mat-option *ngFor="let postalServiceId of postalServices" [value]="postalServiceId.Value" >
+              {{postalServiceId.Key}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-select placeholder="Category ID" formControlName="categoryId">
+            <mat-option *ngFor="let categoryId of categories" [value]="categoryId.CategoryId" >
+              {{categoryId.CategoryName}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-select placeholder="Package Group ID" formControlName="packageGroupId">
+            <mat-option *ngFor="let packageGroupId of packageGroups" [value]="packageGroupId.Value" >
+              {{packageGroupId.Key}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <div>
+          <button mat-button matStepperNext >Next</button>
+        </div>
+    </form>
+  </mat-step>
+  <mat-step [stepControl]="thirdFormGroup">
+    <ng-template matStepLabel>Stock</ng-template>
+        <mat-checkbox class="checkbox-margin" (change)="toggleSuppliers($event,supplier.pkSupplierID)" *ngFor="let supplier of suppliers">{{supplier.SupplierName}}</mat-checkbox>
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button (click)="addInventoryItem()">Create Item</button>
+    </div>
+  </mat-step>
+</mat-horizontal-stepper>
