@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { InventoryService } from '../inventory.service';
 import * as moment from 'moment-timezone';
+import { SoundsService } from 'src/app/shared/sounds.service';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-create-product',
   templateUrl: './create-product.component.html',
@@ -19,7 +21,7 @@ export class CreateProductComponent implements OnInit {
   packageGroups;
 
   checkedSuppliers: any[] = []
-  constructor(private _formBuilder: FormBuilder, private inventoryService: InventoryService) { }
+  constructor(private _formBuilder: FormBuilder, private inventoryService: InventoryService, private soundService: SoundsService, private router: Router) { }
  
   toggleSuppliers({checked},b){
     if(checked){
@@ -39,6 +41,7 @@ export class CreateProductComponent implements OnInit {
     
     this.inventoryService.getNewItemNumber().subscribe(newItemNumber=>{
       this.firstFormGroup.controls['itemNumber'].setValue(newItemNumber);
+      this.firstFormGroup.controls.itemNumber.enable();
     })
 
     this.inventoryService.getAllSuppliers()
@@ -72,7 +75,7 @@ export class CreateProductComponent implements OnInit {
       bin:['', Validators.required],
 
     });
-
+    this.firstFormGroup.controls.itemNumber.disable();
     this.secondFormGroup = this._formBuilder.group({
       //wala sa api
      
@@ -91,7 +94,7 @@ export class CreateProductComponent implements OnInit {
       width: ['', Validators.required],
       depth: ['', Validators.required],
       weight: ['', Validators.required],
-      image: ['', Validators.required]
+      //image: ['', Validators.required]
       
     });
 
@@ -113,6 +116,11 @@ export class CreateProductComponent implements OnInit {
   }
   
   addInventoryItem(){
+    if(this.firstFormGroup.invalid||this.secondFormGroup.invalid ){
+      console.log(this.firstFormGroup.invalid, this.secondFormGroup.invalid)
+      this.soundService.playError()
+      return
+    }
     class Guid {
       static newGuid() {
           return 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
@@ -139,7 +147,7 @@ export class CreateProductComponent implements OnInit {
       "IsCompositeParent": true,
       "ItemNumber": this.firstFormGroup.value.itemNumber,
       "ItemTitle": this.firstFormGroup.value.itemTitle,
-      "BarcodeNumber": this.secondFormGroup.value.barCode,
+      "BarcodeNumber": this.secondFormGroup.value.barcodeNumber,
       "MetaData": "",
       "isBatchedStockType": false,
       "PurchasePrice": this.secondFormGroup.value.purchasePrice,
@@ -162,10 +170,23 @@ export class CreateProductComponent implements OnInit {
     }
 
     this.inventoryService.addInventoryItem(inventoryItem)
-    .subscribe(a=>{
-      this.inventoryService.setBinRack(stockItemId,this.firstFormGroup.value.due)
+    .subscribe((a:any)=>{
+      console.log('a',a.code)
+      if(a){
+        this.soundService.playError()
+        return
+      }
+      this.soundService.playSuccess()
+      this.router.navigate(['inventory',this.firstFormGroup.value.itemNumber])
+      
+      this.inventoryService.setBinRack(stockItemId,this.firstFormGroup.value.bin)
       .subscribe(b=>{
-        console.log(b)
+        if(b){
+          this.soundService.playError()
+          return
+        }
+        this.soundService.playSuccess()
+        this.router.navigate(['inventory',this.firstFormGroup.value.itemNumber]) 
       })
 
       let suppliers = [];
@@ -188,7 +209,12 @@ export class CreateProductComponent implements OnInit {
 
       this.inventoryService.addSuppliersToNewCreatedInventory(suppliers)
         .subscribe(b=>{
-          console.log(a)
+          if(b){
+            this.soundService.playError()
+            return
+          }
+          this.soundService.playSuccess()
+          this.router.navigate(['inventory',this.firstFormGroup.value.itemNumber])
         })
       
         

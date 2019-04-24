@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { InventoryService } from './inventory.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Subscription, Observable } from 'rxjs';
@@ -13,7 +13,7 @@ import { MatAutocomplete } from '@angular/material';
   templateUrl: './inventory.component.html',
   styleUrls: ['./inventory.component.css']
 })
-export class InventoryComponent implements OnInit, AfterViewInit {
+export class InventoryComponent implements OnInit {
   form;
   skuDetails;
   myControl = new FormControl();
@@ -51,11 +51,14 @@ export class InventoryComponent implements OnInit, AfterViewInit {
         validators: [Validators.required]
       })
     });
+    this.skuKeyField.nativeElement.focus();
 
 
     this.filteredOptions = this.myControl.valueChanges
       .pipe(
-        map(value => this._filter(value))
+        //startWith(''),
+        map(val => val.length >= 1 ? this._filter(val): [])
+
       );
 
       
@@ -87,10 +90,6 @@ export class InventoryComponent implements OnInit, AfterViewInit {
   //   this.matAutocomplete.options.first.select();
     
   // }
-
-  ngAfterViewInit(){
-    this.skuKeyField.nativeElement.focus();
-  }
 
 
 

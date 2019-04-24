@@ -1,6 +1,15 @@
 
   <mat-card>
       <div class="row">
+          <button mat-raised-button color="primary" routerLink="/create-product">
+            <mat-icon aria-label="plus icon">add</mat-icon>
+            Add Product
+          </button>
+
+      </div>
+      <br>
+
+      <div class="row">
           <div class="col">
             <form [formGroup]="form" (submit)="checkSku()">
                 <mat-form-field floatLabel="always">
