@@ -193,16 +193,16 @@ export class InventoryService{
         return this.http.post(url,params,options)
     }
 
-    uploadImageOfInvToLinn(imageFile:File){
-        const imageData = new FormData();
-        imageData.append('somename', imageFile, 'update.JPG');
-        let url = `${this.tokenService.getServer()}/api/Uploader/UploadFile?type=Image&expiredInHours=24`;
-        let params = {
-            imageData
-            }
-        const options = {  headers: new HttpHeaders().set('Authorization', this.tokenService.getToken()) };
-        return this.http.post(url,imageData,options)
-    }
+    // uploadImageOfInvToLinn(imageFile:File){
+    //     const imageData = new FormData();
+    //     imageData.append('somename', imageFile, 'update.JPG');
+    //     let url = `${this.tokenService.getServer()}/api/Uploader/UploadFile?type=Image&expiredInHours=24`;
+    //     let params = {
+    //         imageData
+    //         }
+    //     const options = {  headers: new HttpHeaders().set('Authorization', this.tokenService.getToken()) };
+    //     return this.http.post(url,imageData,options)
+    // }
 
     // upload(image,stockItemId){
     //     let storageRef = firebase.storage().ref();

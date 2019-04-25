@@ -20,7 +20,7 @@ export class AppComponent implements OnInit{
     this.tokenService.tokenUpdateListener()
     .subscribe(a=>{
       this.orderService.loadCount();
-      
+      //this.tokenService.getNewToken();
     })
     ///this.tokenService.realTimeUpdateToken();
     

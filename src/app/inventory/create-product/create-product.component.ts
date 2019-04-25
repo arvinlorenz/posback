@@ -117,10 +117,10 @@ export class CreateProductComponent implements OnInit {
   }
   
   addInventoryItem(){
-    this.inventoryService.uploadImageOfInvToLinn(this.firstFormGroup.value.image)
-      .subscribe(a=>{
-        console.log(a)
-      })
+    // this.inventoryService.uploadImageOfInvToLinn(this.firstFormGroup.value.image)
+    //   .subscribe(a=>{
+    //     console.log(a)
+    //   })
     if(this.firstFormGroup.invalid||this.secondFormGroup.invalid ){
       console.log(this.firstFormGroup.invalid, this.secondFormGroup.invalid)
       this.soundService.playError()
