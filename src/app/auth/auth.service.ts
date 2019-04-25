@@ -4,6 +4,7 @@ import { Router } from "@angular/router";
 import { Subject } from "rxjs";
 import { environment } from '../../environments/environment';
 import { TokenService } from "../shared/token.service";
+import { map } from "rxjs/operators";
 
 
 @Injectable({providedIn:'root'})
@@ -26,13 +27,25 @@ export class AuthService{
 
 
     signinUser(email: string, password: string) {
-        
-        this.http.post(`${environment.apiUrl}/user`,{email,password})
+        let url = `${environment.apiUrl}/user`;
+        let params = {
+            email,password
+            }
+        this.http.post(url,params)
+            
             .subscribe((res:any)=>{
-                this.token = res.token;
-                this.saveAuthData(this.token, this.tokenService.getToken(), this.tokenService.getServer());
-                this.authTokenUpdated.next(this.token);
-                this.router.navigate(['/']);
+                if(res.message === 'Auth failed'){
+                    console.log('Auth failed')
+                    this.token = null;
+                    this.authTokenUpdated.next(this.token);
+                    
+                }
+                else{
+                    this.token = res.token;
+                    this.saveAuthData(this.token, this.tokenService.getToken(), this.tokenService.getServer());
+                    this.authTokenUpdated.next(this.token);
+                }
+              
             })
         
     }

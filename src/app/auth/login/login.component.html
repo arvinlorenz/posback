@@ -6,8 +6,9 @@
         <input 
         matInput 
         placeholder="Email"
-        type="email"
+        email="true"
         formControlName="email">
+        <mat-error *ngIf="form.get('email').invalid">{{ emailErrorMessage }}</mat-error>
       </mat-form-field>
 
       <mat-form-field>
@@ -16,6 +17,8 @@
           type="password"
           placeholder="Password"
           formControlName="password">
+          <mat-error *ngIf="form.get('password').invalid">{{ passwordErrorMessage }}</mat-error>
+
       </mat-form-field>
     
      

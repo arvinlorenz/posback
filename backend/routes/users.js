@@ -10,13 +10,13 @@ router.post('', async(req,res,next)=>{
     try {
         let user = await User.findOne({email: req.body.email});
         if(!user){
-            res.status(401).json({
+            res.status(200).json({
                 message: 'Auth failed'
             });  
         }
         let result = await bcrypt.compare(req.body.password, user.password);
         if(!result){
-            res.status(401).json({
+            res.status(200).json({
                 message: 'Auth failed'
             });  
         }
