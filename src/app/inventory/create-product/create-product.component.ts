@@ -4,6 +4,7 @@ import { InventoryService } from '../inventory.service';
 import * as moment from 'moment-timezone';
 import { SoundsService } from 'src/app/shared/sounds.service';
 import { Router } from '@angular/router';
+import { read } from 'fs';
 @Component({
   selector: 'app-create-product',
   templateUrl: './create-product.component.html',
@@ -70,7 +71,7 @@ export class CreateProductComponent implements OnInit {
       openOrder:['', Validators.required],
       available:['', Validators.required],
       due:['', Validators.required],
-
+      image:[''],
       //wala sa api
       bin:['', Validators.required],
 
@@ -116,6 +117,10 @@ export class CreateProductComponent implements OnInit {
   }
   
   addInventoryItem(){
+    this.inventoryService.uploadImageOfInvToLinn(this.firstFormGroup.value.image)
+      .subscribe(a=>{
+        console.log(a)
+      })
     if(this.firstFormGroup.invalid||this.secondFormGroup.invalid ){
       console.log(this.firstFormGroup.invalid, this.secondFormGroup.invalid)
       this.soundService.playError()
@@ -168,11 +173,10 @@ export class CreateProductComponent implements OnInit {
       "SerialNumberScanRequired": true,
       "StockItemId": stockItemId
     }
-
+    console.log(inventoryItem)
     this.inventoryService.addInventoryItem(inventoryItem)
-    .subscribe((a:any)=>{
-      console.log('a',a.code)
-      if(a){
+    .subscribe(a=>{
+      if(a != null){
         this.soundService.playError()
         return
       }
@@ -181,7 +185,7 @@ export class CreateProductComponent implements OnInit {
       
       this.inventoryService.setBinRack(stockItemId,this.firstFormGroup.value.bin)
       .subscribe(b=>{
-        if(b){
+        if(b != null){
           this.soundService.playError()
           return
         }
@@ -209,7 +213,7 @@ export class CreateProductComponent implements OnInit {
 
       this.inventoryService.addSuppliersToNewCreatedInventory(suppliers)
         .subscribe(b=>{
-          if(b){
+          if(b != null){
             this.soundService.playError()
             return
           }
@@ -221,6 +225,18 @@ export class CreateProductComponent implements OnInit {
 
       
     })
+  }
+
+  onImagePicked(event: Event){
+    const file = (event.target as HTMLInputElement).files[0];
+    this.firstFormGroup.patchValue({image: file});
+    this.firstFormGroup.get('image').updateValueAndValidity();
+    const reader = new FileReader();
+    reader.onload = ()=>{
+      //this.imagePreview = reader.result;
+      console.log(reader.result)
+    };
+    reader.readAsDataURL(file);
   }
 
 }

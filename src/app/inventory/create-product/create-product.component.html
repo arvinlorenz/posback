@@ -2,6 +2,12 @@
   <mat-step [stepControl]="firstFormGroup">
     <ng-template matStepLabel>Inventory</ng-template>
     <form [formGroup]="firstFormGroup">
+       
+        <div>
+          <input type="file" #filePicker (change)="onImagePicked($event)">
+          <button type="button" mat-stroked-button (click)="filePicker.click()">Pick Image</button>
+       
+        </div>
         <mat-form-field>
           <input 
           matInput 
