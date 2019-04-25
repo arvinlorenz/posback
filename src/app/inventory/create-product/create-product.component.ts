@@ -71,9 +71,6 @@ export class CreateProductComponent implements OnInit {
       itemNumber:['', Validators.required],
       itemTitle:['', Validators.required],
       quantity:['', Validators.required],
-      openOrder:['', Validators.required],
-      available:['', Validators.required],
-      due:['', Validators.required],
       image:[''],
       //wala sa api
       bin:['', Validators.required],
@@ -147,10 +144,7 @@ export class CreateProductComponent implements OnInit {
     
     let inventoryItem={
       "Quantity": this.firstFormGroup.value.quantity,
-      "InOrder": this.firstFormGroup.value.openOrder,
-      "Due": this.firstFormGroup.value.due,
       "MinimumLevel": this.secondFormGroup.value.minimumLevel,
-      "Available": this.firstFormGroup.value.available,
       "CreationDate": now,
       "IsCompositeParent": true,
       "ItemNumber": this.firstFormGroup.value.itemNumber,

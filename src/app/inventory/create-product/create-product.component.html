@@ -30,25 +30,7 @@
           formControlName="quantity">
         </mat-form-field>
         
-        <mat-form-field>
-          <input 
-          matInput 
-          placeholder="Open Order"
-          formControlName="openOrder">
-        </mat-form-field>
-
-        <mat-form-field>
-          <input 
-          matInput 
-          placeholder="Available"
-          formControlName="available">
-        </mat-form-field>
-        <mat-form-field>
-          <input 
-          matInput 
-          placeholder="Due"
-          formControlName="due">
-        </mat-form-field>
+        
         <mat-form-field>
           <input 
           matInput 
@@ -160,7 +142,7 @@
     </form>
   </mat-step>
   <mat-step [stepControl]="thirdFormGroup">
-    <ng-template matStepLabel>Stock</ng-template>
+    <ng-template matStepLabel>Suppliers</ng-template>
         <mat-checkbox class="checkbox-margin" (change)="toggleSuppliers($event,supplier.pkSupplierID)" *ngFor="let supplier of suppliers">{{supplier.SupplierName}}</mat-checkbox>
     <div>
       <button mat-button matStepperPrevious>Back</button>
