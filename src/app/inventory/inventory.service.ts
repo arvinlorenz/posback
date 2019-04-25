@@ -229,6 +229,16 @@ export class InventoryService{
     //     this.db.list(`${this.basePath}/`).push(image);
     //   }
 
+    addSupplier(supplier){
+        let url = `${this.tokenService.getServer()}/api/Inventory/AddSupplier`;
+        let params = {
+                supplier:{
+                    ...supplier
+                }
+            }
+        const options = {  headers: new HttpHeaders().set('Authorization', this.tokenService.getToken()) };
+        return  this.http.post(url,params,options);
+    }
     getAllSuppliers(){
         let url = `${this.tokenService.getServer()}/api/Inventory/GetSuppliers`;
         let params = {

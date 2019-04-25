@@ -142,11 +142,29 @@
     </form>
   </mat-step>
   <mat-step [stepControl]="thirdFormGroup">
+    <form [formGroup]="thirdFormGroup">
     <ng-template matStepLabel>Suppliers</ng-template>
-        <mat-checkbox class="checkbox-margin" (change)="toggleSuppliers($event,supplier.pkSupplierID)" *ngFor="let supplier of suppliers">{{supplier.SupplierName}}</mat-checkbox>
-    <div>
-      <button mat-button matStepperPrevious>Back</button>
-      <button mat-button (click)="addInventoryItem()">Create Item</button>
-    </div>
+    <!-- <mat-checkbox class="checkbox-margin" (change)="toggleSuppliers($event,supplier.pkSupplierID)" *ngFor="let supplier of suppliers">{{supplier.SupplierName}}</mat-checkbox> -->
+   
+        <mat-form-field>
+          <mat-label>Suppliers</mat-label>
+          <mat-select formControlName="suppliersSelected" multiple>
+            <mat-option *ngFor="let supplier of suppliers" [value]="supplier.pkSupplierID">{{supplier.SupplierName}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        
+        <button mat-button (click)="createSupplier()">
+            <mat-icon aria-label="plus icon">add</mat-icon>
+          Create New Supplier
+        </button>
+
+        <br>
+        <br>
+      <div>
+        <button mat-raised-button matStepperPrevious>Back</button>
+        <button mat-raised-button color="primary" (click)="addInventoryItem()">Create Item</button>
+      </div>
+    </form>
+    
   </mat-step>
 </mat-horizontal-stepper>

@@ -1,0 +1,82 @@
+
+
+<h1 mat-dialog-title>Create New Supplier</h1>
+<div mat-dialog-content>
+  
+    
+  <form [formGroup]="supplierFormGroup">
+    <mat-form-field>
+      <input 
+      matInput 
+      placeholder="Supplier Name"
+      formControlName="supplierName">
+    </mat-form-field>
+    <mat-form-field>
+        <input 
+        matInput 
+        placeholder="ContactName"
+        formControlName="contactName">
+      </mat-form-field>
+      
+    <mat-form-field>
+      <input 
+      matInput 
+      placeholder="Address"
+      formControlName="address">
+    </mat-form-field>
+    
+    
+    <mat-form-field>
+      <input 
+      matInput 
+      placeholder="City/Town"
+      formControlName="cityTown">
+    </mat-form-field>
+
+
+
+    <mat-form-field>
+      <input 
+      matInput 
+      placeholder="Region"
+      formControlName="region">
+    </mat-form-field>
+
+    <mat-form-field>
+      <input 
+      matInput 
+      placeholder="Country"
+      formControlName="country">
+    </mat-form-field>
+  
+    <mat-form-field>
+        <input 
+        matInput 
+        placeholder="Post Code"
+        formControlName="postCode">
+      </mat-form-field>
+      
+    <mat-form-field>
+      <input 
+      matInput 
+      placeholder="Contact Telephone"
+      formControlName="contact">
+    </mat-form-field>
+    
+    
+    <mat-form-field>
+      <input 
+      matInput 
+      email="true"
+      placeholder="Email"
+      formControlName="email">
+      <mat-error *ngIf="supplierFormGroup.get('email').invalid">Please enter a valid email</mat-error>
+    </mat-form-field>
+
+  </form>
+</div>
+
+  <div mat-dialog-actions>
+    <button mat-button type="submit" (click)="createSupplier()">Create!</button>
+  </div>
+

@@ -4,6 +4,8 @@ import { InventoryService } from '../inventory.service';
 import * as moment from 'moment-timezone';
 import { SoundsService } from 'src/app/shared/sounds.service';
 import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material';
+import { SuppliersCreateComponent } from 'src/app/inventory/suppliers/suppliers-create/suppliers-create.component';
 //import { read } from 'fs';
 @Component({
   selector: 'app-create-product',
@@ -21,22 +23,26 @@ export class CreateProductComponent implements OnInit {
   categories;
   packageGroups;
 
-  checkedSuppliers: any[] = []
-  constructor(private _formBuilder: FormBuilder, private inventoryService: InventoryService, private soundService: SoundsService, private router: Router) { }
- 
-  toggleSuppliers({checked},b){
-    if(checked){
-      this.checkedSuppliers.push(b)
-    }
-    else{
-        if(this.checkedSuppliers.indexOf(b) != -1){
-          this.checkedSuppliers.splice(this.checkedSuppliers.indexOf(b),1)
-        }
+  
+  constructor(private _formBuilder: FormBuilder, 
+              private inventoryService: InventoryService, 
+              private soundService: SoundsService, 
+              private router: Router,
+              public dialog: MatDialog) { }
+ //checkedSuppliers: any[] = []
+  // toggleSuppliers({checked},b){
+  //   if(checked){
+  //     this.checkedSuppliers.push(b)
+  //   }
+  //   else{
+  //       if(this.checkedSuppliers.indexOf(b) != -1){
+  //         this.checkedSuppliers.splice(this.checkedSuppliers.indexOf(b),1)
+  //       }
         
       
-    }
-    console.log(this.checkedSuppliers)
-  }
+  //   }
+  //   console.log(this.checkedSuppliers)
+  // }
   ngOnInit() {
     
     
@@ -78,11 +84,6 @@ export class CreateProductComponent implements OnInit {
     });
     this.firstFormGroup.controls.itemNumber.disable();
     this.secondFormGroup = this._formBuilder.group({
-      //wala sa api
-     
-
-     
-
       minimumLevel: ['', Validators.required],
       barcodeNumber: ['', Validators.required],
       purchasePrice: ['', Validators.required],
@@ -96,33 +97,35 @@ export class CreateProductComponent implements OnInit {
       depth: ['', Validators.required],
       weight: ['', Validators.required],
       //image: ['', Validators.required]
-      
     });
 
-    // this.thirdFormGroup = this._formBuilder.group({
-    //   supplier: ['', Validators.required],
-    //   code: ['', Validators.required],
-    //  //2 barCode: ['', Validators.required],
-    //   leadTime: ['', Validators.required],
-    //   purchasePrice: ['', Validators.required],
-    //   purchasePriceAUD: ['', Validators.required],
-    //   minPrice: ['', Validators.required],
-    //   maxPrice: ['', Validators.required],
-    //   averagePrice: ['', Validators.required],
-    //   averageLeadTime: ['', Validators.required],
-    //   supplierMinOrderQty: ['', Validators.required],
-    //   supplierPackSize: ['', Validators.required],
-    //   supplierCurrency: ['', Validators.required],  
-    // });
+    this.thirdFormGroup = this._formBuilder.group({
+      suppliersSelected: [[], Validators.required]
+    });
   }
   
+  createSupplier(){
+    const dialogRef = this.dialog.open(SuppliersCreateComponent, {
+      width: '250px',
+      data:{}
+    });
+    dialogRef.afterClosed().subscribe(newSupplier => {   
+      if(newSupplier=== undefined){
+        return
+      }
+      this.suppliers.push(newSupplier)
+      
+      this.thirdFormGroup.controls['suppliersSelected'].setValue([...this.thirdFormGroup.value.suppliersSelected, newSupplier.pkSupplierID]);
+      
+      
+    });
+  }
   addInventoryItem(){
     // this.inventoryService.uploadImageOfInvToLinn(this.firstFormGroup.value.image)
     //   .subscribe(a=>{
     //     console.log(a)
     //   })
     if(this.firstFormGroup.invalid||this.secondFormGroup.invalid ){
-      console.log(this.firstFormGroup.invalid, this.secondFormGroup.invalid)
       this.soundService.playError()
       return
     }
@@ -191,7 +194,7 @@ export class CreateProductComponent implements OnInit {
       })
 
       let suppliers = [];
-      this.checkedSuppliers.forEach(supplier=>{
+      this.thirdFormGroup.value.suppliersSelected.forEach(supplier=>{
         suppliers.push({
           StockItemId: stockItemId,
           Supplier: this.suppliers.find(sup=> sup.pkSupplierID == supplier).SupplierName,

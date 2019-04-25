@@ -47,6 +47,7 @@ import { OpenOrderComponent } from './order/open-order/open-order.component';
 import { PrintComponent } from './order/print/print.component';
 import { PrintlabelProcessorderComponent } from './printlabel-processorder/printlabel-processorder.component';
 import { CreateProductComponent } from './inventory/create-product/create-product.component';
+import { SuppliersCreateComponent } from './inventory/suppliers/suppliers-create/suppliers-create.component';
 
 
 @NgModule({
@@ -67,7 +68,8 @@ import { CreateProductComponent } from './inventory/create-product/create-produc
     OpenOrderComponent,
     PrintComponent,
     PrintlabelProcessorderComponent,
-    CreateProductComponent
+    CreateProductComponent,
+    SuppliersCreateComponent
     
   ],
   imports: [
@@ -102,7 +104,8 @@ import { CreateProductComponent } from './inventory/create-product/create-produc
     BrowserAnimationsModule
   ],
   entryComponents: [
-    ModalComponent
+    ModalComponent,
+    SuppliersCreateComponent
   ],
   providers: [
       
