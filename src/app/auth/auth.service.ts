@@ -65,8 +65,8 @@ export class AuthService{
     logout() {
        
         localStorage.removeItem('token');
-        localStorage.removeItem('linnToken');
-        localStorage.removeItem('linnServer');
+        // localStorage.removeItem('linnToken');
+        // localStorage.removeItem('linnServer');
         this.token = null;
         this.authTokenUpdated.next(this.token);
         

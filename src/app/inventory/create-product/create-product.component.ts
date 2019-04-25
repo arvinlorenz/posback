@@ -54,14 +54,17 @@ export class CreateProductComponent implements OnInit {
     this.inventoryService.getPostalServices()
     .subscribe(postalServices=>{
       this.postalServices = postalServices
+      this.secondFormGroup.controls['postalServiceId'].setValue("00000000-0000-0000-0000-000000000000");
     })
     this.inventoryService.getCategories()
     .subscribe(categories=>{
       this.categories = categories
+      this.secondFormGroup.controls['categoryId'].setValue("00000000-0000-0000-0000-000000000000");
     })
     this.inventoryService.getPackageGroups()
     .subscribe(packageGroups=>{
       this.packageGroups = packageGroups
+      this.secondFormGroup.controls['packageGroupId'].setValue("00000000-0000-0000-0000-000000000000");
     })
 
     this.firstFormGroup = this._formBuilder.group({
