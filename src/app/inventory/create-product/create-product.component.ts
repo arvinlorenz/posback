@@ -4,7 +4,7 @@ import { InventoryService } from '../inventory.service';
 import * as moment from 'moment-timezone';
 import { SoundsService } from 'src/app/shared/sounds.service';
 import { Router } from '@angular/router';
-import { read } from 'fs';
+//import { read } from 'fs';
 @Component({
   selector: 'app-create-product',
   templateUrl: './create-product.component.html',
@@ -227,16 +227,16 @@ export class CreateProductComponent implements OnInit {
     })
   }
 
-  onImagePicked(event: Event){
-    const file = (event.target as HTMLInputElement).files[0];
-    this.firstFormGroup.patchValue({image: file});
-    this.firstFormGroup.get('image').updateValueAndValidity();
-    const reader = new FileReader();
-    reader.onload = ()=>{
-      //this.imagePreview = reader.result;
-      console.log(reader.result)
-    };
-    reader.readAsDataURL(file);
-  }
+  // onImagePicked(event: Event){
+  //   const file = (event.target as HTMLInputElement).files[0];
+  //   this.firstFormGroup.patchValue({image: file});
+  //   this.firstFormGroup.get('image').updateValueAndValidity();
+  //   const reader = new FileReader();
+  //   reader.onload = ()=>{
+  //     //this.imagePreview = reader.result;
+  //     console.log(reader.result)
+  //   };
+  //   reader.readAsDataURL(file);
+  // }
 
 }
