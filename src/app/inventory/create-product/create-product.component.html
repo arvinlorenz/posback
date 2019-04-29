@@ -41,7 +41,7 @@
         
         
           <div formArrayName="images"
-            *ngFor="let item of firstFormGroup.get('images').controls; let i = index;">
+            *ngFor="let image of firstFormGroup.get('images').controls; let i = index;">
             
             <div [formGroupName]="i">
               <mat-form-field>
