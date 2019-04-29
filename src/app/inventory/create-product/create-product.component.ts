@@ -224,7 +224,7 @@ export class CreateProductComponent implements OnInit {
           "Code":this.secondFormGroup.value.itemNumber,
           "SupplierBarcode":"",
           "LeadTime":1,
-          "PurchasePrice": this.secondFormGroup.value.purchasePrice,
+          "PurchasePrice": this.secondFormGroup.value.purchasePrice || 0,
           "SupplierCurrency":"AUD",
           "SupplierMinOrderQty":0,
           "SupplierPackSize":0,
