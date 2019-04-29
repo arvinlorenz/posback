@@ -12,21 +12,21 @@
             <mat-form-field>
               <input 
               matInput 
-              placeholder="Image URL"
+              placeholder="Image URL 图片网址"
               formControlName="imageUrl">
             </mat-form-field>
                   
             <mat-form-field>
               <input 
               matInput 
-              placeholder="Item Number"
+              placeholder="Item Number 项目编号"
               formControlName="itemNumber">
             </mat-form-field>
       
             <mat-form-field>
                 <input 
                 matInput 
-                placeholder="Item Name"
+                placeholder="Item Name 项目名称"
                 formControlName="itemTitle">
               </mat-form-field>
           
@@ -34,55 +34,55 @@
               <input 
               #quantity
               matInput 
-              placeholder="Quantity"
+              placeholder="Quantity 数量"
               formControlName="quantity">
             </mat-form-field>
             
             <mat-form-field>
               <input 
               matInput 
-              placeholder="Open Order"
+              placeholder="Open Order 开放订单"
               formControlName="openOrder">
             </mat-form-field>
       
             <mat-form-field>
               <input 
               matInput 
-              placeholder="Minimum Level"
+              placeholder="Minimum Level 最低水平"
               formControlName="minimumLevel">
             </mat-form-field>
       
             <mat-form-field>
               <input 
               matInput 
-              placeholder="Available"
+              placeholder="Available 可得到"
               formControlName="available">
             </mat-form-field>
       
             <mat-form-field>
               <input 
               matInput 
-              placeholder="Due"
+              placeholder="Due 应有"
               formControlName="due">
             </mat-form-field>
       
             <mat-form-field>
               <input 
               matInput 
-              placeholder="Barcode"
+              placeholder="Barcode 条码"
               formControlName="barcodeNumber">
             </mat-form-field>
       
             <mat-form-field>
               <input 
               matInput 
-              placeholder="Purchase Price CNY"
+              placeholder="Purchase Price 购买价格 CNY"
               formControlName="purchasePrice">
             </mat-form-field>
             <mat-form-field>
               <input 
               matInput 
-              placeholder="Retail Price"
+              placeholder="Retail Price 零售价"
               formControlName="retailPrice">
             </mat-form-field>
             
@@ -91,41 +91,41 @@
             <mat-form-field>
               <input 
               matInput 
-              placeholder="Height"
+              placeholder="Height 高度"
               formControlName="height">
             </mat-form-field>
       
             <mat-form-field>
               <input 
               matInput 
-              placeholder="Width" 
+              placeholder="Width 宽度" 
               formControlName="width">
             </mat-form-field>
       
             <mat-form-field>
               <input 
               matInput 
-              placeholder="Depth"
+              placeholder="Depth 深度"
               formControlName="depth">
             </mat-form-field>
       
             <mat-form-field>
               <input 
               matInput 
-              placeholder="Weight"
+              placeholder="Weight 重量"
               formControlName="weight">
             </mat-form-field>
 
               <mat-form-field>
                 <input 
                 matInput 
-                placeholder="Shipping"
+                placeholder="Shipping 运输"
                 formControlName="shipping">
               </mat-form-field>
               <mat-form-field>
                 <input 
                 matInput 
-                placeholder="Postage"
+                placeholder="Postage 邮资"
                 formControlName="postage">
               </mat-form-field>
          
@@ -157,12 +157,12 @@
                 <button 
                   mat-stroked-button 
                   type="submit"  
-                  color="primary">SAVE</button>
-                <button mat-stroked-button (click)="cancel()" color="warn">CANCEL</button>
+                  color="primary">SAVE 保存</button>
+                <button mat-stroked-button (click)="cancel()" color="warn">CANCEL 取消</button>
             </mat-card-actions>
       
             <mat-card-actions *ngIf="!editMode && showButton">
-                <button mat-stroked-button (click)="edit()"color="primary" >EDIT</button>
+                <button mat-stroked-button (click)="edit()"color="primary" >EDIT 编辑</button>
             </mat-card-actions>
         </form>
       </mat-card>

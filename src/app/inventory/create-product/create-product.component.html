@@ -1,6 +1,6 @@
 <mat-horizontal-stepper #stepper>
   <mat-step [stepControl]="firstFormGroup">
-    <ng-template matStepLabel>Inventory</ng-template>
+    <ng-template matStepLabel>Inventory 库存</ng-template>
     <form [formGroup]="firstFormGroup">
        
         <!-- <div>
@@ -12,14 +12,14 @@
         <mat-form-field>
           <input 
           matInput 
-          placeholder="Item Number"
+          placeholder="Item Number 项目编号"
           formControlName="itemNumber">
         </mat-form-field>
       
         <mat-form-field>
             <input 
             matInput 
-            placeholder="Item Name"
+            placeholder="Item Name 项目名称"
             formControlName="itemTitle">
           </mat-form-field>
           
@@ -27,7 +27,7 @@
           <input 
           #quantity
           matInput 
-          placeholder="Quantity"
+          placeholder="Quantity 数量"
           formControlName="quantity">
         </mat-form-field>
         
@@ -47,7 +47,7 @@
               <mat-form-field>
                 <input 
                 matInput 
-                [placeholder]="'Image '+(i+1)"
+                [placeholder]="'Image 图片'+(i+1)"
                 formControlName="imageUrl">
               </mat-form-field>
             </div>
@@ -55,16 +55,16 @@
           </div>
           <button mat-button (click)="addImage()">
               <mat-icon aria-label="plus icon">add</mat-icon>
-              Add Image</button>
+              Add Image 添加图片</button>
           <br>
           <br>
           <div>
-            <button mat-raised-button color="primary" matStepperNext>Next</button>
+            <button mat-raised-button color="primary" matStepperNext>Next 下一个</button>
           </div>
     </form>
   </mat-step>
   <mat-step [stepControl]="secondFormGroup">
-    <ng-template matStepLabel>Stock</ng-template>
+    <ng-template matStepLabel>Stock 股票</ng-template>
     <form [formGroup]="secondFormGroup">
       
             
@@ -72,7 +72,7 @@
       <mat-form-field>
         <input 
         matInput 
-        placeholder="Minimum Level"
+        placeholder="Minimum Level 最低水平"
         formControlName="minimumLevel">
       </mat-form-field>
 
@@ -80,26 +80,26 @@
       <mat-form-field>
         <input 
         matInput 
-        placeholder="Barcode"
+        placeholder="Barcode 条码"
         formControlName="barcodeNumber">
       </mat-form-field>
 
       <mat-form-field>
         <input 
         matInput 
-        placeholder="Purchase Price CNY"
+        placeholder="Purchase Price CNY 购买价格"
         formControlName="purchasePrice">
       </mat-form-field>
       <mat-form-field>
         <input 
         matInput 
-        placeholder="Retail Price"
+        placeholder="Retail Price 零售价"
         formControlName="retailPrice">
       </mat-form-field>
       <mat-form-field>
           <input 
           matInput 
-          placeholder="Tax Rate"
+          placeholder="Tax Rate 税率"
           formControlName="taxRate">
         </mat-form-field>
       
@@ -107,28 +107,28 @@
       <mat-form-field>
         <input 
         matInput 
-        placeholder="Height"
+        placeholder="Height 高度"
         formControlName="height">
       </mat-form-field>
 
       <mat-form-field>
         <input 
         matInput 
-        placeholder="Width" 
+        placeholder="Width 宽度" 
         formControlName="width">
       </mat-form-field>
 
       <mat-form-field>
         <input 
         matInput 
-        placeholder="Depth"
+        placeholder="Depth 深度"
         formControlName="depth">
       </mat-form-field>
 
       <mat-form-field>
         <input 
         matInput 
-        placeholder="Weight"
+        placeholder="Weight 重量"
         formControlName="weight">
       </mat-form-field>
 
@@ -157,17 +157,17 @@
           </mat-select>
         </mat-form-field>
         <div>
-          <button mat-raised-button color="primary" matStepperNext >Next</button>
+          <button mat-raised-button color="primary" matStepperNext >Next 下一个</button>
         </div>
     </form>
   </mat-step>
   <mat-step [stepControl]="thirdFormGroup">
     <form [formGroup]="thirdFormGroup">
-    <ng-template matStepLabel>Suppliers</ng-template>
+    <ng-template matStepLabel>Suppliers 供应商</ng-template>
     <!-- <mat-checkbox class="checkbox-margin" (change)="toggleSuppliers($event,supplier.pkSupplierID)" *ngFor="let supplier of suppliers">{{supplier.SupplierName}}</mat-checkbox> -->
    
         <mat-form-field>
-          <mat-label>Suppliers</mat-label>
+          <mat-label>Suppliers 供应商</mat-label>
           <mat-select formControlName="suppliersSelected" multiple>
             <mat-option *ngFor="let supplier of suppliers" [value]="supplier.pkSupplierID">{{supplier.SupplierName}}</mat-option>
           </mat-select>
@@ -175,14 +175,14 @@
         
         <button mat-button (click)="createSupplier()">
             <mat-icon aria-label="plus icon">add</mat-icon>
-          Create New Supplier
+          Create New Supplier 创建新供应商
         </button>
 
         <br>
         <br>
       <div>
-        <button mat-raised-button matStepperPrevious>Back</button>
-        <button mat-raised-button color="primary" (click)="addInventoryItem()">Create Item</button>
+        <button mat-raised-button matStepperPrevious>Back 背部</button>
+        <button mat-raised-button color="primary" (click)="addInventoryItem()">Create Product 创建产品</button>
       </div>
     </form>
     

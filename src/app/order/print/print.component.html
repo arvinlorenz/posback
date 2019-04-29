@@ -1,7 +1,7 @@
 <mat-card>
   <mat-card-header>
        
-        <mat-card-title>Print Labels</mat-card-title>
+        <mat-card-title>Print Labels 打印标签</mat-card-title>
 
   </mat-card-header>
   <form [formGroup]="form" (submit)="scan()">
@@ -18,7 +18,7 @@
 
     <div class="form-group">
       <select class="form-control" formControlName="printer">
-        <option disabled selected value>Printer</option>
+        <option disabled selected value>Printer 打印机</option>
         <option 
           *ngFor="let printer of printers; let id = index"
           [value]="printer.PrinterName"
@@ -28,7 +28,7 @@
     </div>
     <div class="form-group">
       <select class="form-control" formControlName="template">
-        <option disabled selected value>Template</option>
+        <option disabled selected value>Template 模板</option>
         <option 
           *ngFor="let template of templates; let id = index"
           [value]="template.TemplateId"
@@ -36,6 +36,7 @@
       </select>
     </div>
 
-    <button mat-stroked-button type="submit" color="primary" >PRINT</button>
+    <button mat-stroked-button type="submit" color="primary" >PRINT 印刷
+    </button>
   </form>
 </mat-card>

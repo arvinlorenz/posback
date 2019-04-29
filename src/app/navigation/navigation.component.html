@@ -18,20 +18,20 @@
   <!-- Sidebar -->
   <div id="sidebar-wrapper">
       <ul class="sidebar-nav">
-          <li class="sidebar-brand"> <a href="#menu-toggle" id="menu-toggle1">Quick Links </a> </li>
-          <li class="sidebar-item"> <a routerLink="/open">Open Orders</a> </li>
-          <li class="sidebar-item"> <a routerLink="/print">Print Labels</a> </li>
-          <li class="sidebar-item"> <a routerLink="/label-print">TEST</a> </li>
-          <li class="sidebar-item"> <a routerLink="/pos">Process System</a> </li>
-          <li class="sidebar-item"> <a routerLink="/sku">Stock</a> </li>
-          <li class="sidebar-item"> <a routerLink="/inventory">Inventory
+          <li class="sidebar-brand"> <a href="#menu-toggle" id="menu-toggle1">Quick Links 快速链接</a> </li>
+          <li class="sidebar-item"> <a routerLink="/open">Open Orders 未结订单</a> </li>
+          <li class="sidebar-item"> <a routerLink="/print">Print Labels 打印标签</a> </li>
+          <li class="sidebar-item"> <a routerLink="/label-print">TEST 测试</a> </li>
+          <li class="sidebar-item"> <a routerLink="/pos">Process System 流程系统</a> </li>
+          <li class="sidebar-item"> <a routerLink="/sku">Stock 库存</a> </li>
+          <li class="sidebar-item"> <a routerLink="/inventory">Inventory 库存
           </a> </li>
           
           <div class="dropdown-divider"></div>
-          <li class="sidebar-item"> <a  routerLink="/setting" *ngIf="authService.isAuthenticated()">Settings<span class="sr-only">(current)</span></a> </li>
+          <li class="sidebar-item"> <a  routerLink="/setting" *ngIf="authService.isAuthenticated()">Settings 环境<span class="sr-only">(current)</span></a> </li>
           <!-- <li class="nav-item"> <a class="nav-link" routerLink="/login" *ngIf="!authService.isAuthenticated()">Login</a> </li> -->
           
-          <li class="sidebar-item"> <a (click)="onLogout()" *ngIf="authService.isAuthenticated()">Logout</a> </li>
+          <li class="sidebar-item"> <a (click)="onLogout()" *ngIf="authService.isAuthenticated()">Logout 登出</a> </li>
 
       </ul>
   </div> <!-- /#sidebar-wrapper -->
