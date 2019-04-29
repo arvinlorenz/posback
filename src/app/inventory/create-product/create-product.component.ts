@@ -44,6 +44,7 @@ export class CreateProductComponent implements OnInit {
   //   }
   //   console.log(this.checkedSuppliers)
   // }
+  
   ngOnInit() {
     
     
@@ -80,6 +81,7 @@ export class CreateProductComponent implements OnInit {
       quantity:'',
       bin:'',
       images: this._formBuilder.array([ this.createNewImage() ])
+      
     });
     this.firstFormGroup.controls.itemNumber.disable();
     this.secondFormGroup = this._formBuilder.group({
@@ -102,6 +104,9 @@ export class CreateProductComponent implements OnInit {
       suppliersSelected: [[], Validators.required]
     });
 
+  }
+  getArrayImageData(){
+     return this.firstFormGroup.get('images'); 
   }
   createNewImage(): FormGroup {
     return this._formBuilder.group({
@@ -128,6 +133,7 @@ export class CreateProductComponent implements OnInit {
       
     });
   }
+  
   addInventoryItem(){
     
     let images = this.firstFormGroup.value.images;
