@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators, FormArray} from '@angular/forms';
 import { InventoryService } from '../inventory.service';
 import * as moment from 'moment-timezone';
 import { SoundsService } from 'src/app/shared/sounds.service';
@@ -14,10 +14,11 @@ import { SuppliersCreateComponent } from 'src/app/inventory/suppliers/suppliers-
 })
 export class CreateProductComponent implements OnInit {
 
+  
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
   thirdFormGroup: FormGroup;
-
+  images: FormArray;
   suppliers;
   postalServices;
   categories;
@@ -75,35 +76,42 @@ export class CreateProductComponent implements OnInit {
 
     this.firstFormGroup = this._formBuilder.group({
       itemNumber:['', Validators.required],
-      itemTitle:['', Validators.required],
-      quantity:['', Validators.required],
-      image:[''],
-      //wala sa api
-      bin:['', Validators.required],
-
+      itemTitle:'',
+      quantity:'',
+      bin:'',
+      images: this._formBuilder.array([ this.createNewImage() ])
     });
     this.firstFormGroup.controls.itemNumber.disable();
     this.secondFormGroup = this._formBuilder.group({
-      minimumLevel: ['', Validators.required],
-      barcodeNumber: ['', Validators.required],
-      purchasePrice: ['', Validators.required],
-      retailPrice: ['', Validators.required],
-      taxRate: ['', Validators.required],
-      postalServiceId: ['', Validators.required],
-      categoryId: ['', Validators.required],
-      packageGroupId: ['', Validators.required],
-      height: ['', Validators.required],
-      width: ['', Validators.required],
-      depth: ['', Validators.required],
-      weight: ['', Validators.required],
+      minimumLevel: '',
+      barcodeNumber: '',
+      purchasePrice: '',
+      retailPrice: '',
+      taxRate: '',
+      postalServiceId: '',
+      categoryId: '',
+      packageGroupId: '',
+      height: '',
+      width: '',
+      depth: '',
+      weight: '',
       //image: ['', Validators.required]
     });
 
     this.thirdFormGroup = this._formBuilder.group({
       suppliersSelected: [[], Validators.required]
     });
+
   }
-  
+  createNewImage(): FormGroup {
+    return this._formBuilder.group({
+      imageUrl: ''
+    });
+  }
+  addImage(): void {
+    this.images = this.firstFormGroup.get('images') as FormArray;
+    this.images.push(this.createNewImage());
+  }
   createSupplier(){
     const dialogRef = this.dialog.open(SuppliersCreateComponent, {
       width: '250px',
@@ -121,10 +129,9 @@ export class CreateProductComponent implements OnInit {
     });
   }
   addInventoryItem(){
-    // this.inventoryService.uploadImageOfInvToLinn(this.firstFormGroup.value.image)
-    //   .subscribe(a=>{
-    //     console.log(a)
-    //   })
+    
+    let images = this.firstFormGroup.value.images;
+
     if(this.firstFormGroup.invalid||this.secondFormGroup.invalid ){
       this.soundService.playError()
       return
@@ -146,28 +153,28 @@ export class CreateProductComponent implements OnInit {
 
     
     let inventoryItem={
-      "Quantity": this.firstFormGroup.value.quantity,
-      "MinimumLevel": this.secondFormGroup.value.minimumLevel,
+      "Quantity": this.firstFormGroup.value.quantity || 0,
+      "MinimumLevel": this.secondFormGroup.value.minimumLevel || 4,
       "CreationDate": now,
       "IsCompositeParent": true,
       "ItemNumber": this.firstFormGroup.value.itemNumber,
-      "ItemTitle": this.firstFormGroup.value.itemTitle,
-      "BarcodeNumber": this.secondFormGroup.value.barcodeNumber,
+      "ItemTitle": this.firstFormGroup.value.itemTitle || 'new product',
+      "BarcodeNumber": this.secondFormGroup.value.barcodeNumber || 0,
       "MetaData": "",
       "isBatchedStockType": false,
-      "PurchasePrice": this.secondFormGroup.value.purchasePrice,
-      "RetailPrice": this.secondFormGroup.value.retailPrice,
-      "TaxRate": this.secondFormGroup.value.taxRate,
+      "PurchasePrice": this.secondFormGroup.value.purchasePrice || 0,
+      "RetailPrice": this.secondFormGroup.value.retailPrice || 0,
+      "TaxRate": this.secondFormGroup.value.taxRate || 0,
       "PostalServiceId": this.secondFormGroup.value.postalServiceId,
       "PostalServiceName": postalServiceName,
       "CategoryId": this.secondFormGroup.value.categoryId,
       "CategoryName": categoryName,
       "PackageGroupId": this.secondFormGroup.value.packageGroupId,
       "PackageGroupName": packageGroupName,
-      "Height": this.secondFormGroup.value.height,
-      "Width": this.secondFormGroup.value.width,
-      "Depth": this.secondFormGroup.value.depth,
-      "Weight": this.secondFormGroup.value.weight,
+      "Height": this.secondFormGroup.value.height || 0,
+      "Width": this.secondFormGroup.value.width || 0,
+      "Depth": this.secondFormGroup.value.depth || 0,
+      "Weight": this.secondFormGroup.value.weight || 0,
       "InventoryTrackingType": 21,
       "BatchNumberScanRequired": true,
       "SerialNumberScanRequired": true,
@@ -183,7 +190,17 @@ export class CreateProductComponent implements OnInit {
       this.soundService.playSuccess()
       this.router.navigate(['inventory',this.firstFormGroup.value.itemNumber])
       
-      this.inventoryService.setBinRack(stockItemId,this.firstFormGroup.value.bin)
+      images.forEach(image=>{
+        if(image.imageUrl != ''){
+          this.inventoryService.uploadImageToLinn(image.imageUrl,stockItemId, this.firstFormGroup.value.itemNumber)
+          .subscribe(a=>{
+            console.log(a)
+          })
+        }
+        
+      })
+
+      this.inventoryService.setBinRack(stockItemId,this.firstFormGroup.value.bin || 88)
       .subscribe(b=>{
         if(b != null){
           this.soundService.playError()

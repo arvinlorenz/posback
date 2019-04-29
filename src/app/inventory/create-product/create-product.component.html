@@ -8,6 +8,7 @@
           <button type="button" mat-stroked-button (click)="filePicker.click()">Pick Image</button>
        
         </div> -->
+
         <mat-form-field>
           <input 
           matInput 
@@ -37,10 +38,29 @@
           placeholder="Bin Rack"
           formControlName="bin">
         </mat-form-field>
-      
-        <div>
-          <button mat-button matStepperNext>Next</button>
-        </div>
+        
+        
+          <div formArrayName="images"
+            *ngFor="let item of firstFormGroup.get('images').controls; let i = index;">
+            
+            <div [formGroupName]="i">
+              <mat-form-field>
+                <input 
+                matInput 
+                [placeholder]="'Image '+(i+1)"
+                formControlName="imageUrl">
+              </mat-form-field>
+            </div>
+
+          </div>
+          <button mat-button (click)="addImage()">
+              <mat-icon aria-label="plus icon">add</mat-icon>
+              Add Image</button>
+          <br>
+          <br>
+          <div>
+            <button mat-raised-button color="primary" matStepperNext>Next</button>
+          </div>
     </form>
   </mat-step>
   <mat-step [stepControl]="secondFormGroup">
@@ -137,7 +157,7 @@
           </mat-select>
         </mat-form-field>
         <div>
-          <button mat-button matStepperNext >Next</button>
+          <button mat-raised-button color="primary" matStepperNext >Next</button>
         </div>
     </form>
   </mat-step>

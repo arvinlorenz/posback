@@ -187,6 +187,7 @@ export class InventoryWithSuppliersComponent implements OnInit, OnDestroy{
           })
         this.inventoryService.getItemImage(this.itemStockId)
           .subscribe((img:any[])=>{
+            console.log(img)
             if(img.length > 0){
              
               this.imagePath = img[0].FullSource;
@@ -401,7 +402,6 @@ export class InventoryWithSuppliersComponent implements OnInit, OnDestroy{
       weight,
       postServiceName: this.postServiceName, categoryName:this.categoryName, packageGroupName: this.packageGroupName
     };
-    console.log(details.packageGroupId, details.categoryId)
     this.inventoryService.updateInventoryItem(details,this.itemStockId).subscribe(a=>{
       if(a === null){
         // if(this.form.value.image){
@@ -422,7 +422,7 @@ export class InventoryWithSuppliersComponent implements OnInit, OnDestroy{
           
         if(imageUrl != ''){
 
-          this.inventoryService.uploadImageToLinn(imageUrl,this.itemStockId)
+          this.inventoryService.uploadImageToLinn(imageUrl,this.itemStockId, itemNumber)
           .subscribe(imageUpload=>{
             console.log(imageUpload);
             this.skuSubscribe();

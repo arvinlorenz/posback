@@ -180,10 +180,10 @@ export class InventoryService{
         
     }
 
-   uploadImageToLinn(imageUrl,stockItemId){
+   uploadImageToLinn(imageUrl,stockItemId, itemNumber){
         let url = `${this.tokenService.getServer()}/api/Inventory/AddImageToInventoryItem`;
         let params = {
-            request:{"ItemNumber": stockItemId,
+            request:{"ItemNumber": itemNumber,
                     "StockItemId": stockItemId,
                     "IsMain": true,
                     "ImageUrl": imageUrl
