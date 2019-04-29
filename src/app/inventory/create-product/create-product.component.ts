@@ -105,9 +105,7 @@ export class CreateProductComponent implements OnInit {
     });
 
   }
-  getArrayImageData(){
-     return this.firstFormGroup.get('images'); 
-  }
+  get formData() { return <FormArray>this.firstFormGroup.get('images');; }
   createNewImage(): FormGroup {
     return this._formBuilder.group({
       imageUrl: ''
