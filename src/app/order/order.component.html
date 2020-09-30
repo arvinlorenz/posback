@@ -4,25 +4,25 @@
           <div class="col">
             <form [formGroup]="form" (submit)="processOrder()">
                 <mat-form-field>
-                  <input 
+                  <input
                     #orderNumber
                     formControlName="orderNumber"
-                    matInput 
+                    matInput
                     placeholder="Order Number 订单号">
-                </mat-form-field>    
-                <button 
+                </mat-form-field>
+                <button
                     mat-raised-button
                     color="basic"
                     type="submit"
                     >Process Order 流程订单
-                </button> 
+                </button>
             </form>
           </div>
       </div>
       <div class="row">
           <div class="col">
                 <p> Count 数: {{processCount}} </p>
-          </div>         
+          </div>
       </div>
       <div class="row">
         <div class="col">
@@ -31,7 +31,7 @@
       </div>
   </mat-card>
 
-  <div >
+  <!-- <div >
       <br>
       <div class="card">
         <h3 class="card-header text-center font-weight-bold text-uppercase py-4">PROCESSED ORDERS 加工订单</h3>
@@ -45,7 +45,7 @@
                   <th class="text-center">Name</th>
                   <th class="text-center">Date/Time</th>
                   <th class="text-center">Action</th>
-              
+
                 </tr>
               </thead>
               <tbody>
@@ -64,13 +64,13 @@
                       <button mat-stroked-button type="button" (click)="printInvoice(order)" color="primary" >Process</button>
                     </div>
                   </td>
-                  
-                    
-                  
+
+
+
                 </tr>
               </tbody>
             </table>
           </div>
         </div>
       </div>
-  </div>
+  </div> -->
