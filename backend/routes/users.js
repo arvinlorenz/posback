@@ -11,14 +11,18 @@ router.post('', async(req,res,next)=>{
         // let user = await User.findOne({email: req.body.email});
         let user = {
           email: 'admin@damienwhite.com',
-          password: 'DamienWhite2020'
+          password: await bcrypt.hash('DamienWhite20202', 10)
+          //DamienWhite20202
         }
+
+        console.log(user.password);
         if(!user){
             res.status(200).json({
                 message: 'Auth failed'
             });
         }
         let result = await bcrypt.compare(req.body.password, user.password);
+        console.log(result);
         if(!result){
             res.status(200).json({
                 message: 'Auth failed'
