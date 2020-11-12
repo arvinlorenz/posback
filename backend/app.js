@@ -8,15 +8,15 @@ const orderRoutes = require('./routes/orders');
 const userRoutes = require('./routes/users');
 const app = express();
 
-const {checkAndSaveOrders} = require('./functions/orders');
+// const {checkAndSaveOrders} = require('./functions/orders');
 
-mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost:27017/Pos")
-    .then(()=>{
-        console.log('Connected to Database!');
-    })
-    .catch(()=>{
-        console.log('Connection failed!');
-    });
+// mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost:27017/Pos")
+//     .then(()=>{
+//         console.log('Connected to Database!');
+//     })
+//     .catch(()=>{
+//         console.log('Connection failed!');
+//     });
 app.use(bodyParser.json());
 app.use((req,res,next)=>{
 
