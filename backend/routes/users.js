@@ -11,7 +11,7 @@ router.post('', async(req,res,next)=>{
         // let user = await User.findOne({email: req.body.email});
         let user = {
           email: 'admin@damienwhite.com',
-          password: await bcrypt.hash('DamienWhite20202', 10)
+          password: await bcrypt.hash('DamienWhite2020', 10)
           //DamienWhite20202
         }
 
