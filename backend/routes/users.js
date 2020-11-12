@@ -8,25 +8,29 @@ const jwt = require('jsonwebtoken');
 
 router.post('', async(req,res,next)=>{
     try {
-        let user = await User.findOne({email: req.body.email});
+        // let user = await User.findOne({email: req.body.email});
+        let user = {
+          email: 'admin@damienwhite.com',
+          password: 'DamienWhite2020'
+        }
         if(!user){
             res.status(200).json({
                 message: 'Auth failed'
-            });  
+            });
         }
         let result = await bcrypt.compare(req.body.password, user.password);
         if(!result){
             res.status(200).json({
                 message: 'Auth failed'
-            });  
+            });
         }
-        
+
         const token = jwt.sign(
-            { email: user.email, userId: user._id}, 
+            { email: user.email, userId: user._id},
                 'JWSECRET',
                 {expiresIn:'1h'}
             );
-            
+
         res.status(200).json({
             token
         })
@@ -34,9 +38,9 @@ router.post('', async(req,res,next)=>{
     } catch (error) {
         res.status(401).json({
             message: 'Auth failed'
-        });  
+        });
     }
-    
+
 });
 
 module.exports = router;
