@@ -1,13 +1,13 @@
-<nav class="navbar navbar-expand navbar-dark bg-primary fixed-top"> 
+<nav class="navbar navbar-expand navbar-dark bg-primary fixed-top">
     <a class="navbar-brand" routerLink="/">PROCESS ORDER SYSTEM  </a>
-  
+
   <div class="collapse navbar-collapse" id="navbarsExample02">
       <ul class="navbar-nav ml-auto">
-          
+
           <li class="nav-item">
             <a  class="nav-link" href="#menu-toggle" id="menu-toggle">
               <span class="navbar-toggler-icon"></span>
-            </a> 
+            </a>
           </li>
       </ul>
       <form class="form-inline my-2 my-md-0"> </form>
@@ -26,11 +26,11 @@
           <li class="sidebar-item"> <a routerLink="/sku">Stock 库存</a> </li>
           <li class="sidebar-item"> <a routerLink="/inventory">Inventory 库存
           </a> </li>
-          
+
           <div class="dropdown-divider"></div>
-          <li class="sidebar-item"> <a  routerLink="/setting" *ngIf="authService.isAuthenticated()">Settings 环境<span class="sr-only">(current)</span></a> </li>
+          <!-- <li class="sidebar-item"> <a  routerLink="/setting" *ngIf="authService.isAuthenticated()">Settings 环境<span class="sr-only">(current)</span></a> </li> -->
           <!-- <li class="nav-item"> <a class="nav-link" routerLink="/login" *ngIf="!authService.isAuthenticated()">Login</a> </li> -->
-          
+
           <li class="sidebar-item"> <a (click)="onLogout()" *ngIf="authService.isAuthenticated()">Logout 登出</a> </li>
 
       </ul>

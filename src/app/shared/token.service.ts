@@ -20,7 +20,7 @@ export class TokenService{
 
     constructor(private http: HttpClient, private router: Router){
     }
-    
+
     playSuccess(){
         this.SuccessAudio.play();
     }
@@ -59,12 +59,14 @@ export class TokenService{
             let params = { token : tokenRes.token,
                         applicationId : tokenRes.applicationId,
                         applicationSecret : tokenRes.applicationSecret };
-            this.createCredentials = { 
-                                        id: tokenRes.id,
+            this.createCredentials = {
+                                        // id: tokenRes.id,
                                         token : tokenRes.token,
                                         applicationId : tokenRes.applicationId,
                                         applicationSecret : tokenRes.applicationSecret };
-  
+
+            console.log(this.createCredentials);
+
             this.http
             .get(
                 "https://api.linnworks.net/api/Auth/AuthorizeByApplication",
@@ -75,7 +77,7 @@ export class TokenService{
                 this.accountFullname = responseData.FullName;
                 this.token = responseData.Token;
                 localStorage.setItem('linnToken', this.token);
-                
+
                 this.server = responseData.Server;
                 localStorage.setItem('linnServer', this.server);
                 this.tokenUpdated.next(this.token);
@@ -84,7 +86,7 @@ export class TokenService{
         })
 
 
-        
+
         //TEST
         //  let params = { token : '17568c13cd21c66574768a82d927f697',
         //                 applicationId : 'db3695da-e3b3-4d92-8981-5d8dee809f46',
@@ -92,50 +94,50 @@ export class TokenService{
 
 
 
-                // //LIVE 
+                // //LIVE
                 //         let params = { token : 'd1ded4727d8204b3f3ca88c475a24533',
                 //         applicationId : 'f01c4825-1eaa-4ad7-88da-74dec836d94a',
                 //         applicationSecret : '9bef39a1-0376-4b48-8b06-2142fe3c98c5' };
 
-        
 
-        
+
+
     }
 
-    
-    updateToken(token:string,applicationId:string,applicationSecret:string){
-        let params = { token, applicationId, applicationSecret};
-        this.http
-            .get(
-                "https://api.linnworks.net/api/Auth/AuthorizeByApplication",
-                {params}
-            )
-            .subscribe((tokenRes: any)=>{
-                let id = this.getCredentials().id;
-                this.http.put(`${environment.apiUrl}/token/${id}`, params)
-                   .subscribe((response:any)=>{
-                       console.log(response.message)
-                       if(response.message == 'Update successful')
-                        this.playSuccess();
-                        this.createCredentials = { ...this.createCredentials, token, applicationId, applicationSecret};
-                        this.accountFullname = tokenRes.FullName;
-                        this.token = tokenRes.Token;
-                        localStorage.setItem('linnToken', this.token);
-                        this.server = tokenRes.Server;
-                        localStorage.setItem('linnServer', this.server);
-                        this.tokenUpdated.next(this.token);
-                        this.nameUpdated.next(this.accountFullname);
-                    })
-                    
-            },
-            err => {
-                this.playError();
-            })
+
+    // updateToken(token:string,applicationId:string,applicationSecret:string){
+    //     let params = { token, applicationId, applicationSecret};
+    //     this.http
+    //         .get(
+    //             "https://api.linnworks.net/api/Auth/AuthorizeByApplication",
+    //             {params}
+    //         )
+    //         .subscribe((tokenRes: any)=>{
+    //             let id = this.getCredentials().id;
+    //             this.http.put(`${environment.apiUrl}/token/${id}`, params)
+    //                .subscribe((response:any)=>{
+    //                    console.log(response.message)
+    //                    if(response.message == 'Update successful')
+    //                     this.playSuccess();
+    //                     this.createCredentials = { ...this.createCredentials, token, applicationId, applicationSecret};
+    //                     this.accountFullname = tokenRes.FullName;
+    //                     this.token = tokenRes.Token;
+    //                     localStorage.setItem('linnToken', this.token);
+    //                     this.server = tokenRes.Server;
+    //                     localStorage.setItem('linnServer', this.server);
+    //                     this.tokenUpdated.next(this.token);
+    //                     this.nameUpdated.next(this.accountFullname);
+    //                 })
+
+    //         },
+    //         err => {
+    //             this.playError();
+    //         })
 
 
-    
-    }
-    
+
+    // }
+
     // getNewTokenFake(){
     //     this.http.get('https://arvin-8a261.firebaseio.com/apiToken.json')
     //     .subscribe((tokenRes:any)=>{
@@ -143,7 +145,7 @@ export class TokenService{
     //                     applicationId : "db3695da-e3b3-4d92-8981-5kamoted8dee809f46",
     //                     applicationSecret : "2004f0b7-9dae-4a95-93dkjf37-feaf450ef996" };
     //         this.createCredentials = params;
-            
+
     //         this.http
     //         .get(
     //             "https://api.linnworks.net/api/Auth/AuthorizeByApplication",

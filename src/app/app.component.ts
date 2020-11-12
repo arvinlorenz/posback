@@ -23,7 +23,7 @@ export class AppComponent implements OnInit{
       //this.tokenService.getNewToken();
     })
     ///this.tokenService.realTimeUpdateToken();
-    
+
   }
 
 }

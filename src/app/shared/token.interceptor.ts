@@ -13,15 +13,15 @@ export class TokenInterceptor implements HttpInterceptor {
         console.log('error')
         if (error.status === 401 || error.status === 400 ) {
         console.log('intercepted')
-            this.tokenService.getNewToken();
+            // this.tokenService.getNewToken();
             return this.tokenService.tokenUpdateListener()
             .pipe(mergeMap(a=>{
               return next.handle(req)
             }))
-            
-           
+
+
         }
-  
+
         //return throwError(error);
       }));
   }

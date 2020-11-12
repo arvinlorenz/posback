@@ -1,3 +1,6 @@
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config();
+}
 const path = require('path'); //construct paths in a way htats safe to run on any operation system
 const express = require('express');
 const bodyParser = require('body-parser');
